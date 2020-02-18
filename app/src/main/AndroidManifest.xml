@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.barterapp">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.Valet"></activity>
+        <activity android:name=".activities.HistoryDetails" />
+        <activity android:name=".activities.History" />
+        <activity android:name=".activities.ChangePassword" />
+        <activity android:name=".activities.TermsAndConditions" />
+        <activity android:name=".activities.tasks.ServiceDueDate" />
+        <activity android:name=".activities.tasks.AddService" />
+        <activity android:name=".activities.ChoosePaymentMethodThree" />
+        <activity android:name=".activities.ChoosePaymentMethodTwo" />
+        <activity android:name=".activities.ChooseService" />
+        <activity android:name=".activities.ChoosePaymentMethod" />
+        <activity android:name=".activities.LocationActivity" />
+        <activity android:name=".activities.NotificationsSettings" />
+        <activity android:name=".activities.Portfolio" />
+        <activity android:name=".activities.EditPortfolio" />
+        <activity android:name=".activities.CompleteOrder" />
+        <activity android:name=".activities.ServicesActivity" />
+        <activity android:name=".activities.ChatActivity" />
+        <activity android:name=".activities.MainPage" />
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.SignInActivity" />
+        <activity android:name=".activities.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

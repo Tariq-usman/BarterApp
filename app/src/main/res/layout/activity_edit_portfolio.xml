@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.EditPortfolio">
+
+    <FrameLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/top_bar"
+        android:orientation="horizontal"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/iv_back_edit_portfolio"
+            android:layout_width="45dp"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center"
+            android:text="Edit portfolio"
+            android:textAllCaps="true"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/sixteen_sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
+                android:paddingBottom="65dp">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_uploaded_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginVertical="3dp"
+                        android:src="@drawable/design" />
+                    <ImageView
+                        android:id="@+id/iv_upload_image"
+                        android:layout_width="25dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_camera"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_gravity="bottom|right"/>
+
+                    <!--<TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload "
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/sixteen_sp" />-->
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".6"
+                        android:text="Title:"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_title_edit_portfolio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="Design"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".6"
+                        android:text="Price:"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_price_edit_portfolio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="abc1245"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_edit_portfolio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/row_items_edit_portfolio" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/trade_btn"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_button"
+            android:paddingHorizontal="20dp"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textColor="@color/greyForText" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

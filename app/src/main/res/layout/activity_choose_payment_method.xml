@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.ChoosePaymentMethod">
+
+    <FrameLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/top_bar"
+        android:orientation="horizontal"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/iv_back_pay_method"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center"
+            android:text="Choose payment method"
+            android:textAllCaps="true"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/sixteen_sp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_re_serv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center_horizontal"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/bg_service_details_button">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/twenty_sp"
+                android:text="Return a Service" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_get_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="16dp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/bg_service_details_button">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:text="Get Pay"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/confirm_order"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/bg_button"
+        android:text="Confirm Order"
+        android:textAllCaps="false"
+        android:textColor="@color/greyForText" />
+
+
+
+</LinearLayout>
