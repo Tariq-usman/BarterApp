@@ -28,7 +28,7 @@ public class EditPortfolioAdapter extends RecyclerView.Adapter<EditPortfolioAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.imageView.setImageResource(images[position]);
+        //holder.ivPortfolioImage.setImageResource(images[position]);
 
     }
 
@@ -41,7 +41,7 @@ public class EditPortfolioAdapter extends RecyclerView.Adapter<EditPortfolioAdap
         CircleImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-          //  imageView = itemView.findViewById(R.id.iv_home_products);
+          //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
         }
     }
 }

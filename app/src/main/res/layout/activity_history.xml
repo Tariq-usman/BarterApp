@@ -28,7 +28,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="50dp"
             android:gravity="center"
-            android:text="History"
+            android:text="My Tasks"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />
@@ -39,6 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view_history"
-        tools:listitem="@layout/row_items_home"/>
+        tools:listitem="@layout/row_items_my_tasks"/>
 
 </LinearLayout>

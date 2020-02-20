@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.barterapp.R;
-import com.example.barterapp.adapters.EditPortfolioAdapter;
 import com.example.barterapp.adapters.ProfilePortfolioAdapter;
 
 public class Portfolio extends AppCompatActivity {
-private RecyclerView recyclerView;
-private ImageView imageViewBack;
+    private RecyclerView recyclerView;
+    private ImageView imageViewBack;
+    int[] images = {R.drawable.notification_image, R.drawable.arslan, R.drawable.farmer_four, R.drawable.farmer_three, R.drawable.customer};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,6 @@ private ImageView imageViewBack;
 
         recyclerView = findViewById(R.id.recycler_view_portfolio);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
-        recyclerView.setAdapter(new ProfilePortfolioAdapter(getApplicationContext()));
+        //recyclerView.setAdapter(new ProfilePortfolioAdapter(getApplicationContext(), images));
     }
 }

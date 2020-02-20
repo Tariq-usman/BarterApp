@@ -28,7 +28,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_home,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_my_tasks,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -57,7 +57,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         CircleImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.iv_home_products);
+            imageView = itemView.findViewById(R.id.iv_my_task_products);
         }
     }
 }

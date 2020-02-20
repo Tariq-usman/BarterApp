@@ -45,7 +45,7 @@ public class TradesAdapter extends RecyclerView.Adapter<TradesAdapter.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.tv_trade_text);
-          //  imageView = itemView.findViewById(R.id.iv_home_products);
+          //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
         }
     }
 }

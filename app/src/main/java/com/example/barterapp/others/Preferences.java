@@ -21,4 +21,13 @@ public class Preferences {
     public String getFragmentStatus(){
         return sharedPreferences.getString("notification_fragment","");
     }
+
+    public void setEditStatus(int status){
+        editor.putInt("edit_profile",status);
+        editor.apply();
+        editor.commit();
+    }
+    public int getEditStatus(){
+        return sharedPreferences.getInt("edit_profile",0);
+    }
 }

@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="50dp"
             android:gravity="center"
-            android:text="Choose payment method"
+            android:text="Choose method"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />

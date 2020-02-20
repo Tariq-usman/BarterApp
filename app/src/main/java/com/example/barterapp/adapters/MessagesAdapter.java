@@ -30,7 +30,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.imageView.setImageResource(images[position]);
+        //holder.ivPortfolioImage.setImageResource(images[position]);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         CircleImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-          //  imageView = itemView.findViewById(R.id.iv_home_products);
+          //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
         }
     }
 }

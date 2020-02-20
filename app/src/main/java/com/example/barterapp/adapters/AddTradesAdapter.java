@@ -11,45 +11,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.List;
 
-public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAdapter.ViewHolder> {
+public class AddTradesAdapter extends RecyclerView.Adapter<AddTradesAdapter.ViewHolder> {
     Context context;
-    private String[] trades;
-    private int[] images;
-    public PaymentMethodsAdapter(Context context, int[] images, String[] trades) {
+    List<String> trades;
+    public AddTradesAdapter(Context context, List<String> trades) {
         this.context = context;
-        this.images = images;
         this.trades = trades;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_payment_method,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_trades,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(images[position]);
-        holder.serviceView.setText(trades[position]);
+        holder.textView.setText(trades.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return trades.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView imageView;
-        private TextView serviceView;
+        private TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.service_image);
-            serviceView = itemView.findViewById(R.id.service_view_choose_service);
+            textView = itemView.findViewById(R.id.tv_trade_text);
+          //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
         }
     }
 }

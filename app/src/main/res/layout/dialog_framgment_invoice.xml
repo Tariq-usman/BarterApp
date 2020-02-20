@@ -1,215 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <FrameLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="10dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/cancel_btn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="4dp"
-            android:src="@drawable/ic_cancel"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/bg_button"/>
-
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="35dp"
-            android:background="@drawable/bg_button"
-            android:paddingHorizontal="20dp"
-            android:text="Custom Invoice"
-            android:textAllCaps="false"
-            android:textSize="@dimen/fourteen_sp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/greyForText" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="2dp"
-        android:background="@drawable/bg_invoice"
-        android:orientation="vertical"
-        android:padding="8dp">
-
+        app:cardCornerRadius="14dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Price:"
-                android:textColor="@color/greyForText"
-                android:textSize="@dimen/twelve_sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$ "
-                android:textSize="@dimen/twelve_sp" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@android:color/transparent"
-                android:hint="3000"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="@dimen/twelve_sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Due Date:"
-                android:textColor="@color/greyForText"
-                android:textSize="@dimen/twelve_sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="17/02/2020"
-                android:textSize="@dimen/twelve_sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Security Amount"
-                android:textColor="@color/greyForText"
-                android:textSize="@dimen/twelve_sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$ "
-                android:textSize="@dimen/twelve_sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@android:color/transparent"
-                android:hint="300"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="@dimen/twelve_sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:background="@color/purple"
+                android:layout_height="40dp">
 
-            <TextView
+                <ImageView
+                    android:id="@+id/cancel_btn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_cancel" />
+
+                <TextView
+                    android:layout_width="180dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="Custom Invoice"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/sixteen_sp" />
+
+            </FrameLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trades"
-                android:textColor="@color/blackColor"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:layout_marginVertical="2dp"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_invoice_trades"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/row_items_trades" />
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="35dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_get_pay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="Get pay"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_return_service"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:text="Return Service"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/twelve_sp" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Price:"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@android:color/transparent"
+                        android:hint="$3000"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="@dimen/twelve_sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Due Date:"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="17/02/2020"
+                        android:textSize="@dimen/twelve_sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/security_amount_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Security Amount"
+                        android:textColor="@color/greyForText"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@android:color/transparent"
+                        android:hint="$300"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="@dimen/twelve_sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Trades"
+                            android:textColor="@color/blackColor"
+                            android:textSize="@dimen/sixteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/btn_add_new_trade"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="right"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_add_trade" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_invoice_trades"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/row_items_trades" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/return_trades_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Return Trade"
+                        android:textColor="@color/blackColor"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_invoice_return_trades"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/row_items_trades" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textColor="@color/blackColor"
+                        android:textSize="@dimen/sixteen_sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Description text here....."
+                        android:textSize="@dimen/twelve_sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp"
+                android:gravity="bottom|center_horizontal">
+
+                <Button
+                    android:id="@+id/send_invoice"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:paddingHorizontal="20dp"
+                    android:text="Send"
+                    android:textAllCaps="false"
+                    android:textColor="@color/greyForText" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Return Trade"
-                android:textColor="@color/blackColor"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_invoice_return_trades"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/row_items_trades" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textColor="@color/blackColor"
-                android:textSize="@dimen/sixteen_sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:hint="Description text here....."
-                android:textSize="@dimen/twelve_sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="10dp"
-        android:gravity="bottom|center_horizontal">
-
-        <Button
-            android:id="@+id/send_invoice"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_button"
-            android:paddingHorizontal="20dp"
-            android:text="Send"
-            android:textAllCaps="false"
-            android:textColor="@color/greyForText" />
-
-    </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

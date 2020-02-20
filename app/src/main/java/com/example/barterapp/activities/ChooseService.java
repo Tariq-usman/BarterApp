@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.R;
-import com.example.barterapp.adapters.PaymentMethodsAdapter;
+import com.example.barterapp.adapters.ChooseServicesAdapter;
 
 public class ChooseService extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -28,7 +28,7 @@ public class ChooseService extends AppCompatActivity {
         preferences = new Preferences(getApplicationContext());
         recyclerView = findViewById(R.id.recycler_view_payment_method);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new PaymentMethodsAdapter(getApplicationContext(),images,trades));
+        recyclerView.setAdapter(new ChooseServicesAdapter(getApplicationContext(),trades));
 
         backBtn = findViewById(R.id.iv_back_choose_service);
         backBtn.setOnClickListener(new View.OnClickListener() {

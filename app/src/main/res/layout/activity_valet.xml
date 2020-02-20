@@ -17,7 +17,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/iv_back_pay_method"
+            android:id="@+id/iv_back_valet"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="50dp"
             android:gravity="center"
-            android:text="Choose payment method"
+            android:text="Valet"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />

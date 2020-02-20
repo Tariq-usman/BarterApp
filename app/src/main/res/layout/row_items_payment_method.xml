@@ -11,15 +11,17 @@
         android:layout_marginVertical="3dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="4dp"
-        android:padding="6dp">
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="20dp">
 
+<!--
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/service_image"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginHorizontal="10dp"
             android:src="@drawable/notification_image" />
+-->
 
         <LinearLayout
             android:layout_width="0dp"

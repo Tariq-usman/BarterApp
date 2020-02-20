@@ -39,7 +39,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.imageView.setImageResource(images[position]);
+        //holder.ivPortfolioImage.setImageResource(images[position]);
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +79,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //  imageView = itemView.findViewById(R.id.iv_home_products);
+            //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
 
 
             recyclerViewTrades = itemView.findViewById(R.id.recycler_view_chat_invoice_trades);

@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_margin="8dp"
+            android:visibility="visible"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -35,6 +36,19 @@
                 android:layout_marginLeft="6dp"
                 android:src="@drawable/ic_edit" />
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_margin="8dp"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:id="@+id/save_btn"
+            android:textSize="@dimen/fourteen_sp"
+            android:textColor="@color/whiteColor"
+            android:textStyle="bold"/>
 
 
         <LinearLayout
@@ -75,10 +89,13 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_height="wrap_content">
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
+                    android:clickable="false"
                     android:src="@drawable/notification_image" />
                 <View
+                    android:id="@+id/online_offline_status_view"
                     android:layout_width="20dp"
                     android:layout_gravity="bottom|right"
                     android:layout_height="20dp"
@@ -94,12 +111,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
+        android:fillViewport="true"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical">
 
@@ -124,6 +141,7 @@
                     android:hint="Lorem Ipsum is simply dummy text"
                     android:background="@android:color/transparent"
                     android:clickable="false"
+                    android:maxLines="1"
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -157,19 +175,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trades"
-                    android:textStyle="bold"
-                    android:textColor="@color/blackColor"
-                    android:textSize="@dimen/sixteen_sp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Trades"
+                        android:textStyle="bold"
+                        android:textColor="@color/blackColor"
+                        android:textSize="@dimen/sixteen_sp" />
+                    <ImageButton
+                        android:id="@+id/btn_add_trade_profile"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:visibility="invisible"
+                        android:layout_gravity="right"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_add_trade" />
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
                     tools:listitem="@layout/row_items_trades"
+
                     android:id="@+id/recycler_view_profile_trades"/>
             </LinearLayout>
 
@@ -188,15 +221,23 @@
                     android:textStyle="bold"
                     android:textColor="@color/blackColor"
                     android:textSize="@dimen/sixteen_sp" />
-
+                <ImageButton
+                    android:id="@+id/btn_add_portfolio_profile"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:visibility="invisible"
+                    android:layout_gravity="right"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_add_trade" />
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_profile_portfolio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/row_items_profile_portfolio" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_profile_portfolio"
+                    android:fillViewport="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/row_items_profile_portfolio" />
 
         </LinearLayout>
     </ScrollView>

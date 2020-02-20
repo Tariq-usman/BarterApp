@@ -11,6 +11,7 @@
         android:textSize="@dimen/twelve_sp"
         android:background="@drawable/bg_button"
         android:text="Design"
+        android:clickable="false"
         android:paddingHorizontal="14dp"
         android:paddingVertical="3dp"
         android:textColor="@color/greyForText"/>

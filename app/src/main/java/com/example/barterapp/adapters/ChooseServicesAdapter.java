@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 
-public class ReturnTradesAdapter extends RecyclerView.Adapter<ReturnTradesAdapter.ViewHolder> {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class ChooseServicesAdapter extends RecyclerView.Adapter<ChooseServicesAdapter.ViewHolder> {
     Context context;
-    String[] trades;
-    public ReturnTradesAdapter(Context context, String[] trades) {
+    private String[] trades;
+    private int[] images;
+    public ChooseServicesAdapter(Context context, String[] trades) {
         this.context = context;
         this.trades = trades;
     }
@@ -22,14 +25,15 @@ public class ReturnTradesAdapter extends RecyclerView.Adapter<ReturnTradesAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_trades,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_payment_method,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(trades[position]);
+//        holder.ivPortfolioImage.setImageResource(images[position]);
+        holder.serviceView.setText(trades[position]);
 
     }
 
@@ -39,11 +43,12 @@ public class ReturnTradesAdapter extends RecyclerView.Adapter<ReturnTradesAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView textView;
+        CircleImageView imageView;
+        private TextView serviceView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.tv_trade_text);
-          //  ivPortfolioImage = itemView.findViewById(R.id.iv_home_products);
+//            ivPortfolioImage = itemView.findViewById(R.id.service_image);
+            serviceView = itemView.findViewById(R.id.service_view_choose_service);
         }
     }
 }

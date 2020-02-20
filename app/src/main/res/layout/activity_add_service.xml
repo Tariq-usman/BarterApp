@@ -28,7 +28,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="50dp"
             android:gravity="center"
-            android:text="Services Details"
+            android:text="Add Task"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="Service Description"
+                android:text="Location"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/fourteen_sp"/>
             <EditText
