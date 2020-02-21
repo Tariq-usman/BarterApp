@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.tasks.ServiceDueDate">
+    tools:context=".activities.TaskDueDate">
 
     <FrameLayout
         android:id="@+id/title_layout"
@@ -57,6 +57,7 @@
                 android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
+                android:id="@+id/date_layout_add_task"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGreyForBG"
@@ -70,6 +71,7 @@
                     android:src="@drawable/ic_calendr" />
 
                 <TextView
+                    android:id="@+id/date_view_add_task"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"

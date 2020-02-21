@@ -1,4 +1,4 @@
-package com.example.barterapp.activities.tasks;
+package com.example.barterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,14 +11,14 @@ import android.widget.ImageView;
 
 import com.example.barterapp.R;
 
-public class AddService extends AppCompatActivity {
+public class AddTask extends AppCompatActivity {
 
 private Button nextBtn;
 private ImageView backBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_service);
+        setContentView(R.layout.activity_add_task);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         backBtn = findViewById(R.id.iv_back_add_service);
@@ -33,7 +33,7 @@ private ImageView backBtn;
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ServiceDueDate.class));
+                startActivity(new Intent(getApplicationContext(), TaskDueDate.class));
             }
         });
     }

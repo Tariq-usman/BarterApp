@@ -1,11 +1,7 @@
 package com.example.barterapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
-import com.example.barterapp.RecyclerClickInterface;
+import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
 
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
-import static com.example.barterapp.fragments.Profile.portfolio_pics;
 
 public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfolioAdapter.ViewHolder> {
     Context context;

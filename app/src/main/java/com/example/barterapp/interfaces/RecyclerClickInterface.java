@@ -1,4 +1,4 @@
-package com.example.barterapp;
+package com.example.barterapp.interfaces;
 
 import android.view.View;
 

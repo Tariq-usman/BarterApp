@@ -26,209 +26,229 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Sign Up"
-            android:textStyle="bold"
             android:textColor="@color/whiteColor"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Name"
+                android:inputType="text"
+                android:singleLine="true"
+                android:text="tariq"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textSize="@dimen/eighteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/whiteColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text="tariqusman2222@gmail.com"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textSize="@dimen/eighteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/whiteColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:text="tariq12"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textSize="@dimen/eighteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/whiteColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_confirm_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:text="tariq12"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textSize="@dimen/eighteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/whiteColor" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/sixteen_sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="50dp"
-                android:gravity="bottom"
-                android:paddingBottom="50dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search_view"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_location_signup"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="4dp"
+                    android:text="g 11 islamabad"
+                    android:textColor="@color/greyForText"
+                    android:textSize="@dimen/twelve_sp" />
 
-
-                    <EditText
-                        android:id="@+id/et_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Name"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Email"
-                        android:singleLine="true"
-                        android:inputType="textEmailAddress"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Password"
-                        android:singleLine="true"
-                        android:inputType="textPassword"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_confirm_pass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Confirm password"
-                        android:singleLine="true"
-                        android:inputType="textPassword"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Country"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="City"
-                        android:singleLine="true"
-                        android:inputType="text"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/et_zip_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="Zip Code"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/whiteColor"
-                        android:textSize="@dimen/eighteen_sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/whiteColor" />
-                </LinearLayout>-->
-
-
-
-
+                <ImageView
+                    android:id="@+id/select_location_from_map"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginVertical="4dp"
+                    android:src="@drawable/ic_location_empty" />
             </LinearLayout>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:button="@drawable/white_checkbox_custom" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="Agree to terms and conditions"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/twelve_sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_signup"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/greenColor"
-        android:text="Next"
+        android:text="SignUp"
         android:textAllCaps="false"
         android:textColor="@color/gradientDark"
         android:textSize="@dimen/twenty_sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="Already Have An Account? "
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/twelve_sp" />
+
+        <TextView
+            android:id="@+id/tv_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textColor="@color/greenColor"
+            android:textSize="@dimen/fourteen_sp" />
+    </LinearLayout>
 </LinearLayout>

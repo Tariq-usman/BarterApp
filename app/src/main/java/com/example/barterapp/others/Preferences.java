@@ -30,4 +30,13 @@ public class Preferences {
     public int getEditStatus(){
         return sharedPreferences.getInt("edit_profile",0);
     }
+
+    public void setLocation(String location){
+        editor.putString("location",location);
+        editor.commit();
+        editor.apply();
+    }
+    public String getLocation(){
+        return sharedPreferences.getString("location","");
+    }
 }

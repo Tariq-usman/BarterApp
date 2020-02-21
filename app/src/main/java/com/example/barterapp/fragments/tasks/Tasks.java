@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.barterapp.R;
-import com.example.barterapp.activities.tasks.AddService;
+import com.example.barterapp.activities.AddTask;
 import com.example.barterapp.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -36,7 +36,7 @@ private Button addNewTasksBtn;
         addNewTasksBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddService.class);
+                Intent intent = new Intent(getContext(), AddTask.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
             }

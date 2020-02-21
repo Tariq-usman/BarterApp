@@ -17,7 +17,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.barterapp.RecyclerClickInterface;
+import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.activities.Portfolio;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.ProfilePortfolioAdapter;

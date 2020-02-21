@@ -31,7 +31,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginLeft="4dp"
-            android:src="@drawable/ic_search"/>
+            android:src="@drawable/ic_search_purple"/>
         <ImageView
             android:layout_width="28dp"
             android:layout_height="28dp"
