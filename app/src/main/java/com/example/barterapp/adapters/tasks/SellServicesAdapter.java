@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.activities.HistoryDetails;
-import com.example.barterapp.activities.ServicesActivity;
 import com.example.barterapp.others.Preferences;
 
 import de.hdodenhof.circleimageview.CircleImageView;

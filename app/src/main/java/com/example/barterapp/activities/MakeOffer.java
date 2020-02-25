@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.barterapp.CustomOffer;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.TradesAdapter;
 import com.google.android.flexbox.AlignItems;
@@ -17,7 +18,7 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
-public class ServicesActivity extends AppCompatActivity {
+public class MakeOffer extends AppCompatActivity {
     private Button tradeBtn;
     private ImageView backBtn;
     private RecyclerView recyclerView, recyclerViewTrades;
@@ -27,7 +28,7 @@ public class ServicesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_services);
+        setContentView(R.layout.activity_make_offer);
         backBtn = findViewById(R.id.iv_back_services);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +50,7 @@ public class ServicesActivity extends AppCompatActivity {
         tradeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ServicesActivity.this, ChoosePaymentMethod.class));
+                startActivity(new Intent(MakeOffer.this, CustomOffer.class));
             }
         });
     }

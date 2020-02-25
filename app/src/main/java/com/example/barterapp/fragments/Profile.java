@@ -83,6 +83,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         preferences.setEditStatus(0);
         profileImage = view.findViewById(R.id.profile_image);
         profileImage.setOnClickListener(this);
+        profileImage.setClickable(false);
+
         ibAddNewTrade = view.findViewById(R.id.btn_add_trade_profile);
         ibAddNewTrade.setOnClickListener(this);
         ibAddNewPortfolio = view.findViewById(R.id.btn_add_portfolio_profile);
@@ -129,6 +131,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 ibAddNewTrade.setVisibility(View.VISIBLE);
                 ibAddNewPortfolio.setVisibility(View.VISIBLE);
                 profileImage.setEnabled(true);
+                profileImage.setClickable(true);
                 preferences.setEditStatus(1);
                 profileTradesAdapter.notifyDataSetChanged();
                 profilePortfolioAdapter.notifyDataSetChanged();
@@ -143,6 +146,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 ibAddNewTrade.setVisibility(View.INVISIBLE);
                 ibAddNewPortfolio.setVisibility(View.INVISIBLE);
                 profileImage.setEnabled(false);
+                profileImage.setClickable(false);
                 preferences.setEditStatus(0);
                 profileTradesAdapter.notifyDataSetChanged();
                 profilePortfolioAdapter.notifyDataSetChanged();

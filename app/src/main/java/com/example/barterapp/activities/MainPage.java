@@ -17,7 +17,7 @@ import com.example.barterapp.others.Preferences;
 import com.example.barterapp.R;
 import com.example.barterapp.fragments.Home;
 import com.example.barterapp.fragments.Menu;
-import com.example.barterapp.fragments.Messages;
+import com.example.barterapp.fragments.Chat;
 import com.example.barterapp.fragments.Notifications;
 import com.example.barterapp.fragments.tasks.Tasks;
 import com.example.barterapp.fragments.Profile;
@@ -112,7 +112,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
             case R.id.messages_layout:
                 layoutTitle.setVisibility(View.VISIBLE);
                 textViewTitle.setText("Chat");
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Messages()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Chat()).commit();
                 imageViewHome.setImageResource(R.drawable.ic_home_purple);
                 textViewHome.setVisibility(View.GONE);
                 imageViewMessages.setImageResource(R.drawable.ic_chat_white);

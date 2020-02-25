@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
-import com.example.barterapp.activities.ServicesActivity;
+import com.example.barterapp.activities.MakeOffer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +36,7 @@ public class ReturnServicesAdapter extends RecyclerView.Adapter<ReturnServicesAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ServicesActivity.class);
+                Intent intent = new Intent(context, MakeOffer.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

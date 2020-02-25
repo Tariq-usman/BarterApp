@@ -2,6 +2,8 @@ package com.example.barterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -12,9 +14,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
+import com.example.barterapp.others.Preferences;
+import com.example.barterapp.responses.LogInResponse;
+import com.example.barterapp.utils.URLs;
 import com.example.barterapp.utils.Utils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,16 +43,17 @@ public class SignInActivity extends AppCompatActivity {
     private LayoutInflater inflater;
     private View layout;
     private Toast toast;
-
-
-//    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private Preferences preferences;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        preferences = new Preferences(this);
         generateCustomToast();
+        customProgressDialog(SignInActivity.this);
+
 
         etEmail = findViewById(R.id.et_email_signin);
         etPassword = findViewById(R.id.et_pass_signin);
@@ -60,13 +77,47 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (pass.length()<6) {
                     etPassword.setError("Please enter valid password..");
                 } else {
-                    tv.setText("Successfully SignIn");
-                    toast.show();
-                    startActivity(new Intent(SignInActivity.this, MainPage.class));
-                    finish();
+                    logInUser();
                 }
             }
         });
+    }
+
+    private void logInUser() {
+        progressDialog.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(SignInActivity.this);
+        final Gson gson = new GsonBuilder().create();
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.login_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+               // Toast.makeText(SignInActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                LogInResponse logInResponse =gson.fromJson(response,LogInResponse.class);
+                String token = logInResponse.getToken();
+                preferences.setToken(token);
+                tv.setText("Successfully SignIn");
+                toast.show();
+                progressDialog.dismiss();
+                startActivity(new Intent(SignInActivity.this, MainPage.class));
+                finish();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                //Toast.makeText(SignInActivity.this, "Error"+error.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String ,String> map = new HashMap<>();
+                map.put("email",email);
+                map.put("password",pass);
+                return map;
+            }
+        };
+        requestQueue.add(request);
     }
 
     public boolean isValidPassword(final String password) {
@@ -104,5 +155,14 @@ public class SignInActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
 //        toast.show();
+    }
+    public void customProgressDialog(Context context){
+        progressDialog = new ProgressDialog(context);
+        // Setting Message
+        progressDialog.setMessage("Loading...");
+        // Progress Dialog Style Spinner
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Fetching max value
+        progressDialog.getMax();
     }
 }

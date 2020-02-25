@@ -31,6 +31,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_title_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -60,6 +61,7 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/tv_price_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="100$"
@@ -83,6 +85,7 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/tv_duration_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5 Days"
@@ -106,9 +109,11 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/tv_location_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Islamabad"
+                    android:ellipsize="end"
                     android:textColor="@color/gradientDark"
                     android:textSize="@dimen/twelve_sp" />
 
@@ -126,6 +131,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"

@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="Email"
-                        android:text="tariqusman2222@gmail.com"
+                        android:text="ahmad@gmail.com"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/whiteColor"

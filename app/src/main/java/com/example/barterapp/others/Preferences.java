@@ -13,6 +13,19 @@ public class Preferences {
         sharedPreferences= context.getSharedPreferences("com.example.barterapp",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
+
+    public void setToken(String token) {
+        editor.putString("token", token);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString("token", "");
+    }
+
+
+
     public void setFragmentStatus(String fragmentStatus){
         editor.putString("notification_fragment", fragmentStatus);
         editor.apply();

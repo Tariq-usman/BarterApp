@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.MessagesAdapter;
 
-public class Messages extends Fragment {
+public class Chat extends Fragment {
     RecyclerView recyclerView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_messages,container,false);
-        recyclerView = view.findViewById(R.id.recycler_view_messages);
+        View view = inflater.inflate(R.layout.fragment_chat,container,false);
+        recyclerView = view.findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new MessagesAdapter(getContext()));
