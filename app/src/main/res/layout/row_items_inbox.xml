@@ -6,11 +6,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
         android:layout_height="match_parent"
         android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:id="@+id/iv_chat_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/notification_image"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,17 +21,22 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_user_name_inbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="John Doe"
                 android:textColor="@color/blackColor"
                 android:textSize="@dimen/fourteen_sp"/>
             <TextView
+                android:id="@+id/tv_message_inbox"
                 android:layout_width="match_parent"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/twelve_sp"/>
             <TextView
+                android:id="@+id/tv_time_inbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/twelve_sp"

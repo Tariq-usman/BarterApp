@@ -58,6 +58,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -135,7 +136,7 @@
                     android:textSize="@dimen/sixteen_sp" />
 
                 <EditText
-                    android:id="@+id/experience_view"
+                    android:id="@+id/tv_experience"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Lorem Ipsum is simply dummy text"

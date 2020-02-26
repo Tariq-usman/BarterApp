@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
-import com.example.barterapp.adapters.MessagesAdapter;
 import com.example.barterapp.adapters.NotificationsAdapter;
 
 public class Notifications extends Fragment {

@@ -17,7 +17,7 @@ import com.example.barterapp.others.Preferences;
 import com.example.barterapp.R;
 import com.example.barterapp.fragments.Home;
 import com.example.barterapp.fragments.Menu;
-import com.example.barterapp.fragments.Chat;
+import com.example.barterapp.fragments.ChatInbox;
 import com.example.barterapp.fragments.Notifications;
 import com.example.barterapp.fragments.tasks.Tasks;
 import com.example.barterapp.fragments.Profile;
@@ -66,7 +66,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
         textViewProfile = findViewById(R.id.tv_profile);
         textViewMenu = findViewById(R.id.tv_menu);
 
-        if (status != null) {
+        if (status != null && status.equalsIgnoreCase("notification")) {
             layoutTitle.setVisibility(View.VISIBLE);
             textViewTitle.setText("Notifications");
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Notifications()).commit();
@@ -78,6 +78,22 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
             textViewTask.setVisibility(View.GONE);
             imageViewNotify.setImageResource(R.drawable.ic_notification_white);
             textViewNotify.setVisibility(View.VISIBLE);
+            imageViewProfile.setImageResource(R.drawable.ic_profile_purple);
+            textViewProfile.setVisibility(View.GONE);
+            imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
+            textViewMenu.setVisibility(View.GONE);
+        } else if (status != null && status.equalsIgnoreCase("tasks")) {
+            layoutTitle.setVisibility(View.VISIBLE);
+            textViewTitle.setText("Tasks");
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Tasks()).commit();
+            imageViewHome.setImageResource(R.drawable.ic_home_purple);
+            textViewHome.setVisibility(View.GONE);
+            imageViewMessages.setImageResource(R.drawable.ic_chat_purple);
+            textViewMessages.setVisibility(View.GONE);
+            imageViewTask.setImageResource(R.drawable.ic_task);
+            textViewTask.setVisibility(View.VISIBLE);
+            imageViewNotify.setImageResource(R.drawable.ic_notification_purple);
+            textViewNotify.setVisibility(View.GONE);
             imageViewProfile.setImageResource(R.drawable.ic_profile_purple);
             textViewProfile.setVisibility(View.GONE);
             imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
@@ -111,8 +127,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.messages_layout:
                 layoutTitle.setVisibility(View.VISIBLE);
-                textViewTitle.setText("Chat");
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Chat()).commit();
+                textViewTitle.setText("Inbox");
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ChatInbox()).commit();
                 imageViewHome.setImageResource(R.drawable.ic_home_purple);
                 textViewHome.setVisibility(View.GONE);
                 imageViewMessages.setImageResource(R.drawable.ic_chat_white);

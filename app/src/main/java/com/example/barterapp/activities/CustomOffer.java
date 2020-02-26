@@ -1,4 +1,4 @@
-package com.example.barterapp;
+package com.example.barterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.barterapp.activities.ChoosePaymentMethodTwo;
-import com.example.barterapp.activities.MainPage;
+import com.example.barterapp.R;
 import com.example.barterapp.adapters.AddTradesAdapter;
 import com.example.barterapp.adapters.ReturnTradesAdapter;
 import com.example.barterapp.others.Preferences;

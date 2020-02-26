@@ -8,6 +8,6 @@
         android:id="@+id/recycler_view_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/row_items_messages"/>
+        tools:listitem="@layout/row_items_inbox"/>
 
 </LinearLayout>

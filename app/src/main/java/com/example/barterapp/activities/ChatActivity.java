@@ -1,10 +1,10 @@
 package com.example.barterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +24,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         fragmentInvoice = new DialogFragmentInvoice();
-        generateInvoice = findViewById(R.id.view_generate_invoice);
+        generateInvoice = findViewById(R.id.view_get_custom_offers);
         generateInvoice.setOnClickListener(this);
         imageView = findViewById(R.id.iv_back_chat);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +42,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.view_generate_invoice:
-                fragmentInvoice.show(getSupportFragmentManager(),"Invoice Dialog");
+            case R.id.view_get_custom_offers:
+                startActivity(new Intent(ChatActivity.this, OfferAcceptReject.class));
+                break;
+//                fragmentInvoice.show(getSupportFragmentManager(),"Invoice Dialog");
         }
 
     }

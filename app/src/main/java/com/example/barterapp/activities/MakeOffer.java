@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.barterapp.CustomOffer;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.TradesAdapter;
 import com.google.android.flexbox.AlignItems;

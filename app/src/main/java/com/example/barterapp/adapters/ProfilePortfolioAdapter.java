@@ -11,9 +11,12 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
+import com.example.barterapp.responses.CurrentUserResponse;
+import com.example.barterapp.utils.URLs;
 
 import java.util.List;
 
@@ -21,14 +24,14 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
     Context context;
     int status;
     private int RESULT_LOAD_IMAGE = 1;
-    List<Uri> images;
+    List<CurrentUserResponse.User.Portfolio> portfolio_pics;
     private Preferences preferences;
     RecyclerClickInterface clickInterface;
     int last_position = 0;
 
-    public ProfilePortfolioAdapter(Context context, List<Uri> images, RecyclerClickInterface recyclerClickInterface) {
+    public ProfilePortfolioAdapter(Context context, List<CurrentUserResponse.User.Portfolio> portfolio_pics, RecyclerClickInterface recyclerClickInterface) {
         this.context = context;
-        this.images = images;
+        this.portfolio_pics = portfolio_pics;
         preferences = new Preferences(context);
         this.clickInterface = recyclerClickInterface;
     }
@@ -58,11 +61,11 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
         }
-        holder.ivPortfolioImage.setImageURI(images.get(position));
+        Glide.with(holder.ivPortfolioImage).load(URLs.portfolio_images_url + portfolio_pics.get(position).getPicture());
         holder.ivDeletePortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                images.remove(images.get(position));
+                portfolio_pics.remove(portfolio_pics.get(position));
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
             }
@@ -77,7 +80,7 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return portfolio_pics.size();
     }
 
 
