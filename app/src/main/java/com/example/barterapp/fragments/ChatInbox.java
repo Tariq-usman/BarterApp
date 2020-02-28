@@ -1,10 +1,12 @@
 package com.example.barterapp.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.ChatInboxAdapter;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.responses.GetAllInboxMessagesResponse;
+import com.example.barterapp.responses.chat_responses.GetAllInboxMessagesResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,6 +38,7 @@ public class ChatInbox extends Fragment {
     RecyclerView recyclerView;
     Preferences preferences;
     ChatInboxAdapter inboxAdapter;
+    private ProgressDialog progressDialog;
 
     List<GetAllInboxMessagesResponse.GetMessage> allInboxMessagesList = new ArrayList<>();
 
@@ -43,37 +46,37 @@ public class ChatInbox extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_inbox, container, false);
+        customProgressDialog(getContext());
         preferences = new Preferences(getContext());
         getAllInboxMessages();
 
         recyclerView = view.findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        inboxAdapter = new ChatInboxAdapter(getContext(),allInboxMessagesList);
+        inboxAdapter = new ChatInboxAdapter(getContext(), allInboxMessagesList);
         recyclerView.setAdapter(inboxAdapter);
         return view;
     }
 
     private void getAllInboxMessages() {
+        progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         final Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.GET, URLs.get_all_inbox_messages, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.get_all_inbox_messages_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getContext(), "Response", Toast.LENGTH_SHORT).show();
-
-                GetAllInboxMessagesResponse inboxMessagesResponse = gson.fromJson(response,GetAllInboxMessagesResponse.class);
-                for(int i=0;i<inboxMessagesResponse.getGetMessages().size();i++){
-
+                GetAllInboxMessagesResponse inboxMessagesResponse = gson.fromJson(response, GetAllInboxMessagesResponse.class);
+                for (int i = 0; i < inboxMessagesResponse.getGetMessages().size(); i++) {
                     allInboxMessagesList.add(inboxMessagesResponse.getGetMessages().get(i));
                 }
                 inboxAdapter.notifyDataSetChanged();
-
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                Log.e("Error", error.toString());
+                progressDialog.dismiss();
 
             }
         }) {
@@ -86,5 +89,15 @@ public class ChatInbox extends Fragment {
             }
         };
         requestQueue.add(request);
+    }
+
+    public void customProgressDialog(Context context) {
+        progressDialog = new ProgressDialog(context);
+        // Setting Message
+        progressDialog.setMessage("Loading...");
+        // Progress Dialog Style Spinner
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Fetching max value
+        progressDialog.getMax();
     }
 }

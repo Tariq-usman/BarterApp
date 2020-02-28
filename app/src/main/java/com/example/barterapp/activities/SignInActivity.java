@@ -105,8 +105,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                //Toast.makeText(SignInActivity.this, "Error"+error.toString(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(SignInActivity.this, "User not found!", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

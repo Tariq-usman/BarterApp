@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:text="15/Feb/2020"
+                    android:text="2020-02-27"
                     android:textColor="@color/purple"
                     android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
@@ -94,17 +94,33 @@
                 android:text="Your estimated budget estimate?"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/fourteen_sp" />
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/lightGreyForBG"
-                android:inputType="text"
-                android:hint="$500"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="10dp"
-                android:textColor="@color/purple"
-                android:textColorHint="@color/purple"
-                android:textSize="@dimen/fourteen_sp" />
+                android:background="@color/lightGreyForBG"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:text="$ "
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/fourteen_sp" />
+                <EditText
+                    android:id="@+id/et_estimated_budget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="500"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/purple"
+                    android:textColorHint="@color/purple"
+                    android:textSize="@dimen/fourteen_sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

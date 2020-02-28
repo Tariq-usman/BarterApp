@@ -1,4 +1,4 @@
-package com.example.barterapp.responses;
+package com.example.barterapp.responses.chat_responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,8 +7,7 @@ import java.util.List;
 
 public class GetAllInboxMessagesResponse {
 
-
-    @SerializedName("getMessages")
+    @SerializedName("GetMessages")
     @Expose
     private List<GetMessage> getMessages = null;
 
@@ -19,6 +18,7 @@ public class GetAllInboxMessagesResponse {
     public void setGetMessages(List<GetMessage> getMessages) {
         this.getMessages = getMessages;
     }
+
 
     public class GetMessage {
 
@@ -66,6 +66,7 @@ public class GetAllInboxMessagesResponse {
         public void setLastMessages(LastMessages lastMessages) {
             this.lastMessages = lastMessages;
         }
+
         public class LastMessages {
 
             @SerializedName("messages_id")
@@ -114,8 +115,8 @@ public class GetAllInboxMessagesResponse {
             }
 
         }
-
     }
-
 }
+
+
 

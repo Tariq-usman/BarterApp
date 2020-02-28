@@ -1,7 +1,6 @@
 package com.example.barterapp.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.responses.CurrentUserResponse;
+import com.example.barterapp.responses.profile.CurrentUserResponse;
 import com.example.barterapp.utils.URLs;
 
 import java.util.List;
@@ -24,12 +23,12 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
     Context context;
     int status;
     private int RESULT_LOAD_IMAGE = 1;
-    List<CurrentUserResponse.User.Portfolio> portfolio_pics;
+    List<String> portfolio_pics;
     private Preferences preferences;
     RecyclerClickInterface clickInterface;
     int last_position = 0;
 
-    public ProfilePortfolioAdapter(Context context, List<CurrentUserResponse.User.Portfolio> portfolio_pics, RecyclerClickInterface recyclerClickInterface) {
+    public ProfilePortfolioAdapter(Context context, List<String> portfolio_pics, RecyclerClickInterface recyclerClickInterface) {
         this.context = context;
         this.portfolio_pics = portfolio_pics;
         preferences = new Preferences(context);
@@ -61,7 +60,8 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
         }
-        Glide.with(holder.ivPortfolioImage).load(URLs.portfolio_images_url + portfolio_pics.get(position).getPicture());
+        String imsges = URLs.portfolio_images_url + portfolio_pics.get(position);
+        Glide.with(context).load(imsges).into(holder.ivPortfolioImage);
         holder.ivDeletePortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

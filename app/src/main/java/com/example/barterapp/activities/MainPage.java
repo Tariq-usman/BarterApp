@@ -98,7 +98,23 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
             textViewProfile.setVisibility(View.GONE);
             imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
             textViewMenu.setVisibility(View.GONE);
-        } else if (savedInstanceState == null) {
+        } else if (status != null && status.equalsIgnoreCase("add_task")) {
+            layoutTitle.setVisibility(View.VISIBLE);
+            textViewTitle.setText("Home");
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Home(), "Home").commit();
+            imageViewHome.setImageResource(R.drawable.ic_home_white);
+            textViewHome.setVisibility(View.VISIBLE);
+            imageViewMessages.setImageResource(R.drawable.ic_chat_purple);
+            textViewMessages.setVisibility(View.GONE);
+            imageViewTask.setImageResource(R.drawable.ic_task_purple);
+            textViewTask.setVisibility(View.GONE);
+            imageViewNotify.setImageResource(R.drawable.ic_notification_purple);
+            textViewNotify.setVisibility(View.GONE);
+            imageViewProfile.setImageResource(R.drawable.ic_profile_purple);
+            textViewProfile.setVisibility(View.GONE);
+            imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
+            textViewMenu.setVisibility(View.GONE);
+        }else if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Home(), "Home").commit();
             imageViewHome.setImageResource(R.drawable.ic_home_white);
         }

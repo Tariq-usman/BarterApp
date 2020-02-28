@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.activities.ChatActivity;
 import com.example.barterapp.R;
-import com.example.barterapp.responses.GetAllInboxMessagesResponse;
+import com.example.barterapp.responses.chat_responses.GetAllInboxMessagesResponse;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,16 +43,16 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tvUserName.setText(allInboxMessagesList.get(position).getName());
         if (allInboxMessagesList.get(position).getLastMessages() != null) {
             holder.tvMessage.setText(allInboxMessagesList.get(position).getLastMessages().getMessages());
             String time = allInboxMessagesList.get(position).getLastMessages().getDateTime();
             String[] date = time.split(" ");
-            String s_date = date[0];
+            String s_date = date[1];
             String currentDateAndTime = simpleDateFormat.format(new Date());
             String[] edate = currentDateAndTime.split(" ");
-            String e_date = edate[0];
+            String e_date = edate[1];
             try {
                 currentDate = simpleDateFormat.parse(currentDateAndTime);
                 startDate = simpleDateFormat.parse(time);
@@ -63,11 +61,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
             } catch (Exception e) {
                 Log.e("Error", e.toString());
             }
-            if (s_date == e_date) {
                 holder.tvTime.setText(elapsedHours + " hours ago");
-            } else {
-                holder.tvTime.setText(elapsedDays + " Days ago");
-            }
         }
 
         //holder.ivPortfolioImage.setImageResource(images[position]);
@@ -75,6 +69,8 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
+                Integer id= allInboxMessagesList.get(position).getId();
+                intent.putExtra("sender_id",id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -82,8 +78,8 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
 
     }
 
-    private void printDifference(Date startDate, Date endDate) {
-        different = startDate.getTime() - endDate.getTime();
+    private void printDifference(Date startDate, Date currentDate) {
+        different = currentDate.getTime() - startDate.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;

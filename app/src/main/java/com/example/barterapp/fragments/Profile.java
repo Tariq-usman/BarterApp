@@ -5,8 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,8 +45,10 @@ import com.example.barterapp.activities.Portfolio;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.ProfilePortfolioAdapter;
 import com.example.barterapp.adapters.ProfileTradesAdapter;
+import com.example.barterapp.others.MySingleton;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.responses.CurrentUserResponse;
+import com.example.barterapp.others.VolleyMultipartRequest;
+import com.example.barterapp.responses.profile.CurrentUserResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -53,17 +58,25 @@ import com.google.android.flexbox.JustifyContent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static java.lang.String.format;
+import static java.lang.String.valueOf;
 
 public class Profile extends Fragment implements View.OnClickListener, RecyclerClickInterface {
+    private static String result;
     private int RESULT_LOAD_IMAGE = 1;
     private Dialog myDialog;
     private TextView tvUserName, tradesView;
@@ -71,7 +84,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private TextView textViewPortfolio, saveBtn;
     private RecyclerView recyclerView, recyclerViewTrades;
     private FlexboxLayoutManager layoutManager;
-    private EditText tv_experience;
+    private EditText et_experience;
     private String[] trades = {"Design", "Mobile App Design", "Web Design", "abc", "abc", "Design"};
     int[] images = {R.drawable.notification_image, R.drawable.arslan, R.drawable.farmer_four, R.drawable.farmer_three, R.drawable.customer};
 
@@ -81,12 +94,14 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private ImageButton ibAddNewTrade, ibAddNewPortfolio;
     private Button btnYes, btnNo;
 
-    private List<String> trade_list;
-    public static List<CurrentUserResponse.User.Portfolio> portfolio_pics = new ArrayList<>();
+    private List<String> trades_list;
+    public static List<String> portfolio_pics = new ArrayList<>();
     private CircleImageView iv_profileImage;
     private boolean select_image_status = true;
     private int currentPosition = -1;
     private String token;
+    private byte[] bytesArray;
+    private Bitmap bitmap;
     private ProgressDialog progressDialog;
 
 
@@ -97,8 +112,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         customProgressDialog(getContext());
         currentUser();
 
-        trade_list = new ArrayList<>();
-        trade_list.add("Android developer");
+        trades_list = new ArrayList<>();
+        trades_list.add("Android developer");
 //        portfolio_pics.add(Uri.parse(String.valueOf(R.drawable.notification_image)));
 
         preferences = new Preferences(getContext());
@@ -115,7 +130,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         ibAddNewPortfolio = view.findViewById(R.id.btn_add_portfolio_profile);
         ibAddNewPortfolio.setOnClickListener(this);
 
-        tv_experience = view.findViewById(R.id.tv_experience);
+        et_experience = view.findViewById(R.id.tv_experience);
         layoutEdit = view.findViewById(R.id.layout_edit);
         layoutEdit.setOnClickListener(this);
         saveBtn = view.findViewById(R.id.save_btn);
@@ -135,6 +150,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         recyclerView = view.findViewById(R.id.recycler_view_profile_portfolio);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setHasFixedSize(true);
+        profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics, Profile.this);
+        recyclerView.setAdapter(profilePortfolioAdapter);
 
 
         return view;
@@ -156,21 +173,23 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 String profileImage = userResponse.getUser().getPicture();
 
                 tvUserName.setText(userName);
-                Glide.with(iv_profileImage).load(URLs.image_url+profileImage);
-                tv_experience.setText(experience);
+                Glide.with(getContext()).load(URLs.image_url + profileImage).into(iv_profileImage);
+                et_experience.setText(experience);
                 if (!trades.equals(null)) {
-                    List<String> trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
+                    trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
                     profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
                     recyclerViewTrades.setAdapter(profileTradesAdapter);
-                }else {
+                } else {
                     Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
                 }
-
-                for (CurrentUserResponse.User.Portfolio portfolio : userResponse.getUser().getPortfolios()) {
-                    portfolio_pics.add(portfolio);
+                portfolio_pics.clear();
+                for(int i = 0 ; i<userResponse.getUser().getPortfolios().size();i++){
+                    portfolio_pics.add(userResponse.getUser().getPortfolios().get(i).getPicture());
                 }
-                profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics, Profile.this);
-                recyclerView.setAdapter(profilePortfolioAdapter);
+               /* for (CurrentUserResponse.User.Portfolio portfolio : userResponse.getUser().getPortfolios()) {
+                    portfolio_pics.add(portfolio);
+                }*/
+                profilePortfolioAdapter.notifyDataSetChanged();
 
                 progressDialog.dismiss();
 
@@ -178,6 +197,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.toString());
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
@@ -200,10 +220,10 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
             case R.id.layout_edit:
                 layoutEdit.setVisibility(View.GONE);
                 saveBtn.setVisibility(View.VISIBLE);
-                tv_experience.setFocusable(true);
-                tv_experience.setClickable(true);
-                tv_experience.setCursorVisible(true);
-                tv_experience.setFocusableInTouchMode(true);
+                et_experience.setFocusable(true);
+                et_experience.setClickable(true);
+                et_experience.setCursorVisible(true);
+                et_experience.setFocusableInTouchMode(true);
                 ibAddNewTrade.setVisibility(View.VISIBLE);
                 ibAddNewPortfolio.setVisibility(View.VISIBLE);
                 iv_profileImage.setEnabled(true);
@@ -213,12 +233,17 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 profilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.save_btn:
+                try {
+                    updateUserData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 layoutEdit.setVisibility(View.VISIBLE);
                 saveBtn.setVisibility(View.GONE);
-                tv_experience.setFocusable(false);
-                tv_experience.setClickable(false);
-                tv_experience.setCursorVisible(false);
-                tv_experience.setFocusableInTouchMode(false);
+                et_experience.setFocusable(false);
+                et_experience.setClickable(false);
+                et_experience.setCursorVisible(false);
+                et_experience.setFocusableInTouchMode(false);
                 ibAddNewTrade.setVisibility(View.INVISIBLE);
                 ibAddNewPortfolio.setVisibility(View.INVISIBLE);
                 iv_profileImage.setEnabled(false);
@@ -245,6 +270,63 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
     }
 
+    public void updateUserData() throws JSONException {
+
+        Map<String, String> headers = new HashMap<>();
+        String token = preferences.getToken();
+        headers.put("Authorization", "Bearer " + token);
+
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URLs.update_profile_url, headers, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+
+                Log.e("Message", response.toString());
+
+                Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "" + error.toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }) {
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws AuthFailureError {
+                Map<String, DataPart> params = new HashMap<>();
+                Bitmap bm = ((BitmapDrawable) iv_profileImage.getDrawable()).getBitmap();
+                bytesArray = imageToString(bm);
+                params.put("picture", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+                params.put("portfolioImage", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+                return params;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("experience", et_experience.getText().toString().trim());
+                hashMap.put("trades", et_experience.getText().toString().trim());
+                return hashMap;
+            }
+
+        };
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(getContext()).addToRequestQue(volleyMultipartRequest);
+    }
+
+    private byte[] imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
     private void pickImageFormGallery() {
         Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -255,37 +337,56 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-
-
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
+            getPath(getContext(),selectedImage);
+            /*String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+            String image = selectedImage.toString();
+            cursor.close();*/
 
             if (select_image_status == false) {
-                iv_profileImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                try {
+                    Glide.with(getContext()).load(selectedImage).into(iv_profileImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 select_image_status = true;
             } else if (currentPosition >= 0) {
                 portfolio_pics.remove(currentPosition);
-//                portfolio_pics.add(currentPosition, selectedImage);
+                portfolio_pics.add(currentPosition, result);
                 profilePortfolioAdapter.notifyDataSetChanged();
                 currentPosition = -1;
             } else {
                 if (portfolio_pics.size() == 0) {
                     portfolio_pics.clear();
-//                    portfolio_pics.add(selectedImage);
+                    portfolio_pics.add(result);
                     profilePortfolioAdapter.notifyDataSetChanged();
                 } else {
-//                    portfolio_pics.add(selectedImage);
+                    portfolio_pics.add(result);
                     profilePortfolioAdapter.notifyDataSetChanged();
                 }
             }
         }
+    }
+    public static String getPath(Context context, Uri uri) {
+
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
+                result = cursor.getString(column_index);
+            }
+            cursor.close();
+        }
+        if (result == null) {
+            result = "Not found";
+        }
+        return result;
     }
 
 
@@ -304,7 +405,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
             public void onClick(View v) {
                 String trade = tradesView.getText().toString().trim();
                 if (!trade.isEmpty() && trade != null && trade != "") {
-                    trade_list.add(trade);
+                    trades_list.add(trade);
+                    profileTradesAdapter.notifyDataSetChanged();
                     Log.i("trades", trade);
                     myDialog.cancel();
                 }

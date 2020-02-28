@@ -7,18 +7,21 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/sender_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="2dp"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/sender_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_send_message_person_grey" />
 
         <TextView
+            android:id="@+id/sender_text"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@drawable/ic_msg_box_purple"
@@ -30,14 +33,16 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/receiver_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="2dp"
         android:gravity="right"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
+            android:id="@+id/receiver_text"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@drawable/ic_msg_box_grey"
@@ -48,6 +53,7 @@
             android:textSize="@dimen/twelve_sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/receiver_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/message_person" />

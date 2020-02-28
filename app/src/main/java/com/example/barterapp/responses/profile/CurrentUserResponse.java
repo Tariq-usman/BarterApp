@@ -1,11 +1,11 @@
-package com.example.barterapp.responses;
+package com.example.barterapp.responses.profile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CurrentUserResponse {
+public class  CurrentUserResponse {
     @SerializedName("user")
     @Expose
     private User user;

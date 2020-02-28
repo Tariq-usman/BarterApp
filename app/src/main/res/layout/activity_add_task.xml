@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.AddTask">
+
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         android:background="@drawable/top_bar"
         android:orientation="horizontal"
         android:visibility="visible">
+
         <ImageView
             android:id="@+id/iv_back_add_service"
             android:layout_width="45dp"
@@ -34,53 +36,63 @@
             android:textSize="@dimen/sixteen_sp" />
 
     </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical">
+
             <EditText
+                android:id="@+id/et_service_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:background="@android:color/transparent"
                 android:hint="Service Title"
+                android:inputType="text"
                 android:textColor="@color/purple"
                 android:textColorHint="@color/purple"
-                android:textSize="@dimen/fourteen_sp"
-                android:background="@android:color/transparent"/>
+                android:textSize="@dimen/fourteen_sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.6dp"
-                android:background="@color/purple"/>
+                android:background="@color/purple" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:text="Service Description"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/fourteen_sp"/>
+                android:textSize="@dimen/fourteen_sp" />
+
             <ScrollView
                 android:layout_width="match_parent"
-                android:background="@drawable/bg_search_view"
-                android:layout_height="220dp">
+                android:layout_height="220dp"
+                android:background="@drawable/bg_search_view">
+
                 <EditText
+                    android:id="@+id/et_service_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:background="@android:color/transparent"
                     android:hint="Enter description here.."
-                    android:textSize="@dimen/fourteen_sp"
-                    android:background="@android:color/transparent"/>
+                    android:textSize="@dimen/fourteen_sp" />
             </ScrollView>
         </LinearLayout>
 
@@ -89,65 +101,75 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Type of your service ?"
-                android:textSize="@dimen/fourteen_sp"
-                android:textColor="@color/purple"/>
+                android:textColor="@color/purple"
+                android:textSize="@dimen/fourteen_sp" />
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:paddingLeft="40dp"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Physical"
-                    android:textColor="@color/purple"
-                    android:textSize="@dimen/twelve_sp"/>
+                android:orientation="horizontal"
+                android:paddingLeft="40dp">
 
                 <RadioButton
+                    android:id="@+id/rb_physical"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Physical"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_online"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Online"
                     android:textColor="@color/purple"
-                    android:textSize="@dimen/twelve_sp"/>
+                    android:textSize="@dimen/twelve_sp" />
             </RadioGroup>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:text="Location"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/fourteen_sp"/>
-            <EditText
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:id="@+id/task_location"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:inputType="text"
+                android:background="@drawable/bg_search_view"
+                android:text="Enter task location"
                 android:paddingHorizontal="8dp"
-                android:hint="Enter task location"
                 android:textColor="@color/purple"
-                android:textColorHint="@color/purple"
-                android:textSize="@dimen/fourteen_sp"
-                android:background="@drawable/bg_search_view" />
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="bottom|center_horizontal"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="bottom|center_horizontal">
+
         <Button
             android:id="@+id/next_btn_add_service"
             android:layout_width="180dp"
