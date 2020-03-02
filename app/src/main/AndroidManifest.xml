@@ -38,7 +38,7 @@
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".activities.Valet" />
-        <activity android:name=".activities.HistoryDetails" />
+        <activity android:name=".activities.SellServicesDetails" />
         <activity android:name=".activities.History" />
         <activity android:name=".activities.ChangePassword" />
         <activity android:name=".activities.TermsAndConditions" />

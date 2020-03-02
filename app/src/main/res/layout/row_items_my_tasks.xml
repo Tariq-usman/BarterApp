@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_my_task_products"
+            android:id="@+id/iv_my_task_products_history"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginVertical="3dp"
@@ -31,6 +31,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/title_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -60,6 +61,7 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/price_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="100$"
@@ -83,6 +85,7 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/duration_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5 Days"
@@ -106,6 +109,7 @@
                     android:textSize="@dimen/twelve_sp" />
 
                 <TextView
+                    android:id="@+id/location_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Islamabad"
@@ -126,6 +130,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
         <ImageButton
+            android:id="@+id/delete_job_history"
             android:layout_width="24dp"
             android:layout_height="30dp"
             android:background="@android:color/transparent"
@@ -133,6 +138,7 @@
             android:src="@drawable/ic_delete"/>
 
         <TextView
+            android:id="@+id/view_job_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"

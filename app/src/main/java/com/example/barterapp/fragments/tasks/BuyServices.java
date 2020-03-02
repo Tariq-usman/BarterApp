@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.tasks.SellServicesAdapter;
 
-public class ReturnServices extends Fragment {
+public class BuyServices extends Fragment {
     RecyclerView recyclerView;
     int[] images ={R.drawable.notification_image,R.drawable.arslan,R.drawable.farmer_four,R.drawable.farmer_three,R.drawable.customer};
 

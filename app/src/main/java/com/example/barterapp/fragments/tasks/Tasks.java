@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.barterapp.R;
 import com.example.barterapp.activities.AddTask;
-import com.example.barterapp.adapters.ViewPagerAdapter;
+import com.example.barterapp.adapters.view_pager_adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class Tasks extends Fragment {

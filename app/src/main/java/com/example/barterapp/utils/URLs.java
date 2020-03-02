@@ -10,6 +10,8 @@ public class URLs {
     public static final String login_url = base_url + "login";
     public static final String get_all_jobs_url = base_url + "getAllJob";
     public static final String add_new_job_url = base_url + "addJob";
+    public static final String user_job_history_url = base_url + "getAllUserJobs";
+    public static final String delete_user_job_url = base_url + "deleteUserJobs/";
     public static final String current_user_url = base_url + "getCurrentUser";
     public static final String get_all_inbox_messages_url = base_url + "getMessage";
     public static final String get_all_chat_messages_url = base_url + "getAllMessages/";

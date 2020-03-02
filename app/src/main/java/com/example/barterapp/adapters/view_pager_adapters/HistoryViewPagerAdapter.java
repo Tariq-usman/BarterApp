@@ -1,20 +1,22 @@
-package com.example.barterapp.adapters;
-import com.example.barterapp.fragments.tasks.GiveServices;
-import com.example.barterapp.fragments.tasks.ReturnServices;
+package com.example.barterapp.adapters.view_pager_adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+import com.example.barterapp.fragments.menu.history.UserJobFragment;
+import com.example.barterapp.fragments.menu.history.UserOffersFragment;
+import com.example.barterapp.fragments.tasks.BuyServices;
+
+public class HistoryViewPagerAdapter extends FragmentPagerAdapter {
 
     private Fragment[] childFragments;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public HistoryViewPagerAdapter(FragmentManager fm) {
         super(fm);
         childFragments = new Fragment[]{
-                new GiveServices(), //0
-                new ReturnServices() //1
+                new UserJobFragment(), //0
+                new UserOffersFragment() //1
         };
     }
 
@@ -32,9 +34,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title = null;
         if (position == 0) {
-            title = "Sell Services";
+            title = "My Jobs";
         } else if (position == 1) {
-            title = "Buy Services";
+            title = "My Offers";
         }
         return title;
     }

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
-import com.example.barterapp.activities.HistoryDetails;
+import com.example.barterapp.activities.SellServicesDetails;
 import com.example.barterapp.others.Preferences;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,7 +40,7 @@ public class SellServicesAdapter extends RecyclerView.Adapter<SellServicesAdapte
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
-                Intent intent = new Intent(context, HistoryDetails.class);
+                Intent intent = new Intent(context, SellServicesDetails.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
