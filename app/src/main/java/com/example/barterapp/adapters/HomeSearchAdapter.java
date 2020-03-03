@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.MakeOffer;
 import com.example.barterapp.responses.home.GetAllJobsResponse;
+import com.example.barterapp.responses.home.SearchJobResponse;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -25,12 +26,12 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.ViewHolder> {
     Context context;
-    List<GetAllJobsResponse.AllJob> jobs;
+    List<SearchJobResponse.Job> jobs;
     long daysDiff;
 
-    public HomeAdapter(Context context, List<GetAllJobsResponse.AllJob> jobs) {
+    public HomeSearchAdapter(Context context, List<SearchJobResponse.Job> jobs) {
         this.context = context;
         this.jobs = jobs;
     }
@@ -45,7 +46,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final GetAllJobsResponse.AllJob jobsResponse = jobs.get(position);
+        final SearchJobResponse.Job jobsResponse = jobs.get(position);
 
         holder.tvTitle.setText(jobsResponse.getTitle());
         holder.tvPrice.setText("$ "+jobsResponse.getEstimatedBudget().toString());
@@ -90,7 +91,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 intent.putExtra("picture",jobsResponse.getUser().getPicture());
                 intent.putExtra("trades",jobsResponse.getUser().getTrades());
                 intent.putExtra("location",holder.tvLocation.getText().toString());
-                intent.putExtra("duration",holder.tvDuration.getText().toString().trim());
+//                intent.putExtra("longitude",jobsResponse.getLongitude());
                 intent.putExtra("due_date",jobsResponse.getDueDate());
                 intent.putExtra("budget",jobsResponse.getEstimatedBudget());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

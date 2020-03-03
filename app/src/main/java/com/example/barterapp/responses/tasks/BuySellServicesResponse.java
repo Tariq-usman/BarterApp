@@ -1,11 +1,11 @@
-package com.example.barterapp.responses.menu;
+package com.example.barterapp.responses.tasks;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AllUserJobsHistoryResponse {
+public class BuySellServicesResponse {
 
     @SerializedName("sellJob")
     @Expose
@@ -29,7 +29,6 @@ public class AllUserJobsHistoryResponse {
     public void setBuyJobs(List<BuyJob> buyJobs) {
         this.buyJobs = buyJobs;
     }
-
 
     public class SellJob {
 
@@ -88,7 +87,6 @@ public class AllUserJobsHistoryResponse {
         public void setOffer(Offer offer) {
             this.offer = offer;
         }
-
         public class User {
 
             @SerializedName("id")
@@ -170,7 +168,6 @@ public class AllUserJobsHistoryResponse {
             }
 
         }
-
         public class Offer {
 
             @SerializedName("id")
@@ -283,7 +280,6 @@ public class AllUserJobsHistoryResponse {
             public void setJob(Job job) {
                 this.job = job;
             }
-
             public class Job {
 
                 @SerializedName("id")
@@ -432,9 +428,7 @@ public class AllUserJobsHistoryResponse {
 
             }
         }
-
     }
-
     public class BuyJob {
 
         @SerializedName("job_user_id")
@@ -492,7 +486,6 @@ public class AllUserJobsHistoryResponse {
         public void setJob(Job_ job) {
             this.job = job;
         }
-
         public class User_ {
 
             @SerializedName("id")
@@ -574,7 +567,6 @@ public class AllUserJobsHistoryResponse {
             }
 
         }
-
         public class Job_ {
 
             @SerializedName("id")
@@ -680,3 +672,16 @@ public class AllUserJobsHistoryResponse {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

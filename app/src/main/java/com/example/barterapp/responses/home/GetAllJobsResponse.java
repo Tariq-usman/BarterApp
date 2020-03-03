@@ -1,4 +1,4 @@
-package com.example.barterapp.responses;
+package com.example.barterapp.responses.home;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

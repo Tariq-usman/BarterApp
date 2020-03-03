@@ -23,7 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.responses.LogInResponse;
+import com.example.barterapp.responses.user.LogInResponse;
 import com.example.barterapp.utils.URLs;
 import com.example.barterapp.utils.Utils;
 import com.google.gson.Gson;

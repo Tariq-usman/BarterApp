@@ -43,8 +43,8 @@ public class UserJobFragment extends Fragment {
     private ImageView backBtn;
     UserJobsHistoryAdapter userJobsHistoryAdapter;
     private Preferences preferences;
-    List<AllUserJobsHistoryResponse.UserJob> userHistoryJobs = new ArrayList<>();
-    List<AllUserJobsHistoryResponse.Offer> userHistoryOffers = new ArrayList<>();
+    List<AllUserJobsHistoryResponse.SellJob> sellJobs = new ArrayList<>();
+    List<AllUserJobsHistoryResponse.BuyJob> buyJobs = new ArrayList<>();
 
     @Nullable
     @Override
@@ -58,7 +58,7 @@ public class UserJobFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_user_jobs_history);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        userJobsHistoryAdapter = new UserJobsHistoryAdapter(getContext(), userHistoryJobs,userHistoryOffers);
+        userJobsHistoryAdapter = new UserJobsHistoryAdapter(getContext(), sellJobs, buyJobs);
         recyclerView.setAdapter(userJobsHistoryAdapter);
         return view;
     }
@@ -76,11 +76,11 @@ public class UserJobFragment extends Fragment {
 
                     AllUserJobsHistoryResponse historyResponse = gson.fromJson(response, AllUserJobsHistoryResponse.class);
 
-                    for (AllUserJobsHistoryResponse.UserJob responseJobs: historyResponse.getUserJobs()) {
-                        userHistoryJobs.add(responseJobs);
+                    for (AllUserJobsHistoryResponse.SellJob responseJobs: historyResponse.getSellJob()) {
+                        sellJobs.add(responseJobs);
                     }
-                    for (AllUserJobsHistoryResponse.Offer responseOffers: historyResponse.getOffer()) {
-                        userHistoryOffers.add(responseOffers);
+                    for (AllUserJobsHistoryResponse.BuyJob responseOffers: historyResponse.getBuyJobs()) {
+                        buyJobs.add(responseOffers);
                     }
                     userJobsHistoryAdapter.notifyDataSetChanged();
                     progressDialog.dismiss();

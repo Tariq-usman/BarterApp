@@ -114,7 +114,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
             textViewProfile.setVisibility(View.GONE);
             imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
             textViewMenu.setVisibility(View.GONE);
-        }else if (savedInstanceState == null) {
+        } else if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new Home(), "Home").commit();
             imageViewHome.setImageResource(R.drawable.ic_home_white);
         }
@@ -234,7 +234,21 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener 
     public void onBackPressed() {
 //        super.onBackPressed();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("Home");
-        if (fragment != null && fragment.isVisible()) {
+        if (preferences.getSearchVal() == true) {
+            preferences.setSearchVal(false);
+            layoutTitle.setVisibility(View.VISIBLE);
+            setFragment(new Home(), "Home");
+            imageViewHome.setImageResource(R.drawable.ic_home_white);
+            textViewHome.setVisibility(View.VISIBLE);
+            imageViewMessages.setImageResource(R.drawable.ic_chat_purple);
+            textViewMessages.setVisibility(View.GONE);
+            imageViewTask.setImageResource(R.drawable.ic_task_purple);
+            textViewTask.setVisibility(View.GONE);
+            imageViewProfile.setImageResource(R.drawable.ic_profile_purple);
+            textViewProfile.setVisibility(View.GONE);
+            imageViewMenu.setImageResource(R.drawable.ic_menu_purple);
+            textViewMenu.setVisibility(View.GONE);
+        } else if (fragment != null && fragment.isVisible()) {
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

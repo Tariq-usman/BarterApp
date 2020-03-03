@@ -90,6 +90,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tvTitle_offer_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -148,6 +149,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tvDescription_offer_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -179,6 +181,7 @@
                     android:padding="6dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivPosted_by_offer_details"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:padding="6dp"
@@ -205,6 +208,7 @@
                                 android:textSize="@dimen/twelve_sp" />
 
                             <TextView
+                                android:id="@+id/tvPosted_by_offer_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -224,6 +228,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvDuration_offer_details"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".4"
@@ -263,7 +268,7 @@
                                 android:textStyle="bold" />
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recycler_view_services_trades"
+                                android:id="@+id/recycler_view_trades_service_details"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 tools:listitem="@layout/row_items_trades" />
@@ -319,6 +324,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tvLocation_offer_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -377,6 +383,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tvDue_date_offer_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"

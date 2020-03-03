@@ -87,6 +87,7 @@
                                 android:layout_marginBottom="4dp"
                                 android:textSize="@dimen/twelve_sp" />
                             <TextView
+                                android:id="@+id/tvTitle_make_offer"
                                 android:layout_width="match_parent"
                                 android:layout_marginTop="4dp"
                                 android:layout_height="wrap_content"
@@ -141,6 +142,7 @@
                                 android:textColor="@color/greyForText"
                                 android:textSize="@dimen/twelve_sp" />
                             <TextView
+                                android:id="@+id/tvDescription_make_offer"
                                 android:layout_width="match_parent"
                                 android:layout_marginTop="4dp"
                                 android:layout_height="wrap_content"
@@ -171,6 +173,7 @@
                     android:padding="6dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivPosted_by_make_offer"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:padding="6dp"
@@ -195,6 +198,7 @@
                             android:layout_marginBottom="4dp"
                             android:textSize="@dimen/twelve_sp" />
                         <TextView
+                            android:id="@+id/tvPosted_by_make_offer"
                             android:layout_width="match_parent"
                             android:layout_marginTop="4dp"
                             android:layout_height="wrap_content"
@@ -213,6 +217,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvDuration_make_offer"
                         android:layout_width="0dp"
                         android:layout_weight=".4"
                         android:layout_height="wrap_content"
@@ -252,7 +257,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 tools:listitem="@layout/row_items_trades"
-                                android:id="@+id/recycler_view_services_trades"/>
+                                android:id="@+id/recycler_view_trades_make_offer"/>
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
@@ -302,6 +307,7 @@
                                 android:layout_marginBottom="4dp"
                                 android:textSize="@dimen/twelve_sp" />
                             <TextView
+                                android:id="@+id/tvLocation_make_offer"
                                 android:layout_width="match_parent"
                                 android:layout_marginTop="4dp"
                                 android:layout_height="wrap_content"
@@ -357,6 +363,7 @@
                                 android:layout_marginBottom="4dp"
                                 android:textSize="@dimen/twelve_sp" />
                             <TextView
+                                android:id="@+id/tvDue_date_make_offer"
                                 android:layout_width="match_parent"
                                 android:layout_marginTop="4dp"
                                 android:layout_height="wrap_content"
@@ -399,6 +406,7 @@
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/twelve_sp" />
         <TextView
+            android:id="@+id/tvEstimated_budget_make_offer"
             android:layout_width="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_height="wrap_content"

@@ -44,17 +44,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistoryAdapter.ViewHolder> {
     Context context;
-    List<AllUserJobsHistoryResponse.UserJob> userJobs;
-    List<AllUserJobsHistoryResponse.Offer> userHistoryOffers;
+    List<AllUserJobsHistoryResponse.SellJob> sellJobs;
+    List<AllUserJobsHistoryResponse.BuyJob> buyJobs;
     private Preferences preferences;
     long daysDiff;
-    Integer user_id;
+    Integer job_id;
 
-    public UserJobsHistoryAdapter(Context context, List<AllUserJobsHistoryResponse.UserJob> userHistoryJobs,
-                                  List<AllUserJobsHistoryResponse.Offer> userHistoryOffers) {
+    public UserJobsHistoryAdapter(Context context, List<AllUserJobsHistoryResponse.SellJob> sellJobs,
+                                  List<AllUserJobsHistoryResponse.BuyJob> buyJobs) {
         this.context = context;
-        this.userJobs = userHistoryJobs;
-        this.userHistoryOffers = userHistoryOffers;
+        this.sellJobs = sellJobs;
+        this.buyJobs = buyJobs;
         preferences = new Preferences(context);
     }
 
@@ -67,21 +67,24 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Glide.with(context).load(userJobs.get(position).getUser().getPicture());
-        holder.tvTitle.setText(userJobs.get(position).getTitle());
-        holder.tvPrice.setText(userJobs.get(position).getEstimatedBudget().toString());
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        Glide.with(context).load(sellJobs.get(position).getUser().getPicture()).into(holder.imageView);
+        holder.tvTitle.setText(sellJobs.get(position).getOffer().getJob().getTitle());
+        holder.tvPrice.setText(sellJobs.get(position).getOffer().getJob().getEstimatedBudget().toString());
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String current_date = df.format(c);
-        String due_date = userJobs.get(position).getDueDate();
-        daybetween(current_date/*"25/02/2020"*/,due_date /*"28/02/2020"*/, "yyyy-MM-dd");
-
-        holder.tvDuration.setText(daysDiff + "Days");
+        String due_date = sellJobs.get(position).getOffer().getJob().getDueDate();
+        daybetween(current_date/*"25/02/2020"*/, due_date /*"28/02/2020"*/, "yyyy-MM-dd");
+        if (daysDiff <= 0) {
+            holder.tvDuration.setText("0 Days");
+        } else {
+            holder.tvDuration.setText(daysDiff + "Days");
+        }
         Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
         List<Address> addresses;
-        Double lat = Double.parseDouble(userJobs.get(position).getUser().getLatitude());
-        Double lng = Double.parseDouble(userJobs.get(position).getUser().getLongitude());
+        Double lat = Double.parseDouble(sellJobs.get(position).getOffer().getJob().getLatitude());
+        Double lng = Double.parseDouble(sellJobs.get(position).getOffer().getJob().getLongitude());
 
         try {
             addresses = geocoder.getFromLocation(28.963400, 77.711990, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -100,6 +103,15 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
             public void onClick(View v) {
                 preferences.setFragmentStatus("history");
                 Intent intent = new Intent(context, SellServicesDetails.class);
+                intent.putExtra("title_my_job",sellJobs.get(position).getOffer().getJob().getTitle());
+                intent.putExtra("description_my_job",sellJobs.get(position).getOffer().getJob().getDescription());
+                intent.putExtra("posted_by_my_job",sellJobs.get(position).getUser().getName());
+                intent.putExtra("picture_my_job",sellJobs.get(position).getUser().getPicture());
+                intent.putExtra("trades_my_job",sellJobs.get(position).getUser().getTrades());
+                intent.putExtra("location_my_job",holder.tvLocation.getText().toString());
+                intent.putExtra("duration_my_job",holder.tvDuration.getText().toString().trim());
+                intent.putExtra("due_date_my_job",sellJobs.get(position).getOffer().getJob().getDueDate());
+                intent.putExtra("budget_my_job",sellJobs.get(position).getOffer().getJob().getEstimatedBudget());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -108,7 +120,7 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
-                user_id = userJobs.get(position).getUserId();
+                job_id = sellJobs.get(position).getOffer().getJob().getId();
                 deleteJob(position);
             }
         });
@@ -118,13 +130,13 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
     private void deleteJob(final int position) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         final Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_user_job_url+ user_id, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_user_job_url + job_id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                userJobs.remove(position);
+                sellJobs.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, userJobs.size());
-                Log.e("RESPONSE " , response);
+                notifyItemRangeChanged(position, sellJobs.size());
+                Log.e("RESPONSE ", response);
                 Toast.makeText(context, "Item delete Successfully", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -163,7 +175,7 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
 
     @Override
     public int getItemCount() {
-        return userJobs.size();
+        return sellJobs.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -27,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
-import com.example.barterapp.responses.SignUpResponse;
+import com.example.barterapp.responses.user.SignUpResponse;
 import com.example.barterapp.utils.URLs;
 import com.example.barterapp.utils.Utils;
 import com.example.barterapp.others.Preferences;

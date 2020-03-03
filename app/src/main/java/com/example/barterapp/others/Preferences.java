@@ -52,4 +52,13 @@ public class Preferences {
     public String getLocation(){
         return sharedPreferences.getString("location","");
     }
+
+    public void setSearchVal(boolean val){
+        editor.putBoolean("location",val);
+        editor.commit();
+        editor.apply();
+    }
+    public boolean getSearchVal(){
+        return sharedPreferences.getBoolean("location",false);
+    }
 }

@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,13 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
-import com.example.barterapp.adapters.menu.history.UserJobsHistoryAdapter;
 import com.example.barterapp.adapters.menu.history.UserOffersHistoryAdapter;
-import com.example.barterapp.adapters.view_pager_adapters.HistoryViewPagerAdapter;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.menu.AllUserJobsHistoryResponse;
 import com.example.barterapp.utils.URLs;
-import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -46,8 +42,8 @@ public class UserOffersFragment extends Fragment {
     private ImageView backBtn;
     UserOffersHistoryAdapter userOffersHistoryAdapter;
     private Preferences preferences;
-    List<AllUserJobsHistoryResponse.UserJob> userHistoryJobs = new ArrayList<>();
-    List<AllUserJobsHistoryResponse.Offer> userHistoryOffers = new ArrayList<>();
+    List<AllUserJobsHistoryResponse.SellJob> sellJobs = new ArrayList<>();
+    List<AllUserJobsHistoryResponse.BuyJob> buyJobs = new ArrayList<>();
 
     @Nullable
     @Override
@@ -59,7 +55,7 @@ public class UserOffersFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_user_offers_history);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        userOffersHistoryAdapter = new UserOffersHistoryAdapter(getContext(), userHistoryOffers);
+        userOffersHistoryAdapter = new UserOffersHistoryAdapter(getContext(), buyJobs);
         recyclerView.setAdapter(userOffersHistoryAdapter);
         return view;
     }
@@ -76,8 +72,8 @@ public class UserOffersFragment extends Fragment {
 
                     AllUserJobsHistoryResponse historyResponse = gson.fromJson(response, AllUserJobsHistoryResponse.class);
 
-                    for (AllUserJobsHistoryResponse.Offer responseOffers : historyResponse.getOffer()) {
-                        userHistoryOffers.add(responseOffers);
+                    for (AllUserJobsHistoryResponse.BuyJob responseOffers : historyResponse.getBuyJobs()) {
+                        buyJobs.add(responseOffers);
                     }
                     userOffersHistoryAdapter.notifyDataSetChanged();
                     progressDialog.dismiss();
