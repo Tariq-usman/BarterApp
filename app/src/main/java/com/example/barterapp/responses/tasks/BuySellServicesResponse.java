@@ -41,6 +41,12 @@ public class BuySellServicesResponse {
         @SerializedName("user_id")
         @Expose
         private Integer userId;
+        @SerializedName("seller_security")
+        @Expose
+        private Integer sellerSecurity;
+        @SerializedName("buyer_security")
+        @Expose
+        private Integer buyerSecurity;
         @SerializedName("user")
         @Expose
         private User user;
@@ -72,6 +78,22 @@ public class BuySellServicesResponse {
             this.userId = userId;
         }
 
+        public Integer getSellerSecurity() {
+            return sellerSecurity;
+        }
+
+        public void setSellerSecurity(Integer sellerSecurity) {
+            this.sellerSecurity = sellerSecurity;
+        }
+
+        public Integer getBuyerSecurity() {
+            return buyerSecurity;
+        }
+
+        public void setBuyerSecurity(Integer buyerSecurity) {
+            this.buyerSecurity = buyerSecurity;
+        }
+
         public User getUser() {
             return user;
         }
@@ -87,6 +109,7 @@ public class BuySellServicesResponse {
         public void setOffer(Offer offer) {
             this.offer = offer;
         }
+
         public class User {
 
             @SerializedName("id")
@@ -168,6 +191,7 @@ public class BuySellServicesResponse {
             }
 
         }
+
         public class Offer {
 
             @SerializedName("id")
@@ -280,6 +304,7 @@ public class BuySellServicesResponse {
             public void setJob(Job job) {
                 this.job = job;
             }
+
             public class Job {
 
                 @SerializedName("id")
@@ -429,6 +454,7 @@ public class BuySellServicesResponse {
             }
         }
     }
+
     public class BuyJob {
 
         @SerializedName("job_user_id")
@@ -440,6 +466,12 @@ public class BuySellServicesResponse {
         @SerializedName("user_id")
         @Expose
         private Integer userId;
+        @SerializedName("seller_security")
+        @Expose
+        private Integer sellerSecurity;
+        @SerializedName("buyer_security")
+        @Expose
+        private Integer buyerSecurity;
         @SerializedName("user")
         @Expose
         private User_ user;
@@ -471,6 +503,22 @@ public class BuySellServicesResponse {
             this.userId = userId;
         }
 
+        public Integer getSellerSecurity() {
+            return sellerSecurity;
+        }
+
+        public void setSellerSecurity(Integer sellerSecurity) {
+            this.sellerSecurity = sellerSecurity;
+        }
+
+        public Integer getBuyerSecurity() {
+            return buyerSecurity;
+        }
+
+        public void setBuyerSecurity(Integer buyerSecurity) {
+            this.buyerSecurity = buyerSecurity;
+        }
+
         public User_ getUser() {
             return user;
         }
@@ -486,6 +534,7 @@ public class BuySellServicesResponse {
         public void setJob(Job_ job) {
             this.job = job;
         }
+
         public class User_ {
 
             @SerializedName("id")
@@ -567,6 +616,7 @@ public class BuySellServicesResponse {
             }
 
         }
+
         public class Job_ {
 
             @SerializedName("id")
@@ -672,6 +722,8 @@ public class BuySellServicesResponse {
         }
     }
 }
+
+
 
 
 

@@ -16,7 +16,10 @@ public class URLs {
     public static final String user_job_history_url = base_url + "getAllUserJobs";
     public static final String delete_user_job_url = base_url + "deleteUserJobs/";
     public static final String delete_user_offer_url = base_url + "deleteUserOffer/";
-    public static final String search_job_url = base_url+"searchJob";
+    public static final String search_job_url = base_url + "searchJob";
+    public static final String create_offer_url = base_url + "createOffers";
+    ////Tasks urls
+    public static final String buy_sell_services_url = base_url + "getSellBuyService";
     ////Profile url
     public static final String current_user_url = base_url + "getCurrentUser";
     public static final String update_profile_url = base_url + "userUpdate";

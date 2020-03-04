@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="Password"
-                        android:text="12345678"
+                        android:text="123456789"
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColorHint="@color/whiteColor"

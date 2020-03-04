@@ -66,6 +66,7 @@ public class ChatInbox extends Fragment {
             @Override
             public void onResponse(String response) {
                 GetAllInboxMessagesResponse inboxMessagesResponse = gson.fromJson(response, GetAllInboxMessagesResponse.class);
+                allInboxMessagesList.clear();
                 for (int i = 0; i < inboxMessagesResponse.getGetMessages().size(); i++) {
                     allInboxMessagesList.add(inboxMessagesResponse.getGetMessages().get(i));
                 }

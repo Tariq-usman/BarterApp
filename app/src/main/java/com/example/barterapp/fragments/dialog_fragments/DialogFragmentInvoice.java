@@ -62,7 +62,7 @@ public class DialogFragmentInvoice extends DialogFragment implements View.OnClic
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         trades_list = new ArrayList<>();
-        addTradesAdapter = new AddTradesAdapter(getContext(), trades_list);
+        //addTradesAdapter = new AddTradesAdapter(getContext(), trades_list);
 
         radioGroup = view.findViewById(R.id.radio_group);
         rb_getPay = view.findViewById(R.id.rb_get_pay);
@@ -135,7 +135,7 @@ public class DialogFragmentInvoice extends DialogFragment implements View.OnClic
         fLayoutManager.setFlexDirection(FlexDirection.ROW);
         fLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
         recyclerViewReturnTrades.setLayoutManager(fLayoutManager);
-        recyclerViewReturnTrades.setAdapter(new ReturnTradesAdapter(getContext(), returnTrades));
+       // recyclerViewReturnTrades.setAdapter(new ReturnTradesAdapter(getContext(), returnTrades));
         return view;
     }
 

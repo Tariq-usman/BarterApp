@@ -85,9 +85,11 @@
                 </RadioGroup>
 
                 <LinearLayout
+                    android:id="@+id/layout_budget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
+                    android:visibility="visible"
                     android:orientation="horizontal">
 
                     <TextView
@@ -99,6 +101,7 @@
                         android:textSize="@dimen/twelve_sp" />
 
                     <EditText
+                        android:id="@+id/etPrice_custom_invoice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -125,6 +128,7 @@
                         android:textSize="@dimen/twelve_sp" />
 
                     <TextView
+                        android:id="@+id/tvDue_date_custom_invoice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -150,6 +154,7 @@
                         android:textSize="@dimen/twelve_sp" />
 
                     <EditText
+                        android:id="@+id/etSecurity_amount_custom_invoice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -167,29 +172,17 @@
                     android:layout_marginVertical="4dp"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Trades"
                             android:textColor="@color/blackColor"
                             android:textSize="@dimen/sixteen_sp"
                             android:textStyle="bold" />
 
-                        <ImageButton
-                            android:id="@+id/btn_add_new_trade_custom_offer"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="right"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/ic_add_trade" />
 
-                    </LinearLayout>
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -207,15 +200,27 @@
                     android:layout_marginVertical="4dp"
                     android:orientation="vertical"
                     android:visibility="visible">
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Return Trade"
                         android:textColor="@color/blackColor"
                         android:textSize="@dimen/sixteen_sp"
                         android:textStyle="bold" />
+                    <ImageButton
+                        android:id="@+id/btn_add_new_trade_custom_offer"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_add_trade" />
 
+                    </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_custom_offer_return_trades"
                         android:layout_width="wrap_content"
@@ -237,6 +242,7 @@
                         android:textSize="@dimen/sixteen_sp" />
 
                     <EditText
+                        android:id="@+id/etDescription_custom_invoice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"

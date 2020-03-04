@@ -1,9 +1,13 @@
 package com.example.barterapp.fragments.tasks;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,24 +15,87 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
-import com.example.barterapp.adapters.tasks.SellServicesAdapter;
+import com.example.barterapp.adapters.tasks.BuyServicesAdapter;
+import com.example.barterapp.others.Preferences;
+import com.example.barterapp.responses.tasks.BuySellServicesResponse;
+import com.example.barterapp.utils.URLs;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BuyServices extends Fragment {
-    RecyclerView recyclerView;
-    int[] images ={R.drawable.notification_image,R.drawable.arslan,R.drawable.farmer_four,R.drawable.farmer_three,R.drawable.customer};
-
-//    int[] images ={R.drawable.maintainance,R.drawable.design,R.drawable.electronic,R.drawable.equipments,R.drawable.furniture};
+    private RecyclerView recyclerView;
+    private BuyServicesAdapter buyServicesAdapter;
+    List<BuySellServicesResponse.BuyJob> buyJobsList = new ArrayList<>();
+    private Preferences preferences;
+private ProgressDialog progressDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_return_services,container,false);
-        recyclerView = view.findViewById(R.id.recycler_view_tasks);
+        View view = inflater.inflate(R.layout.fragment_buy_services,container,false);
+        customProgressDialog(getContext());
+        preferences = new Preferences(getContext());
+        recyclerView = view.findViewById(R.id.recycler_view_buy_services);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new SellServicesAdapter(getContext(),images));
-
+        buyServicesAdapter = new BuyServicesAdapter(getContext(),buyJobsList);
+        recyclerView.setAdapter(buyServicesAdapter);
+        getBuyServicesData();
         return view;
+    }
+    private void getBuyServicesData() {
+        progressDialog.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        final Gson gson = new GsonBuilder().create();
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.buy_sell_services_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                BuySellServicesResponse buyServicesResponse = gson.fromJson(response, BuySellServicesResponse.class);
+                buyJobsList.clear();
+                for (int i = 0;i<buyServicesResponse.getBuyJobs().size();i++){
+                    buyJobsList.add(buyServicesResponse.getBuyJobs().get(i));
+                }
+                buyServicesAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.toString());
+                progressDialog.dismiss();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerMap = new HashMap<>();
+                String token = preferences.getToken();
+                headerMap.put("Authorization", "Bearer " + token);
+                return headerMap;
+            }
+        };
+        requestQueue.add(request);
+    }
+    public void customProgressDialog(Context context) {
+        progressDialog = new ProgressDialog(context);
+        // Setting Message
+        progressDialog.setMessage("Loading...");
+        // Progress Dialog Style Spinner
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Fetching max value
+        progressDialog.getMax();
     }
 }

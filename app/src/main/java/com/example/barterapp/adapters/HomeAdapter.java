@@ -12,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.MakeOffer;
 import com.example.barterapp.responses.home.GetAllJobsResponse;
+import com.example.barterapp.utils.URLs;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final GetAllJobsResponse.AllJob jobsResponse = jobs.get(position);
-
+        Glide.with(context).load(URLs.image_url+jobsResponse.getUser().getPicture()).into(holder.imageView);
         holder.tvTitle.setText(jobsResponse.getTitle());
         holder.tvPrice.setText("$ "+jobsResponse.getEstimatedBudget().toString());
 
@@ -84,6 +86,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MakeOffer.class);
+                intent.putExtra("job_id",jobsResponse.getId());
                 intent.putExtra("title",jobsResponse.getTitle());
                 intent.putExtra("description",jobsResponse.getDescription());
                 intent.putExtra("posted_by",jobsResponse.getUser().getName());

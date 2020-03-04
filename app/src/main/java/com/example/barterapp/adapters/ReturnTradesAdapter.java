@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 
+import java.util.List;
+
 public class ReturnTradesAdapter extends RecyclerView.Adapter<ReturnTradesAdapter.ViewHolder> {
     Context context;
-    String[] trades;
-    public ReturnTradesAdapter(Context context, String[] trades) {
+    List<String> trades;
+    public ReturnTradesAdapter(Context context, List<String> trades) {
         this.context = context;
         this.trades = trades;
     }
@@ -29,13 +31,13 @@ public class ReturnTradesAdapter extends RecyclerView.Adapter<ReturnTradesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(trades[position]);
+        holder.textView.setText(trades.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return trades.length;
+        return trades.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

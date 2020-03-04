@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.MakeOfferTradesAdapter;
+import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
@@ -30,6 +31,7 @@ public class MakeOffer extends AppCompatActivity {
     private TextView tvTitle, tvDescription, tvPosted_by, tvLocation, tvDeuDate,tvDuration, tvBudget;
     private RecyclerView recyclerView, recyclerViewTrades;
     private FlexboxLayoutManager layoutManager;
+    private int job_id;
     private String title, description, posted_by, picture, trades, location, duration, due_date;
     private int budget;
     private List<String> trades_list;
@@ -61,8 +63,9 @@ public class MakeOffer extends AppCompatActivity {
             tvTitle.setText(title);
             tvDescription.setText(description);
             tvPosted_by.setText(posted_by);
-            Glide.with(getApplicationContext()).load(picture).into(ivPostedBy);
-            trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
+            Glide.with(getApplicationContext()).load(URLs.image_url+picture).into(ivPostedBy);
+            trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
+//            trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
             tvLocation.setText(location);
             tvDeuDate.setText(due_date);
             tvDuration.setText(duration);
@@ -80,16 +83,22 @@ public class MakeOffer extends AppCompatActivity {
         recyclerViewTrades.setLayoutManager(layoutManager);
         recyclerViewTrades.setAdapter(new MakeOfferTradesAdapter(getApplicationContext(), trades_list));
 
-        tradeBtn = findViewById(R.id.trade_btn);
+        tradeBtn = findViewById(R.id.make_offer_btn);
         tradeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MakeOffer.this, CustomOffer.class));
+                Intent intent = new Intent(MakeOffer.this,CustomOffer.class);
+                intent.putExtra("jobId",job_id);
+                intent.putExtra("trades",trades);
+                intent.putExtra("due_date",due_date);
+                intent.putExtra("budget",budget);
+                startActivity(intent);
             }
         });
     }
 
     private void getIncommingIntent() {
+        job_id = getIntent().getIntExtra("job_id",0);
         title = getIntent().getStringExtra("title");
         description = getIntent().getStringExtra("description");
         posted_by = getIntent().getStringExtra("posted_by");

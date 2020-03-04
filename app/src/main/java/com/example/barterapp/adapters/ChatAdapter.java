@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
+import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.chat_responses.GetAllChatMessagesResponse;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -26,11 +27,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     Context context;
     int sender_id;
     List<GetAllChatMessagesResponse.Message> messageList;
+    private Preferences  preferences;
 
-    public ChatAdapter(int sender_id, Context applicationContext, List<GetAllChatMessagesResponse.Message> messageList) {
+    public ChatAdapter( Context applicationContext, List<GetAllChatMessagesResponse.Message> messageList) {
         this.context = applicationContext;
-        this.sender_id = sender_id;
+//        this.sender_id = sender_id;
         this.messageList = messageList;
+        preferences = new Preferences(context);
     }
 
 
@@ -44,8 +47,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        int user_id = preferences.getUserId();
         int id = messageList.get(position).getSenderId();
-        if (sender_id == id){
+        if (user_id == id){
             holder.layoutReceiver.setVisibility(View.VISIBLE);
             holder.tvReceiver.setText(messageList.get(position).getText());
         }else {

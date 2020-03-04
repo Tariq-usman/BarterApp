@@ -76,7 +76,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        chatAdapter = new ChatAdapter(sender_id, getApplicationContext(), messageList);
+        chatAdapter = new ChatAdapter( getApplicationContext(), messageList);
         recyclerView.setAdapter(chatAdapter);
     }
 
@@ -91,6 +91,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
                 GetAllChatMessagesResponse allChatMessagesResponse = gson.fromJson(response, GetAllChatMessagesResponse.class);
                 receiver_id = allChatMessagesResponse.getMessage().get(0).getReceiverId();
+                messageList.clear();
                 for (int i = 0; i < allChatMessagesResponse.getMessage().size(); i++) {
                     messageList.add(allChatMessagesResponse.getMessage().get(i));
                 }

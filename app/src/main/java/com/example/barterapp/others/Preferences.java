@@ -24,6 +24,15 @@ public class Preferences {
         return sharedPreferences.getString("token", "");
     }
 
+    public void setUserId(int user_id) {
+        editor.putInt("user_id", user_id);
+        editor.apply();
+        editor.commit();
+    }
+
+    public int getUserId() {
+        return sharedPreferences.getInt("user_id", 0);
+    }
 
 
     public void setFragmentStatus(String fragmentStatus){

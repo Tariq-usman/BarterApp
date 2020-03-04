@@ -57,7 +57,7 @@ public class CustomOffersAdapter extends RecyclerView.Adapter<CustomOffersAdapte
         fLayoutManager.setFlexDirection(FlexDirection.ROW);
         fLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
         holder.recyclerViewReturnTrades.setLayoutManager(fLayoutManager);
-        holder.recyclerViewReturnTrades.setAdapter(new ReturnTradesAdapter(context, returnTrades));
+//        holder.recyclerViewReturnTrades.setAdapter(new ReturnTradesAdapter(context, returnTrades));
 
 
         holder.acceptOfferBtn.setOnClickListener(new View.OnClickListener() {

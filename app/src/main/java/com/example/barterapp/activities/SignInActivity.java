@@ -93,7 +93,9 @@ public class SignInActivity extends AppCompatActivity {
                // Toast.makeText(SignInActivity.this, "Login", Toast.LENGTH_SHORT).show();
                 LogInResponse logInResponse =gson.fromJson(response,LogInResponse.class);
                 String token = logInResponse.getToken();
+                int user_id=logInResponse.getUser().getId();
                 preferences.setToken(token);
+                preferences.setUserId(user_id);
                 tv.setText("Successfully SignIn");
                 toast.show();
                 progressDialog.dismiss();

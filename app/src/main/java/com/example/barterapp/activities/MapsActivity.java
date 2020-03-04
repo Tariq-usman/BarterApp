@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private EditText searchEt;
     private TextView searched_location;
-    private ImageView backBtn,locationPinUp,searchBtn;
+    private ImageView backBtn, locationPinUp, searchBtn;
     private Button doneBtn;
     private LocationManager manager;
     private LatLng current;
@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         searchBtn = findViewById(R.id.searchBtn);
         searchEt = findViewById(R.id.searchEt);
         searched_location = findViewById(R.id.searched_location);
-        locationPinUp=findViewById(R.id.imgLocationPinUp);
+        locationPinUp = findViewById(R.id.imgLocationPinUp);
         backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -191,16 +192,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 try {
                     addresses = geocoder.getFromLocation(center.latitude, center.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String knownName = addresses.get(0).getFeatureName();
-                    searched_location.setText(address);
-                    locationPinUp.setVisibility(View.INVISIBLE);
-
-
+                    if (addresses.isEmpty()) {
+                        addresses = geocoder.getFromLocation(33.684422, 73.047882, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        String knownName = addresses.get(0).getFeatureName();
+                        searched_location.setText(address);
+                        locationPinUp.setVisibility(View.INVISIBLE);
+                    } else {
+                        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        String knownName = addresses.get(0).getFeatureName();
+                        searched_location.setText(address);
+                        locationPinUp.setVisibility(View.INVISIBLE);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -211,7 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String postalCode = addresses.get(0).getPostalCode();
                     String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
                     searchEt.setText(address);*/
-                }
+            }
         });
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override

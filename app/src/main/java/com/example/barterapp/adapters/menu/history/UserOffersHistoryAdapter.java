@@ -65,10 +65,10 @@ public class UserOffersHistoryAdapter extends RecyclerView.Adapter<UserOffersHis
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        if (buyJobs.get(position).getJob()!=null) {
+        if (buyJobs.get(position).getJob() != null) {
             String title = buyJobs.get(position).getJob().getTitle();
             if (title != "null") {
-                Glide.with(context).load(buyJobs.get(position).getUser().getPicture()).into(holder.imageView);
+                Glide.with(context).load(URLs.image_url + buyJobs.get(position).getUser().getPicture()).into(holder.imageView);
                 holder.tvTitle.setText(buyJobs.get(position).getJob().getTitle());
                 holder.tvPrice.setText(buyJobs.get(position).getJob().getEstimatedBudget().toString());
                 Date c = Calendar.getInstance().getTime();
@@ -104,15 +104,15 @@ public class UserOffersHistoryAdapter extends RecyclerView.Adapter<UserOffersHis
                     public void onClick(View v) {
                         preferences.setFragmentStatus("history");
                         Intent intent = new Intent(context, SellServicesDetails.class);
-                        intent.putExtra("title_my_job",buyJobs.get(position).getJob().getTitle());
-                        intent.putExtra("description_my_job",buyJobs.get(position).getJob().getDescription());
-                        intent.putExtra("posted_by_my_job",buyJobs.get(position).getUser().getName());
-                        intent.putExtra("picture_my_job",buyJobs.get(position).getUser().getPicture());
-                        intent.putExtra("trades_my_job",buyJobs.get(position).getUser().getTrades());
-                        intent.putExtra("location_my_job",holder.tvLocation.getText().toString());
-                        intent.putExtra("duration_my_job",holder.tvDuration.getText().toString().trim());
-                        intent.putExtra("due_date_my_job",buyJobs.get(position).getJob().getDueDate());
-                        intent.putExtra("budget_my_job",buyJobs.get(position).getJob().getEstimatedBudget());
+                        intent.putExtra("title_my_job", buyJobs.get(position).getJob().getTitle());
+                        intent.putExtra("description_my_job", buyJobs.get(position).getJob().getDescription());
+                        intent.putExtra("posted_by_my_job", buyJobs.get(position).getUser().getName());
+                        intent.putExtra("picture_my_job", buyJobs.get(position).getUser().getPicture());
+                        intent.putExtra("trades_my_job", buyJobs.get(position).getUser().getTrades());
+                        intent.putExtra("location_my_job", holder.tvLocation.getText().toString());
+                        intent.putExtra("duration_my_job", buyJobs.get(position).getJob().getDueDate());
+                        intent.putExtra("due_date_my_job", buyJobs.get(position).getJob().getDueDate());
+                        intent.putExtra("budget_my_job", buyJobs.get(position).getJob().getEstimatedBudget());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }

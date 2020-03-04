@@ -116,6 +116,7 @@ public class Menu extends Fragment implements View.OnClickListener {
                 preferences.setToken("");
                 Toast.makeText(getContext(), "" + logoutResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(),SignInActivity.class));
+                ((Activity)getContext()).finish();
                 progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
