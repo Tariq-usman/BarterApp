@@ -13,9 +13,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private EditText searchEt;
     private TextView searched_location;
-    private ImageView backBtn, locationPinUp, searchBtn;
+    private ImageView backBtn, locationPinUp, searchBtn,currentLocationBtn;
     private Button doneBtn;
     private LocationManager manager;
     private LatLng current;
@@ -67,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fetchLastLocation();
 
         preferences = new Preferences(this);
-
+        currentLocationBtn = findViewById(R.id.ivCurrent_location);
         doneBtn = findViewById(R.id.done_btn);
         searchBtn = findViewById(R.id.searchBtn);
         searchEt = findViewById(R.id.searchEt);
@@ -113,6 +115,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String passingLocation = searched_location.getText().toString().trim();
                 preferences.setLocation(passingLocation);
                 finish();
+            }
+        });
+        currentLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
             }
         });
 
@@ -166,7 +177,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+                current = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions()
                         .position(current)
                         .title("Current Location"));

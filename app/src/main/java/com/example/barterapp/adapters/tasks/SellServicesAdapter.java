@@ -73,6 +73,7 @@ public class SellServicesAdapter extends RecyclerView.Adapter<SellServicesAdapte
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
                 Intent intent = new Intent(context, SellServicesDetails.class);
+                intent.putExtra("order_id",sellJobList.get(position).getOrderId());
                 intent.putExtra("title_my_job",sellJobList.get(position).getOffer().getJob().getTitle());
                 intent.putExtra("description_my_job",sellJobList.get(position).getOffer().getJob().getDescription());
                 intent.putExtra("posted_by_my_job",sellJobList.get(position).getUser().getName());

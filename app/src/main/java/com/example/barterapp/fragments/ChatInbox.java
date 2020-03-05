@@ -55,6 +55,7 @@ public class ChatInbox extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         inboxAdapter = new ChatInboxAdapter(getContext(), allInboxMessagesList);
         recyclerView.setAdapter(inboxAdapter);
+        recyclerView.smoothScrollToPosition(inboxAdapter.getItemCount()+1);
         return view;
     }
 

@@ -29,9 +29,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     List<GetAllChatMessagesResponse.Message> messageList;
     private Preferences  preferences;
 
-    public ChatAdapter( Context applicationContext, List<GetAllChatMessagesResponse.Message> messageList) {
+    public ChatAdapter(int sender_id, Context applicationContext, List<GetAllChatMessagesResponse.Message> messageList) {
         this.context = applicationContext;
-//        this.sender_id = sender_id;
+        this.sender_id = sender_id;
         this.messageList = messageList;
         preferences = new Preferences(context);
     }
@@ -47,18 +47,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int user_id = preferences.getUserId();
+       // int user_id = preferences.getUserId();
         int id = messageList.get(position).getSenderId();
-        if (user_id == id){
+        if (sender_id == id){
             holder.layoutReceiver.setVisibility(View.VISIBLE);
             holder.tvReceiver.setText(messageList.get(position).getText());
         }else {
             holder.layoutSender.setVisibility(View.VISIBLE);
             holder.tvSender.setText(messageList.get(position).getText());
         }
-
-        //holder.ivPortfolioImage.setImageResource(images[position]);
-
 
     }
 

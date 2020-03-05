@@ -11,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.barterapp.activities.ChatActivity;
 import com.example.barterapp.R;
 import com.example.barterapp.responses.chat_responses.GetAllInboxMessagesResponse;
+import com.example.barterapp.utils.URLs;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +47,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tvUserName.setText(allInboxMessagesList.get(position).getName());
+        Glide.with(context).load(URLs.image_url+allInboxMessagesList.get(position).getPicture()).into(holder.userImage);
         if (allInboxMessagesList.get(position).getLastMessages() != null) {
             holder.tvMessage.setText(allInboxMessagesList.get(position).getLastMessages().getMessages());
             String time = allInboxMessagesList.get(position).getLastMessages().getDateTime();

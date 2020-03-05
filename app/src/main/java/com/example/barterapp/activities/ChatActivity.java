@@ -55,8 +55,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_chat);
         customProgressDialog(ChatActivity.this);
         preferences = new Preferences(this);
+        receiver_id = preferences.getUserId();
         sender_id = getIntent().getIntExtra("sender_id", 0);
-
         getAllMessages();
 
         fragmentInvoice = new DialogFragmentInvoice();
@@ -76,9 +76,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        chatAdapter = new ChatAdapter( getApplicationContext(), messageList);
+        chatAdapter = new ChatAdapter( sender_id,getApplicationContext(), messageList);
         recyclerView.setAdapter(chatAdapter);
-    }
+        recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);  }
 
     private void getAllMessages() {
         progressDialog.show();
@@ -90,7 +90,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             public void onResponse(String response) {
 
                 GetAllChatMessagesResponse allChatMessagesResponse = gson.fromJson(response, GetAllChatMessagesResponse.class);
-                receiver_id = allChatMessagesResponse.getMessage().get(0).getReceiverId();
                 messageList.clear();
                 for (int i = 0; i < allChatMessagesResponse.getMessage().size(); i++) {
                     messageList.add(allChatMessagesResponse.getMessage().get(i));
@@ -128,7 +127,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 //                fragmentInvoice.show(getSupportFragmentManager(),"Invoice Dialog");
             case R.id.view_send_msg:
                 addMessage(etTypeMessage.getText().toString());
-//                getAllMessages();
                 break;
         }
 
@@ -154,7 +152,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 messageList.add(msg);
                 chatAdapter.notifyItemInserted(messageList.size());
                 recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);
-                AddNewMessageResponse addNewMessageResponse = gson.fromJson(response,AddNewMessageResponse.class);
+            AddNewMessageResponse addNewMessageResponse = gson.fromJson(response,AddNewMessageResponse.class);
                 //messageList.clear();
                 /*chatAdapter.notifyItemInserted(chatAdapter.getItemCount() + 1);
                 recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);*/

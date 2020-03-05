@@ -29,6 +29,8 @@ public class URLs {
     public static final String add_messages = base_url + "addMessages";
     ////Term and conditions url
     public static final String terms_conditions_url = base_url + "getAllTerms";
+    ////Rating
+    public static final String reting_url = base_url + "addRating";
 
 
 }

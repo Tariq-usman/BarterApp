@@ -40,7 +40,7 @@ public class SellServicesDetails extends AppCompatActivity {
     private FlexboxLayoutManager layoutManager;
     private String title, description, posted_by, picture, trades, location, duration, due_date;
     private TextView tvTitle, tvDescription, tvPosted_by, tvTrades, tvLocation, tvDuration, tvDue_date;
-    private int budget;
+    private int budget,orderId;
     private List<String> trades_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,12 +107,14 @@ public class SellServicesDetails extends AppCompatActivity {
         completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                preferences.setOrderId(orderId);
                 DialogFragmentRating dialogFragmentRating = new DialogFragmentRating();
                 dialogFragmentRating.show(getSupportFragmentManager(),"Rating");
             }
         });
     }
     private void getIncomingIntent() {
+        orderId = getIntent().getIntExtra("order_id",0);
         title = getIntent().getStringExtra("title_my_job");
         description = getIntent().getStringExtra("description_my_job");
         posted_by = getIntent().getStringExtra("posted_by_my_job");

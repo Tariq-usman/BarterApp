@@ -6,32 +6,34 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class BuySellServicesResponse {
+        @SerializedName("sellJob")
+        @Expose
+        private List<SellJob> sellJob = null;
+        @SerializedName("buyJobs")
+        @Expose
+        private List<BuyJob> buyJobs = null;
 
-    @SerializedName("sellJob")
-    @Expose
-    private List<SellJob> sellJob = null;
-    @SerializedName("buyJobs")
-    @Expose
-    private List<BuyJob> buyJobs = null;
+        public List<SellJob> getSellJob() {
+            return sellJob;
+        }
 
-    public List<SellJob> getSellJob() {
-        return sellJob;
-    }
+        public void setSellJob(List<SellJob> sellJob) {
+            this.sellJob = sellJob;
+        }
 
-    public void setSellJob(List<SellJob> sellJob) {
-        this.sellJob = sellJob;
-    }
+        public List<BuyJob> getBuyJobs() {
+            return buyJobs;
+        }
 
-    public List<BuyJob> getBuyJobs() {
-        return buyJobs;
-    }
-
-    public void setBuyJobs(List<BuyJob> buyJobs) {
-        this.buyJobs = buyJobs;
-    }
+        public void setBuyJobs(List<BuyJob> buyJobs) {
+            this.buyJobs = buyJobs;
+        }
 
     public class SellJob {
 
+        @SerializedName("order_id")
+        @Expose
+        private Integer orderId;
         @SerializedName("offer_user_id")
         @Expose
         private Integer offerUserId;
@@ -53,6 +55,14 @@ public class BuySellServicesResponse {
         @SerializedName("offer")
         @Expose
         private Offer offer;
+
+        public Integer getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(Integer orderId) {
+            this.orderId = orderId;
+        }
 
         public Integer getOfferUserId() {
             return offerUserId;
@@ -109,7 +119,6 @@ public class BuySellServicesResponse {
         public void setOffer(Offer offer) {
             this.offer = offer;
         }
-
         public class User {
 
             @SerializedName("id")
@@ -191,7 +200,6 @@ public class BuySellServicesResponse {
             }
 
         }
-
         public class Offer {
 
             @SerializedName("id")
@@ -209,6 +217,12 @@ public class BuySellServicesResponse {
             @SerializedName("offer")
             @Expose
             private String offer;
+            @SerializedName("description")
+            @Expose
+            private Object description;
+            @SerializedName("return_service")
+            @Expose
+            private Object returnService;
             @SerializedName("barter_security")
             @Expose
             private Integer barterSecurity;
@@ -265,6 +279,22 @@ public class BuySellServicesResponse {
                 this.offer = offer;
             }
 
+            public Object getDescription() {
+                return description;
+            }
+
+            public void setDescription(Object description) {
+                this.description = description;
+            }
+
+            public Object getReturnService() {
+                return returnService;
+            }
+
+            public void setReturnService(Object returnService) {
+                this.returnService = returnService;
+            }
+
             public Integer getBarterSecurity() {
                 return barterSecurity;
             }
@@ -304,7 +334,6 @@ public class BuySellServicesResponse {
             public void setJob(Job job) {
                 this.job = job;
             }
-
             public class Job {
 
                 @SerializedName("id")
@@ -454,9 +483,11 @@ public class BuySellServicesResponse {
             }
         }
     }
-
     public class BuyJob {
 
+        @SerializedName("order_id")
+        @Expose
+        private Integer orderId;
         @SerializedName("job_user_id")
         @Expose
         private Integer jobUserId;
@@ -478,6 +509,14 @@ public class BuySellServicesResponse {
         @SerializedName("job")
         @Expose
         private Job_ job;
+
+        public Integer getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(Integer orderId) {
+            this.orderId = orderId;
+        }
 
         public Integer getJobUserId() {
             return jobUserId;
@@ -616,7 +655,6 @@ public class BuySellServicesResponse {
             }
 
         }
-
         public class Job_ {
 
             @SerializedName("id")
@@ -721,19 +759,6 @@ public class BuySellServicesResponse {
 
         }
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 

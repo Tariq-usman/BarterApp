@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,6 +35,7 @@ import com.example.barterapp.R;
 import com.example.barterapp.adapters.AddTradesAdapter;
 import com.example.barterapp.adapters.ReturnTradesAdapter;
 import com.example.barterapp.others.Preferences;
+import com.example.barterapp.responses.home.CreateOfferResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -62,35 +64,43 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
     ;
     private RadioButton rb_getPay, rb_returnService;
     private RadioGroup radioGroup;
-    private LinearLayout layoutBudget,layoutSecurityAmount, layoutReturnTrades;
+    private LinearLayout layoutBudget, layoutSecurityAmount, layoutReturnTrades;
     private ImageButton addNewTrade;
     private List<String> trades_list;
     private List<String> returnTradesList;
     private TextView tradesView, tvDueDate;
-    private EditText etPrice,etSecurityAmount, etDescription;
+    private EditText etPrice, etSecurityAmount, etDescription;
     private AddTradesAdapter addTradesAdapter;
     private ReturnTradesAdapter returnTradesAdapter;
     Preferences preferences;
     private int jobId;
     private String trades, due_date, budget, offerType;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_offer);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        customProgressDialog(CustomOffer.this);
+
         preferences = new Preferences(this);
         getIncommingIntent();
 
         trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
         returnTradesList = new ArrayList<>();
 
+        tvDueDate = findViewById(R.id.tvDue_date_custom_invoice);
+        tvDueDate.setText(due_date);
         etPrice = findViewById(R.id.etPrice_custom_invoice);
         etSecurityAmount = findViewById(R.id.etSecurity_amount_custom_invoice);
         etDescription = findViewById(R.id.etDescription_custom_invoice);
         radioGroup = findViewById(R.id.radio_group_custom_offer);
         rb_getPay = findViewById(R.id.rb_get_pay_custom_offer);
+        rb_getPay.setOnClickListener(this);
         rb_returnService = findViewById(R.id.rb_return_service_custom_offer);
+        rb_returnService.setOnClickListener(this);
         addNewTrade = findViewById(R.id.btn_add_new_trade_custom_offer);
         addNewTrade.setOnClickListener(this);
 
@@ -98,46 +108,20 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         layoutSecurityAmount = findViewById(R.id.security_amount_dialog_custom_offer);
         layoutReturnTrades = findViewById(R.id.return_trades_custom_offer);
         if (rb_getPay.isChecked()) {
+            offerType = "2";
             layoutSecurityAmount.setVisibility(View.GONE);
             layoutReturnTrades.setVisibility(View.GONE);
+            layoutBudget.setVisibility(View.VISIBLE);
         } else if (rb_returnService.isChecked()) {
             layoutSecurityAmount.setVisibility(View.VISIBLE);
             layoutReturnTrades.setVisibility(View.VISIBLE);
+            layoutBudget.setVisibility(View.GONE);
         }
-
-        rb_getPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                offerType = "1";
-                layoutSecurityAmount.setVisibility(View.GONE);
-                layoutReturnTrades.setVisibility(View.GONE);
-                layoutBudget.setVisibility(View.VISIBLE);
-            }
-        });
-        rb_returnService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                offerType = "2";
-                layoutSecurityAmount.setVisibility(View.VISIBLE);
-                layoutReturnTrades.setVisibility(View.VISIBLE);
-                layoutBudget.setVisibility(View.GONE);
-
-            }
-        });
-
-
         cancelBtn = findViewById(R.id.cancel_btn_custom_offer);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                //dismiss();//
-            }
-        });
+        cancelBtn.setOnClickListener(this);
 
-        recyclerViewTrades = findViewById(R.id.recycler_view_custom_offer);
-        recyclerViewReturnTrades = findViewById(R.id.recycler_view_custom_offer_return_trades);
         //Recycler for trades
+        recyclerViewTrades = findViewById(R.id.recycler_view_custom_offer);
         layoutManager = new FlexboxLayoutManager(getApplicationContext());
         layoutManager.setFlexWrap(FlexWrap.WRAP);
         layoutManager.setAlignItems(AlignItems.STRETCH);
@@ -149,6 +133,7 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         addTradesAdapter.notifyDataSetChanged();
 
         //Recycler for return trades
+        recyclerViewReturnTrades = findViewById(R.id.recycler_view_custom_offer_return_trades);
         fLayoutManager = new FlexboxLayoutManager(getApplicationContext());
         fLayoutManager.setFlexWrap(FlexWrap.WRAP);
         fLayoutManager.setAlignItems(AlignItems.STRETCH);
@@ -174,15 +159,43 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_new_trade_custom_offer:
-//                Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
                 AddTrades();
                 break;
             case R.id.send_invoice_custom_offer:
-
-//                Toast.makeText(getApplicationContext(), ""+stringBuilder, Toast.LENGTH_SHORT).show();
-
-//                sendCustomOffer();
-
+                if (rb_getPay.isChecked()) {
+                    if (etPrice.getText().toString() == null || etPrice.getText().toString().isEmpty()) {
+                        etPrice.setError("Enter estimated budget please");
+                    }else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
+                        etDescription.setError("Enter description please..");
+                    }else {
+                        sendCustomOffer();
+                    }
+                } else if (rb_returnService.isChecked()) {
+                    if (etSecurityAmount.getText().toString().isEmpty() || etSecurityAmount.getText().toString() == null) {
+                        etSecurityAmount.setError("Enter security amount..");
+                    } else if (returnTradesList.isEmpty()) {
+                        Toast.makeText(CustomOffer.this, "Add return trades please", Toast.LENGTH_SHORT).show();
+                    }else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
+                        etDescription.setError("Enter description please..");
+                    }else {
+                        sendCustomOffer();
+                    }
+                }
+                break;
+            case R.id.cancel_btn_custom_offer:
+                finish();
+                break;
+            case R.id.rb_get_pay_custom_offer:
+                offerType = "2";
+                layoutSecurityAmount.setVisibility(View.GONE);
+                layoutReturnTrades.setVisibility(View.GONE);
+                layoutBudget.setVisibility(View.VISIBLE);
+                break;
+            case R.id.rb_return_service_custom_offer:
+                offerType = "1";
+                layoutSecurityAmount.setVisibility(View.VISIBLE);
+                layoutReturnTrades.setVisibility(View.VISIBLE);
+                layoutBudget.setVisibility(View.GONE);
                 break;
 
         }
@@ -220,22 +233,25 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
     }
 
     private void sendCustomOffer() {
+        progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(CustomOffer.this);
 
         Gson gson = new GsonBuilder().create();
         StringRequest request = new StringRequest(Request.Method.POST, URLs.create_offer_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(CustomOffer.this, "Response..", Toast.LENGTH_SHORT).show();
-               /* Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                Toast.makeText(CustomOffer.this, "Create offer successfully..", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 intent.putExtra("fragment_status", "notification");
                 startActivity(intent);
-                finish();*/
+                finish();
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error", error.toString());
+                progressDialog.dismiss();
             }
         }) {
             @Override
@@ -252,20 +268,34 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
                 map.put("offer_type", offerType);
                 if (rb_returnService.isChecked()) {
                     StringBuilder string_return_trades = new StringBuilder();
-                    for (String str:returnTradesList){
-                        string_return_trades.append(str +", ");
+                    for (String str : returnTradesList) {
+                        string_return_trades.append(str + ", ");
                         string_return_trades.append("\t");
                     }
                     map.put("offer", string_return_trades.toString());
-                    map.put("barter_security", etSecurityAmount.getText().toString().trim());
+                    String barterSecurity = etSecurityAmount.getText().toString().trim();
+                    map.put("barter_security", barterSecurity);
                 } else if (rb_getPay.isChecked()) {
-                    map.put("offer", etPrice.getText().toString().trim());
+                    String price = etPrice.getText().toString().trim();
+                    map.put("offer", price);
+                    map.put("barter_security", "0");
                 }
                 map.put("job_id", String.valueOf(jobId));
-                map.put("description", etDescription.getText().toString().trim());
+                String desc = etDescription.getText().toString().trim();
+                map.put("description", desc);
                 return map;
             }
         };
         requestQueue.add(request);
+    }
+
+    public void customProgressDialog(Context context) {
+        progressDialog = new ProgressDialog(context);
+        // Setting Message
+        progressDialog.setMessage("Loading...");
+        // Progress Dialog Style Spinner
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // Fetching max value
+        progressDialog.getMax();
     }
 }

@@ -13,6 +13,15 @@ public class Preferences {
         sharedPreferences= context.getSharedPreferences("com.example.barterapp",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
+    public void setDeviceToken(String deviceToken) {
+        editor.putString("device_token", deviceToken);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String getDeviceToken() {
+        return sharedPreferences.getString("device_token", "");
+    }
 
     public void setToken(String token) {
         editor.putString("token", token);
@@ -33,7 +42,15 @@ public class Preferences {
     public int getUserId() {
         return sharedPreferences.getInt("user_id", 0);
     }
+    public void setOrderId(int order_id) {
+        editor.putInt("order_id", order_id);
+        editor.apply();
+        editor.commit();
+    }
 
+    public int getOrderId() {
+        return sharedPreferences.getInt("order_id", 0);
+    }
 
     public void setFragmentStatus(String fragmentStatus){
         editor.putString("notification_fragment", fragmentStatus);
@@ -63,11 +80,11 @@ public class Preferences {
     }
 
     public void setSearchVal(boolean val){
-        editor.putBoolean("location",val);
+        editor.putBoolean("search",val);
         editor.commit();
         editor.apply();
     }
     public boolean getSearchVal(){
-        return sharedPreferences.getBoolean("location",false);
+        return sharedPreferences.getBoolean("search",false);
     }
 }
