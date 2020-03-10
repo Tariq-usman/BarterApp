@@ -72,6 +72,9 @@ public class SellServices extends Fragment {
                     sellJobsList.add(sellServicesResponse.getSellJob().get(i));
                 }
                 sellServicesAdapter.notifyDataSetChanged();
+                if (sellJobsList.isEmpty()){
+                    Toast.makeText(getContext(), "No data found!", Toast.LENGTH_SHORT).show();
+                }
                 progressDialog.dismiss();
 
             }
@@ -79,6 +82,7 @@ public class SellServices extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error", error.toString());
+                Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         }) {

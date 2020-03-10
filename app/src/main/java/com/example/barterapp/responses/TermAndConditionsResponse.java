@@ -7,18 +7,17 @@ import java.util.List;
 
 public class TermAndConditionsResponse {
 
-    @SerializedName("getTerms")
+    @SerializedName("GetTerm")
     @Expose
-    private List<GetTerm> getTerms = null;
+    private List<GetTerm> getTerm = null;
 
-    public List<GetTerm> getGetTerms() {
-        return getTerms;
+    public List<GetTerm> getGetTerm() {
+        return getTerm;
     }
 
-    public void setGetTerms(List<GetTerm> getTerms) {
-        this.getTerms = getTerms;
+    public void setGetTerm(List<GetTerm> getTerm) {
+        this.getTerm = getTerm;
     }
-
     public class GetTerm {
 
         @SerializedName("id")
@@ -90,3 +89,4 @@ public class TermAndConditionsResponse {
 
     }
 }
+

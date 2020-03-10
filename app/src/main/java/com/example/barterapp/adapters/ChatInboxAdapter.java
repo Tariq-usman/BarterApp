@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.barterapp.activities.ChatActivity;
 import com.example.barterapp.R;
+import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.chat_responses.GetAllInboxMessagesResponse;
 import com.example.barterapp.utils.URLs;
 
@@ -29,11 +30,13 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
     long different, elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds;
     SimpleDateFormat simpleDateFormat;
     private Date current_date, currentDate, startDate;
+    private Preferences preferences;
 
     public ChatInboxAdapter(Context context, List<GetAllInboxMessagesResponse.GetMessage> allInboxMessagesList) {
         this.context = context;
         this.allInboxMessagesList = allInboxMessagesList;
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        preferences = new Preferences(context);
     }
 
     @NonNull
@@ -47,7 +50,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tvUserName.setText(allInboxMessagesList.get(position).getName());
-        Glide.with(context).load(URLs.image_url+allInboxMessagesList.get(position).getPicture()).into(holder.userImage);
+        Glide.with(context).load(URLs.image_url + allInboxMessagesList.get(position).getPicture()).into(holder.userImage);
         if (allInboxMessagesList.get(position).getLastMessages() != null) {
             holder.tvMessage.setText(allInboxMessagesList.get(position).getLastMessages().getMessages());
             String time = allInboxMessagesList.get(position).getLastMessages().getDateTime();
@@ -64,7 +67,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
             } catch (Exception e) {
                 Log.e("Error", e.toString());
             }
-                holder.tvTime.setText(elapsedHours + " hours ago");
+            holder.tvTime.setText(elapsedHours + " hours ago");
         }
 
         //holder.ivPortfolioImage.setImageResource(images[position]);
@@ -72,8 +75,9 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                Integer id= allInboxMessagesList.get(position).getId();
-                intent.putExtra("sender_id",id);
+                Integer id = allInboxMessagesList.get(position).getId();
+                preferences.setJobUserId(id);
+                intent.putExtra("sender_id", id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

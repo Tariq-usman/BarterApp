@@ -13,7 +13,7 @@
         android:background="@drawable/top_bar">
 
         <ImageView
-            android:id="@+id/iv_back_chat"
+            android:id="@+id/iv_back_offer"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="Chat"
+            android:text="Custom Offer"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />

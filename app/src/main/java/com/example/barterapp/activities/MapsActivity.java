@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private EditText searchEt;
     private TextView searched_location;
-    private ImageView backBtn, locationPinUp, searchBtn,currentLocationBtn;
+    private ImageView backBtn, locationPinUp, searchBtn, currentLocationBtn;
     private Button doneBtn;
     private LocationManager manager;
     private LatLng current;
@@ -120,10 +121,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currentLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-                //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                try{
+                    //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                    //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                }catch (Exception e){
+                    Log.e("exception " , e.toString());
+                }
+
             }
         });
 
@@ -177,20 +183,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                current = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions()
-                        .position(current)
-                        .title("Current Location"));
-                //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-                //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                try {
+                    current = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.addMarker(new MarkerOptions()
+                            .position(current)
+                            .title("Current Location"));
+                    //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                    //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
 //                mMap.setMyLocationEnabled(true);
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MapsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MapsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                    }
+                }catch (Exception e){
+                    Log.e("exception",e.toString());
                 }
             }
+
         });
         mMap = googleMap;
 

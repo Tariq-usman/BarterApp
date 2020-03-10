@@ -54,7 +54,7 @@ public class TermsAndConditions extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 TermAndConditionsResponse conditionsResponse = gson.fromJson(response,TermAndConditionsResponse.class);
-                String str = conditionsResponse.getGetTerms().get(0).getContent();
+                String str = conditionsResponse.getGetTerm().get(0).getContent();
                 webView.loadData(str, "text/html", "UTF-8");
                 Toast.makeText(TermsAndConditions.this, "Response", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();

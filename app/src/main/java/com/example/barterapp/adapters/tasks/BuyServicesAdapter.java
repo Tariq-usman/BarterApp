@@ -47,14 +47,14 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Glide.with(context).load(URLs.image_url + buyJobList.get(position).getUser().getPicture()).into(holder.ivUser);
-        holder.tvTitle.setText(buyJobList.get(position).getJob().getTitle());
-        holder.tvprice.setText("$ " + buyJobList.get(position).getJob().getEstimatedBudget());
+        holder.tvTitle.setText(buyJobList.get(position).getOffer().getJob().getTitle());
+        holder.tvprice.setText("$ " + buyJobList.get(position).getOffer().getJob().getEstimatedBudget());
         holder.tvSecurity.setText("$ " + buyJobList.get(position).getBuyerSecurity());
-        holder.tvDueDate.setText(buyJobList.get(position).getJob().getDueDate());
+        holder.tvDueDate.setText(buyJobList.get(position).getOffer().getJob().getDueDate());
         Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
         List<Address> addresses;
-        Double lat = Double.parseDouble(buyJobList.get(position).getJob().getLatitude());
-        Double lng = Double.parseDouble(buyJobList.get(position).getJob().getLongitude());
+        Double lat = Double.parseDouble(buyJobList.get(position).getOffer().getJob().getLatitude());
+        Double lng = Double.parseDouble(buyJobList.get(position).getOffer().getJob().getLongitude());
         try {
             addresses = geocoder.getFromLocation(28.963400, 77.711990, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
@@ -78,7 +78,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             }
         });
 
-        int status_id = buyJobList.get(position).getJob().getStatusId();
+        int status_id = buyJobList.get(position).getOffer().getJob().getStatusId();
         if (status_id == 3) {
             holder.tvStatusText.setText("In Progress");
             holder.viewJobStatus.setBackgroundResource(R.drawable.bg_online_status);
@@ -91,15 +91,15 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
                 Intent intent = new Intent(context, SellServicesDetails.class);
-                intent.putExtra("title_my_job", buyJobList.get(position).getJob().getTitle());
-                intent.putExtra("description_my_job", buyJobList.get(position).getJob().getDescription());
+                intent.putExtra("title_my_job", buyJobList.get(position).getOffer().getJob().getTitle());
+                intent.putExtra("description_my_job", buyJobList.get(position).getOffer().getJob().getDescription());
                 intent.putExtra("posted_by_my_job", buyJobList.get(position).getUser().getName());
                 intent.putExtra("picture_my_job", buyJobList.get(position).getUser().getPicture());
                 intent.putExtra("trades_my_job", buyJobList.get(position).getUser().getTrades());
                 intent.putExtra("location_my_job", holder.tvLocation.getText().toString());
-                intent.putExtra("duration_my_job", buyJobList.get(position).getJob().getDueDate());
-                intent.putExtra("due_date_my_job", buyJobList.get(position).getJob().getDueDate());
-                intent.putExtra("budget_my_job", buyJobList.get(position).getJob().getEstimatedBudget());
+                intent.putExtra("duration_my_job", buyJobList.get(position).getOffer().getJob().getDueDate());
+                intent.putExtra("due_date_my_job", buyJobList.get(position).getOffer().getJob().getDueDate());
+                intent.putExtra("budget_my_job", buyJobList.get(position).getOffer().getJob().getEstimatedBudget());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

@@ -1,16 +1,22 @@
 package com.example.barterapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,11 +63,12 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -85,9 +92,6 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private RecyclerView recyclerView, recyclerViewTrades;
     private FlexboxLayoutManager layoutManager;
     private EditText et_experience;
-    private String[] trades = {"Design", "Mobile App Design", "Web Design", "abc", "abc", "Design"};
-    int[] images = {R.drawable.notification_image, R.drawable.arslan, R.drawable.farmer_four, R.drawable.farmer_three, R.drawable.customer};
-
     private Preferences preferences;
     private ProfileTradesAdapter profileTradesAdapter;
     private ProfilePortfolioAdapter profilePortfolioAdapter;
@@ -157,63 +161,6 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         return view;
     }
 
-    private void currentUser() {
-        progressDialog.show();
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        final Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.GET, URLs.current_user_url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                CurrentUserResponse userResponse = gson.fromJson(response, CurrentUserResponse.class);
-
-                String userName = userResponse.getUser().getName();
-                String experience = userResponse.getUser().getExperience();
-                String trades = userResponse.getUser().getTrades();
-                String profileImage = userResponse.getUser().getPicture();
-
-                tvUserName.setText(userName);
-                Glide.with(getContext()).load(URLs.image_url + profileImage).into(iv_profileImage);
-                et_experience.setText(experience);
-                if (!trades.equals(null)) {
-                    trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
-                    profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
-                    recyclerViewTrades.setAdapter(profileTradesAdapter);
-                } else {
-                    Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
-                }
-                portfolio_pics.clear();
-                for(int i = 0 ; i<userResponse.getUser().getPortfolios().size();i++){
-                    portfolio_pics.add(userResponse.getUser().getPortfolios().get(i).getPicture());
-                }
-               /* for (CurrentUserResponse.User.Portfolio portfolio : userResponse.getUser().getPortfolios()) {
-                    portfolio_pics.add(portfolio);
-                }*/
-                profilePortfolioAdapter.notifyDataSetChanged();
-
-                progressDialog.dismiss();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error", error.toString());
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headerMap = new HashMap<>();
-                token = preferences.getToken();
-                headerMap.put("Authorization", "Bearer " + token);
-                return headerMap;
-            }
-        };
-        requestQueue.add(request);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -270,7 +217,62 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
     }
 
+    private void currentUser() {
+        progressDialog.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        final Gson gson = new GsonBuilder().create();
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.current_user_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                CurrentUserResponse userResponse = gson.fromJson(response, CurrentUserResponse.class);
+
+                String userName = userResponse.getUser().getName();
+                String experience = userResponse.getUser().getExperience();
+                String trades = userResponse.getUser().getTrades();
+                String profileImage = URLs.image_url + userResponse.getUser().getPicture();
+
+                tvUserName.setText(userName);
+                Glide.with(getContext()).load(profileImage).into(iv_profileImage);
+                et_experience.setText(experience);
+                if (!trades.equals(null)) {
+                    trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
+                    profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
+                    recyclerViewTrades.setAdapter(profileTradesAdapter);
+                } else {
+                    Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
+                }
+                portfolio_pics.clear();
+                for (int i = 0; i < userResponse.getUser().getPortfolios().size(); i++) {
+                    portfolio_pics.add(userResponse.getUser().getPortfolios().get(i).getPicture());
+                }
+                profilePortfolioAdapter.notifyDataSetChanged();
+
+                progressDialog.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.toString());
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerMap = new HashMap<>();
+                token = preferences.getToken();
+                headerMap.put("Authorization", "Bearer " + token);
+                return headerMap;
+            }
+        };
+        requestQueue.add(request);
+    }
+
     public void updateUserData() throws JSONException {
+        progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
         String token = preferences.getToken();
@@ -280,9 +282,9 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
             @Override
             public void onResponse(NetworkResponse response) {
 
-                Log.e("Message", response.toString());
+                Log.e("Response", response.toString());
 
-                Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Response", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
@@ -290,7 +292,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "" + error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", error.toString());
                 progressDialog.dismiss();
             }
         }) {
@@ -300,7 +302,11 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 Map<String, DataPart> params = new HashMap<>();
                 Bitmap bm = ((BitmapDrawable) iv_profileImage.getDrawable()).getBitmap();
                 bytesArray = imageToString(bm);
-                params.put("picture", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+                params.put("image", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+               /* for (int i=0;i<portfolio_pics.size();i++){
+                    bytesArray = imageToString(i);
+                    params.put("portfolioImage",new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+                }*/
                 params.put("portfolioImage", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
                 return params;
             }
@@ -309,7 +315,13 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("experience", et_experience.getText().toString().trim());
-                hashMap.put("trades", et_experience.getText().toString().trim());
+                StringBuilder string_return_trades = new StringBuilder();
+                for (String str : trades_list) {
+                    string_return_trades.append(str + ", ");
+                   // string_return_trades.append("\t");
+                }
+                hashMap.put("trades", string_return_trades.toString());
+//                hashMap.put("trades", et_experience.getText().toString().trim());
                 return hashMap;
             }
 
@@ -337,7 +349,12 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            getPath(getContext(),selectedImage);
+            String path = null;
+            try {
+                path = getFilePath(getContext(), selectedImage);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             /*String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
@@ -350,43 +367,103 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
             if (select_image_status == false) {
                 try {
-                    Glide.with(getContext()).load(selectedImage).into(iv_profileImage);
+                    /*Bitmap myBitmap = BitmapFactory.decodeFile(path);
+                    iv_profileImage.setImageBitmap(myBitmap);*/
+//                    Picasso.get().load(picturePath).into(iv_profileImage);
+                    Glide.with(getContext()).load(selectedImage.toString()).into(iv_profileImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 select_image_status = true;
             } else if (currentPosition >= 0) {
                 portfolio_pics.remove(currentPosition);
-                portfolio_pics.add(currentPosition, result);
+                portfolio_pics.add(currentPosition, selectedImage.toString());
+                profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
                 profilePortfolioAdapter.notifyDataSetChanged();
                 currentPosition = -1;
             } else {
                 if (portfolio_pics.size() == 0) {
                     portfolio_pics.clear();
-                    portfolio_pics.add(result);
+                    portfolio_pics.add(selectedImage.toString());
+                    profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
                     profilePortfolioAdapter.notifyDataSetChanged();
                 } else {
-                    portfolio_pics.add(result);
+                    portfolio_pics.add(selectedImage.toString());
+                    profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
                     profilePortfolioAdapter.notifyDataSetChanged();
                 }
             }
         }
     }
-    public static String getPath(Context context, Uri uri) {
 
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
-                result = cursor.getString(column_index);
+    @SuppressLint("NewApi")
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[]{
+                        split[1]
+                };
             }
-            cursor.close();
         }
-        if (result == null) {
-            result = "Not found";
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+
+            if (isGooglePhotosUri(uri)) {
+                return uri.getLastPathSegment();
+            }
+
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
         }
-        return result;
+        return null;
+    }
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
 

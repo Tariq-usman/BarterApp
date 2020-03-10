@@ -240,6 +240,7 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         StringRequest request = new StringRequest(Request.Method.POST, URLs.create_offer_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                preferences.setOfferId(offerType);
                 Toast.makeText(CustomOffer.this, "Create offer successfully..", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 intent.putExtra("fragment_status", "notification");

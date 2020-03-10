@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.MakeOffer;
+import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.home.GetAllJobsResponse;
 import com.example.barterapp.utils.URLs;
 
@@ -31,10 +32,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     Context context;
     List<GetAllJobsResponse.AllJob> jobs;
     long daysDiff;
+    private Preferences preferences;
 
     public HomeAdapter(Context context, List<GetAllJobsResponse.AllJob> jobs) {
         this.context = context;
         this.jobs = jobs;
+        preferences = new Preferences(context);
     }
 
     @NonNull

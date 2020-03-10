@@ -1,11 +1,14 @@
 package com.example.barterapp.responses.profile;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class  CurrentUserResponse {
+public class CurrentUserResponse {
+
     @SerializedName("user")
     @Expose
     private User user;
@@ -47,6 +50,9 @@ public class  CurrentUserResponse {
         @SerializedName("email_verified_at")
         @Expose
         private Object emailVerifiedAt;
+        @SerializedName("device_token")
+        @Expose
+        private String deviceToken;
         @SerializedName("deleted_at")
         @Expose
         private Object deletedAt;
@@ -130,6 +136,14 @@ public class  CurrentUserResponse {
 
         public void setEmailVerifiedAt(Object emailVerifiedAt) {
             this.emailVerifiedAt = emailVerifiedAt;
+        }
+
+        public String getDeviceToken() {
+            return deviceToken;
+        }
+
+        public void setDeviceToken(String deviceToken) {
+            this.deviceToken = deviceToken;
         }
 
         public Object getDeletedAt() {
@@ -258,3 +272,4 @@ public class  CurrentUserResponse {
         }
     }
 }
+

@@ -19,7 +19,6 @@ public class GetAllInboxMessagesResponse {
         this.getMessages = getMessages;
     }
 
-
     public class GetMessage {
 
         @SerializedName("id")
@@ -115,8 +114,10 @@ public class GetAllInboxMessagesResponse {
             }
 
         }
+
     }
 }
+
 
 
 

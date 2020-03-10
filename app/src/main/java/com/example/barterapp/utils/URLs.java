@@ -27,10 +27,13 @@ public class URLs {
     public static final String get_all_inbox_messages_url = base_url + "getMessage";
     public static final String get_all_chat_messages_url = base_url + "getAllMessages/";
     public static final String add_messages = base_url + "addMessages";
+    ////Accept or reject order url
+    public static final String accept_order_url = base_url+"acceptOrders/";
     ////Term and conditions url
     public static final String terms_conditions_url = base_url + "getAllTerms";
     ////Rating
     public static final String reting_url = base_url + "addRating";
 
 
+    public static String get_offers_url = base_url + "getAllUserOffer/";
 }
