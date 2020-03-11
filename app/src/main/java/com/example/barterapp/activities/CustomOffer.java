@@ -88,7 +88,11 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         preferences = new Preferences(this);
         getIncommingIntent();
 
-        trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
+        if (trades!=null) {
+            trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
+        }else {
+            Toast.makeText(getApplicationContext(), "Trades are not found!", Toast.LENGTH_SHORT).show();
+        }
         returnTradesList = new ArrayList<>();
 
         tvDueDate = findViewById(R.id.tvDue_date_custom_invoice);
@@ -241,7 +245,8 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onResponse(String response) {
                 preferences.setOfferId(offerType);
-                Toast.makeText(CustomOffer.this, "Create offer successfully..", Toast.LENGTH_SHORT).show();
+                CreateOfferResponse offerResponse = gson.fromJson(response,CreateOfferResponse.class);
+                Toast.makeText(CustomOffer.this, ""+offerResponse.getMessages(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 intent.putExtra("fragment_status", "notification");
                 startActivity(intent);
@@ -252,6 +257,7 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error", error.toString());
+                Toast.makeText(getApplicationContext(), ""+error.networkResponse.toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         }) {
@@ -266,12 +272,12 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("offer_type", offerType);
+                map.put("offer_type_id", offerType);
                 if (rb_returnService.isChecked()) {
                     StringBuilder string_return_trades = new StringBuilder();
                     for (String str : returnTradesList) {
                         string_return_trades.append(str + ", ");
-                        string_return_trades.append("\t");
+//                        string_return_trades.append("\t");
                     }
                     map.put("offer", string_return_trades.toString());
                     String barterSecurity = etSecurityAmount.getText().toString().trim();

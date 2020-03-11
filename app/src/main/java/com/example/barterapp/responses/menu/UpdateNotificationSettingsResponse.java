@@ -1,11 +1,10 @@
-package com.example.barterapp.responses.user;
+package com.example.barterapp.responses.menu;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+public class UpdateNotificationSettingsResponse {
 
-public class SignUpResponse {
     @SerializedName("message")
     @Expose
     private String message;

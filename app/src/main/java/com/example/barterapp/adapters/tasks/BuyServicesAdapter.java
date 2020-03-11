@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
-import com.example.barterapp.activities.SellServicesDetails;
+import com.example.barterapp.activities.BuySellHistoryServicesDetails;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.tasks.BuySellServicesResponse;
 import com.example.barterapp.utils.URLs;
@@ -72,7 +72,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
-                Intent intent = new Intent(context, SellServicesDetails.class);
+                Intent intent = new Intent(context, BuySellHistoryServicesDetails.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -90,7 +90,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
-                Intent intent = new Intent(context, SellServicesDetails.class);
+                Intent intent = new Intent(context, BuySellHistoryServicesDetails.class);
                 intent.putExtra("title_my_job", buyJobList.get(position).getOffer().getJob().getTitle());
                 intent.putExtra("description_my_job", buyJobList.get(position).getOffer().getJob().getDescription());
                 intent.putExtra("posted_by_my_job", buyJobList.get(position).getUser().getName());

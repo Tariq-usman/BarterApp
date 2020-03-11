@@ -28,18 +28,19 @@ import java.util.List;
 public class MakeOffer extends AppCompatActivity {
     private Button tradeBtn;
     private ImageView backBtn, ivPostedBy;
-    private TextView tvTitle, tvDescription, tvPosted_by, tvLocation, tvDeuDate,tvDuration, tvBudget;
+    private TextView tvTitle, tvDescription, tvPosted_by, tvLocation, tvDeuDate, tvDuration, tvBudget;
     private RecyclerView recyclerView, recyclerViewTrades;
     private FlexboxLayoutManager layoutManager;
     private int job_id;
     private String title, description, posted_by, picture, trades, location, duration, due_date;
     private int budget;
-    private List<String> trades_list;
+    private List<String> trades_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_offer);
+        trades_list.add("xyz");
         backBtn = findViewById(R.id.iv_back_services);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +64,12 @@ public class MakeOffer extends AppCompatActivity {
             tvTitle.setText(title);
             tvDescription.setText(description);
             tvPosted_by.setText(posted_by);
-            Glide.with(getApplicationContext()).load(URLs.image_url+picture).into(ivPostedBy);
-            trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
+            Glide.with(getApplicationContext()).load(URLs.image_url + picture).into(ivPostedBy);
+            if (trades !=null) {
+                trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
+            } else {
+                Toast.makeText(this, "Trades list is null!", Toast.LENGTH_SHORT).show();
+            }
 //            trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
             tvLocation.setText(location);
             tvDeuDate.setText(due_date);
@@ -87,25 +92,25 @@ public class MakeOffer extends AppCompatActivity {
         tradeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MakeOffer.this,CustomOffer.class);
-                intent.putExtra("jobId",job_id);
-                intent.putExtra("trades",trades);
-                intent.putExtra("due_date",due_date);
-                intent.putExtra("budget",budget);
+                Intent intent = new Intent(MakeOffer.this, CustomOffer.class);
+                intent.putExtra("jobId", job_id);
+                intent.putExtra("trades", trades);
+                intent.putExtra("due_date", due_date);
+                intent.putExtra("budget", budget);
                 startActivity(intent);
             }
         });
     }
 
     private void getIncommingIntent() {
-        job_id = getIntent().getIntExtra("job_id",0);
+        job_id = getIntent().getIntExtra("job_id", 0);
         title = getIntent().getStringExtra("title");
         description = getIntent().getStringExtra("description");
         posted_by = getIntent().getStringExtra("posted_by");
         picture = getIntent().getStringExtra("picture");
         trades = getIntent().getStringExtra("trades");
         location = getIntent().getStringExtra("location");
-        duration= getIntent().getStringExtra("duration");
+        duration = getIntent().getStringExtra("duration");
         due_date = getIntent().getStringExtra("due_date");
         budget = getIntent().getIntExtra("budget", 0);
     }

@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.example.barterapp.activities.SellServicesDetails;
+import com.example.barterapp.activities.BuySellHistoryServicesDetails;
 import com.example.barterapp.R;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.menu.AllUserJobsHistoryResponse;
@@ -102,7 +102,7 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("history");
-                Intent intent = new Intent(context, SellServicesDetails.class);
+                Intent intent = new Intent(context, BuySellHistoryServicesDetails.class);
                 intent.putExtra("title_my_job", sellJobs.get(position).getOffer().getJob().getTitle());
                 intent.putExtra("description_my_job", sellJobs.get(position).getOffer().getJob().getDescription());
                 intent.putExtra("posted_by_my_job", sellJobs.get(position).getUser().getName());

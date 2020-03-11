@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +33,7 @@ import java.util.Map;
 
 public class OfferAcceptReject extends AppCompatActivity {
     private RecyclerView recyclerView;
+    private ImageView ivBack;
     private Preferences preferences;
     private ProgressDialog progressDialog;
     AcceptRejectOfferAdapter acceptRejectOfferAdapter;
@@ -41,6 +44,13 @@ public class OfferAcceptReject extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_accept_reject);
         customProgressDialog(OfferAcceptReject.this);
+        ivBack = findViewById(R.id.iv_back_offer_accept_reject);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         preferences = new Preferences(this);
         getOfferData();
         recyclerView = findViewById(R.id.recycler_view_custom_offer_accept_reject);

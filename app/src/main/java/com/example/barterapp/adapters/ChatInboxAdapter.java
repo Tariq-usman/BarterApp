@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.example.barterapp.activities.ChatActivity;
 import com.example.barterapp.R;
@@ -18,9 +19,13 @@ import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.chat_responses.GetAllInboxMessagesResponse;
 import com.example.barterapp.utils.URLs;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,7 +61,24 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
             String time = allInboxMessagesList.get(position).getLastMessages().getDateTime();
             String[] date = time.split(" ");
             String s_date = date[1];
-            String currentDateAndTime = simpleDateFormat.format(new Date());
+            List<String> split_time = Arrays.asList(s_date.split(":"));
+            int hours;
+            String minute;
+            String format;
+            hours = Integer.parseInt(split_time.get(0));
+            minute = split_time.get(1);
+            if (hours == 0) {
+                hours += 12;
+                format = "AM";
+            } else if (hours == 12) {
+                format = "PM";
+            } else if (hours > 12) {
+                hours -= 12;
+                format = "PM";
+            } else {
+                format = "AM";
+            }
+           /* String currentDateAndTime = simpleDateFormat.format(new Date());
             String[] edate = currentDateAndTime.split(" ");
             String e_date = edate[1];
             try {
@@ -66,8 +88,10 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
                 printDifference(currentDate, startDate);
             } catch (Exception e) {
                 Log.e("Error", e.toString());
-            }
-            holder.tvTime.setText(elapsedHours + " hours ago");
+            }   */
+            holder.tvTime.setText(hours + ":" + minute + " " + format);
+
+//            holder.tvTime.setText(elapsedHours + " hours ago");
         }
 
         //holder.ivPortfolioImage.setImageResource(images[position]);
@@ -86,7 +110,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
     }
 
     private void printDifference(Date startDate, Date currentDate) {
-        different = currentDate.getTime() - startDate.getTime();
+        different = startDate.getTime() - currentDate.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;

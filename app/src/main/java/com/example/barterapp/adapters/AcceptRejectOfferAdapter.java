@@ -66,34 +66,36 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvPrice.setText(offerList.get(position).getOffer());
-        holder.tvDueDate.setText(offerList.get(position).getJob().getDueDate());
-        holder.tvSecurityAmount.setText(offerList.get(position).getBarterSecurity());
-        holder.tvDescription.setText(offerList.get(position).getDescription());
-        //Recycler for trades
-        layoutManager = new FlexboxLayoutManager(context);
-        layoutManager.setFlexWrap(FlexWrap.WRAP);
-        layoutManager.setAlignItems(AlignItems.STRETCH);
-        layoutManager.setFlexDirection(FlexDirection.ROW);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
-        holder.recyclerViewTrades.setLayoutManager(layoutManager);
-        holder.recyclerViewTrades.setAdapter(new TradesAdapter(context, trades));
+        if (!offerList.isEmpty()) {
+            holder.tvPrice.setText(offerList.get(position).getOffer());
+            holder.tvDueDate.setText(offerList.get(position).getJob().getDueDate());
+            holder.tvSecurityAmount.setText(String.valueOf(offerList.get(position).getBarterSecurity()));
+            holder.tvDescription.setText(offerList.get(position).getDescription());
+            //Recycler for trades
+            layoutManager = new FlexboxLayoutManager(context);
+            layoutManager.setFlexWrap(FlexWrap.WRAP);
+            layoutManager.setAlignItems(AlignItems.STRETCH);
+            layoutManager.setFlexDirection(FlexDirection.ROW);
+            layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+            holder.recyclerViewTrades.setLayoutManager(layoutManager);
+            holder.recyclerViewTrades.setAdapter(new TradesAdapter(context, trades));
 
-        //Recycler for return trades
-        fLayoutManager = new FlexboxLayoutManager(context);
-        fLayoutManager.setFlexWrap(FlexWrap.WRAP);
-        fLayoutManager.setAlignItems(AlignItems.STRETCH);
-        fLayoutManager.setFlexDirection(FlexDirection.ROW);
-        fLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
-        holder.recyclerViewReturnTrades.setLayoutManager(fLayoutManager);
+            //Recycler for return trades
+            fLayoutManager = new FlexboxLayoutManager(context);
+            fLayoutManager.setFlexWrap(FlexWrap.WRAP);
+            fLayoutManager.setAlignItems(AlignItems.STRETCH);
+            fLayoutManager.setFlexDirection(FlexDirection.ROW);
+            fLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
+            holder.recyclerViewReturnTrades.setLayoutManager(fLayoutManager);
 //        holder.recyclerViewReturnTrades.setAdapter(new ReturnTradesAdapter(context, returnTrades));
-
+        }else {
+            Toast.makeText(context, "No data found!", Toast.LENGTH_SHORT).show();
+        }
 
         holder.acceptOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 acceptOffer();
-
             }
         });
 
@@ -142,7 +144,7 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
 
     @Override
     public int getItemCount() {
-        return 1;
+        return offerList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -28,7 +28,8 @@ public class URLs {
     public static final String get_all_chat_messages_url = base_url + "getAllMessages/";
     public static final String add_messages = base_url + "addMessages";
     ////Accept or reject order url
-    public static final String accept_order_url = base_url+"acceptOrders/";
+    public static final String accept_order_url = base_url + "acceptOrders/";
+    public static String complete_order_url = base_url + "completeOrder/";
     ////Term and conditions url
     public static final String terms_conditions_url = base_url + "getAllTerms";
     ////Rating
@@ -36,4 +37,6 @@ public class URLs {
 
 
     public static String get_offers_url = base_url + "getAllUserOffer/";
+    public static String update_notification_settings_url = base_url + "updateNotificationSetting";
+    public static String current_user_notification_settings = base_url +"getCurrentUserNotification";
 }

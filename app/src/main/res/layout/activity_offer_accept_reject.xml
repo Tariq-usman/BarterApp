@@ -13,7 +13,7 @@
         android:background="@drawable/top_bar">
 
         <ImageView
-            android:id="@+id/iv_back_offer"
+            android:id="@+id/iv_back_offer_accept_reject"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

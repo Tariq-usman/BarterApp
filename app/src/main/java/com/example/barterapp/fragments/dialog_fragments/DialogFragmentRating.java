@@ -99,17 +99,17 @@ public class DialogFragmentRating extends DialogFragment {
                 return headerMap;
             }
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                int order_id = preferences.getOrderId();
-                map.put("order_id", String.valueOf(order_id));
-                String review = etReview.getText().toString().trim();
-                map.put("review", review);
-                double rating = ratingBar.getRating();
-                map.put("rating", String.valueOf(rating));
-                return map;
-            }
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<>();
+                    int order_id = preferences.getOrderId();
+                    map.put("order_id", String.valueOf(order_id));
+                    String review = etReview.getText().toString().trim();
+                    map.put("review", review);
+                    double rating = ratingBar.getRating();
+                    map.put("rating", String.valueOf(rating));
+                    return map;
+                }
         };
         requestQueue.add(request);
     }

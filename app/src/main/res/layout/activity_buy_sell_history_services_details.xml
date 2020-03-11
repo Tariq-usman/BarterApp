@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.SellServicesDetails">
+    tools:context=".activities.BuySellHistoryServicesDetails">
 
     <FrameLayout
         android:id="@+id/title_layout"

@@ -171,11 +171,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String > map = new HashMap<>();
+                String device_token = preferences.getDeviceToken();
                 map.put("name",name);
                 map.put("email",email);
                 map.put("password",pass);
                 map.put("latitude",String.valueOf(latitude));
                 map.put("longitude",String.valueOf(longitude));
+                map.put("device_token",device_token);
                 return map;
             }
         };

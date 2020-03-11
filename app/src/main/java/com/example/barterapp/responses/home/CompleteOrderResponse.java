@@ -3,8 +3,7 @@ package com.example.barterapp.responses.home;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreateOfferResponse {
-
+public class CompleteOrderResponse {
 
     @SerializedName("messages")
     @Expose
@@ -17,5 +16,4 @@ public class CreateOfferResponse {
     public void setMessages(String messages) {
         this.messages = messages;
     }
-
 }

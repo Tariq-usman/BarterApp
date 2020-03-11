@@ -22,10 +22,14 @@ public class Notifications extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notificatins,container,false);
+        getAllNotifications();
         recyclerView = view.findViewById(R.id.recycler_view_notifications);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new NotificationsAdapter(getContext(),images));
         return view;
+    }
+
+    private void getAllNotifications() {
     }
 }

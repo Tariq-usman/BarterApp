@@ -235,11 +235,13 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 tvUserName.setText(userName);
                 Glide.with(getContext()).load(profileImage).into(iv_profileImage);
                 et_experience.setText(experience);
-                if (!trades.equals(null)) {
+                if (trades!=null) {
                     trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
                     profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
                     recyclerViewTrades.setAdapter(profileTradesAdapter);
                 } else {
+                    profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
+                    recyclerViewTrades.setAdapter(profileTradesAdapter);
                     Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
                 }
                 portfolio_pics.clear();
