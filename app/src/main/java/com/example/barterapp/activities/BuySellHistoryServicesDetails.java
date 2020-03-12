@@ -60,7 +60,7 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_sell_history_services_details);
-        customProgressDialog(getApplicationContext());
+        customProgressDialog(BuySellHistoryServicesDetails.this);
 
         preferences = new Preferences(this);
         status = preferences.getFragmentStatus();

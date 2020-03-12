@@ -55,6 +55,7 @@ import com.example.barterapp.others.MySingleton;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.others.VolleyMultipartRequest;
 import com.example.barterapp.responses.profile.CurrentUserResponse;
+import com.example.barterapp.responses.profile.UpdateProfileResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -117,7 +118,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         currentUser();
 
         trades_list = new ArrayList<>();
-        trades_list.add("Android developer");
+        trades_list.add("Example");
 //        portfolio_pics.add(Uri.parse(String.valueOf(R.drawable.notification_image)));
 
         preferences = new Preferences(getContext());
@@ -279,16 +280,13 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         Map<String, String> headers = new HashMap<>();
         String token = preferences.getToken();
         headers.put("Authorization", "Bearer " + token);
-
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URLs.update_profile_url, headers, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
-
                 Log.e("Response", response.toString());
 
-                Toast.makeText(getContext(), "Response", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Update profile successfully.", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-
             }
 
         }, new Response.ErrorListener() {
@@ -320,10 +318,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 StringBuilder string_return_trades = new StringBuilder();
                 for (String str : trades_list) {
                     string_return_trades.append(str + ", ");
-                   // string_return_trades.append("\t");
                 }
                 hashMap.put("trades", string_return_trades.toString());
-//                hashMap.put("trades", et_experience.getText().toString().trim());
                 return hashMap;
             }
 
@@ -479,6 +475,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         btnNo = myDialog.findViewById(R.id.btn_no);
         btnYes.setEnabled(true);
         btnNo.setEnabled(true);
+
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

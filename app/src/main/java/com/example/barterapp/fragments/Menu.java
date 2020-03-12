@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.barterapp.activities.History;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.SignInActivity;
+import com.example.barterapp.activities.TradesHistory;
 import com.example.barterapp.activities.Valet;
 import com.example.barterapp.activities.ChangePassword;
 import com.example.barterapp.activities.ChoosePaymentMethodTwo;
@@ -88,6 +89,9 @@ public class Menu extends Fragment implements View.OnClickListener {
                 break;
             case R.id.notification_layout:
                 startActivity(new Intent(getContext(), NotificationsSettings.class));
+                break;
+            case R.id.trade_history_layout:
+                startActivity(new Intent(getContext(), TradesHistory.class));
                 break;
             case R.id.history_layout:
                 startActivity(new Intent(getContext(), History.class));

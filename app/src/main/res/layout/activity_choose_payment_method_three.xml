@@ -36,6 +36,12 @@
             android:textSize="@dimen/sixteen_sp" />
 
     </FrameLayout>
+    <com.stripe.android.view.CardInputWidget
+        android:id="@+id/cardInputWidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <ScrollView
         android:layout_width="match_parent"

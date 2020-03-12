@@ -40,7 +40,7 @@ public class MakeOffer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_offer);
-        trades_list.add("xyz");
+//        trades_list.add("xyz");
         backBtn = findViewById(R.id.iv_back_services);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

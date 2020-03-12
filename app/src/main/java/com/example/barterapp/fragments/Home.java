@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Home extends Fragment {
-    int[] images = {R.drawable.notification_image, R.drawable.arslan, R.drawable.farmer_four, R.drawable.farmer_three, R.drawable.customer};
     private RecyclerView recyclerView, recyclerViewSearch;
     ProgressDialog progressDialog;
     List<GetAllJobsResponse.AllJob> allJobList = new ArrayList<>();
@@ -89,7 +88,6 @@ public class Home extends Fragment {
                     recyclerViewSearch.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                     InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     searchJob();
                 }
@@ -113,9 +111,9 @@ public class Home extends Fragment {
                     searchList.add(searchJobs);
                 }
                 searchAdapter.notifyDataSetChanged();
-                if (searchList.size()==0){
+                if (searchList.size() == 0) {
                     tvNoResult.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvNoResult.setVisibility(View.GONE);
                 }
                 progressDialog.dismiss();

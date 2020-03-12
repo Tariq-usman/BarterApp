@@ -245,6 +245,7 @@
                         android:id="@+id/etDescription_custom_invoice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="text"
                         android:background="@android:color/transparent"
                         android:hint="Description text here....."
                         android:textSize="@dimen/twelve_sp" />

@@ -38,5 +38,7 @@ public class URLs {
 
     public static String get_offers_url = base_url + "getAllUserOffer/";
     public static String update_notification_settings_url = base_url + "updateNotificationSetting";
-    public static String current_user_notification_settings = base_url +"getCurrentUserNotification";
+    public static String current_user_notification_settings = base_url + "getCurrentUserNotification";
+    public static String get_all_users_notifications = base_url + "getAllUserNotification";
+    public static String get_trades_history_url = base_url + "getTradeHistory";
 }

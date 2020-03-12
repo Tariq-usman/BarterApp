@@ -126,13 +126,13 @@ public class UserOffersHistoryAdapter extends RecyclerView.Adapter<UserOffersHis
             public void onClick(View v) {
 //                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
                 offer_id = buyJobs.get(position).getJob().getId();
-                deleteJob(position);
+                deleteJob(position,offer_id);
             }
         });
 
     }
 
-    private void deleteJob(final int position) {
+    private void deleteJob(int offer_id, final int position) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         final Gson gson = new GsonBuilder().create();
         StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_user_offer_url + offer_id, new Response.Listener<String>() {

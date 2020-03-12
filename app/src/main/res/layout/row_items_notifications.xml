@@ -22,6 +22,7 @@
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_notify_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Jhon Doe"
@@ -29,12 +30,14 @@
                 android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/tv_notify_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Notification text or may be description of job / service"
                 android:textSize="@dimen/twelve_sp"
                 android:textColor="@color/greyForText"/>
             <TextView
+                android:id="@+id/tv_notify_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2 hours ago"

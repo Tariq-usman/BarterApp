@@ -12,16 +12,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
+        android:name=".application.AppClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".application.AppClass"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.OfferAcceptReject"></activity>
+        <activity android:name=".activities.TradesHistory"></activity>
+        <activity android:name=".activities.OfferAcceptReject" />
         <activity android:name=".activities.CustomOffer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

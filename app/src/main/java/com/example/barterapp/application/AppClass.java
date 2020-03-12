@@ -8,6 +8,7 @@ import com.example.barterapp.others.Preferences;
 import com.google.firebase.FirebaseApp;
 import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
+import com.stripe.android.PaymentConfiguration;
 
 public class AppClass extends Application {
     Preferences preferences;
@@ -37,5 +38,10 @@ public class AppClass extends Application {
                 }*/
             }
         });
+
+        PaymentConfiguration.init(
+                getApplicationContext(),
+                "pk_test_TYooMQauvdEDq54NiTphI7jx"
+        );
     }
 }

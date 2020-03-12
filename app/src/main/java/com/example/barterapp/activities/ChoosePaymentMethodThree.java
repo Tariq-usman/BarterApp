@@ -3,6 +3,7 @@ package com.example.barterapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,13 @@ import android.widget.TextView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.activities.CompleteOrder;
+import com.stripe.android.PaymentConfiguration;
+import com.stripe.android.Stripe;
+import com.stripe.android.model.Card;
+import com.stripe.android.model.ConfirmPaymentIntentParams;
+import com.stripe.android.model.Customer;
+import com.stripe.android.model.PaymentMethodCreateParams;
+import com.stripe.android.view.CardInputWidget;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,18 +33,19 @@ import java.util.List;
 
 public class ChoosePaymentMethodThree extends AppCompatActivity {
     private Button submitBtn;
-    private TextView tvDay,tvYear;
+    private TextView tvDay, tvYear;
     private LinearLayout layoutDate;
     private ImageView backBtn;
     private DatePickerDialog datePickerDialog;
     private int mYear, mMonth, mDay;
+    CardInputWidget cardInputWidget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_payment_method_three);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        cardInputWidget = findViewById(R.id.cardInputWidget);
         tvDay = findViewById(R.id.tv_day);
         tvYear = findViewById(R.id.tv_year);
         backBtn = findViewById(R.id.iv_back_pay_method_three);
@@ -81,38 +90,5 @@ public class ChoosePaymentMethodThree extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
-
-       /* // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("1");
-        categories.add("2");
-        categories.add("3");
-        categories.add("4");
-        categories.add("5");
-        categories.add("6");
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
     }
 }

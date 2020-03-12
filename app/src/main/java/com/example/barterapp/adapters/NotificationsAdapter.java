@@ -5,34 +5,45 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.ChatActivity;
+import com.example.barterapp.responses.menu.GetAllUsersNotificationsResponse;
+import com.example.barterapp.utils.URLs;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
     Context context;
-    private int[] images;
-    public NotificationsAdapter(Context context, int[] images) {
+    private List<GetAllUsersNotificationsResponse.NotificationStreaming> notifications_list;
+
+    public NotificationsAdapter(Context context, List<GetAllUsersNotificationsResponse.NotificationStreaming> notifications_list) {
         this.context = context;
-        this.images = images;
+        this.notifications_list = notifications_list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_notifications,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_notifications, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(images[position]);
+        Glide.with(context).load(URLs.image_url+notifications_list.get(position).getPicture()).into(holder.ivNotifyUser);
+        holder.tvNotifyUserName.setText(notifications_list.get(position).getName());
+        holder.tvNotityBody.setText(notifications_list.get(position).getDescription());
+        holder.tvNotityTime.setText(notifications_list.get(position).getCreatedAt());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,14 +57,19 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return notifications_list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView imageView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView ivNotifyUser;
+        private TextView tvNotifyUserName, tvNotityBody, tvNotityTime;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.iv_notify_user);
+            ivNotifyUser = itemView.findViewById(R.id.iv_notify_user);
+            tvNotifyUserName = itemView.findViewById(R.id.tv_notify_user_name);
+            tvNotityBody = itemView.findViewById(R.id.tv_notify_body);
+            tvNotityTime = itemView.findViewById(R.id.tv_notify_time);
         }
     }
 }

@@ -83,14 +83,15 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_offer);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        trades_list = new ArrayList<>();
         customProgressDialog(CustomOffer.this);
 
         preferences = new Preferences(this);
         getIncommingIntent();
 
-        if (trades!=null) {
+        if (trades != null) {
             trades_list = new ArrayList<>(Arrays.asList(trades.split(",")));
-        }else {
+        } else {
             Toast.makeText(getApplicationContext(), "Trades are not found!", Toast.LENGTH_SHORT).show();
         }
         returnTradesList = new ArrayList<>();
@@ -169,9 +170,9 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
                 if (rb_getPay.isChecked()) {
                     if (etPrice.getText().toString() == null || etPrice.getText().toString().isEmpty()) {
                         etPrice.setError("Enter estimated budget please");
-                    }else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
+                    } else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
                         etDescription.setError("Enter description please..");
-                    }else {
+                    } else {
                         sendCustomOffer();
                     }
                 } else if (rb_returnService.isChecked()) {
@@ -179,9 +180,9 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
                         etSecurityAmount.setError("Enter security amount..");
                     } else if (returnTradesList.isEmpty()) {
                         Toast.makeText(CustomOffer.this, "Add return trades please", Toast.LENGTH_SHORT).show();
-                    }else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
+                    } else if (etDescription.getText().toString().isEmpty() || etDescription.getText().toString() == null) {
                         etDescription.setError("Enter description please..");
-                    }else {
+                    } else {
                         sendCustomOffer();
                     }
                 }
@@ -245,19 +246,25 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onResponse(String response) {
                 preferences.setOfferId(offerType);
-                CreateOfferResponse offerResponse = gson.fromJson(response,CreateOfferResponse.class);
-                Toast.makeText(CustomOffer.this, ""+offerResponse.getMessages(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), MainPage.class);
-                intent.putExtra("fragment_status", "notification");
-                startActivity(intent);
-                finish();
-                progressDialog.dismiss();
+                CreateOfferResponse offerResponse = gson.fromJson(response, CreateOfferResponse.class);
+                String message = offerResponse.getMessages();
+                if (message != null && message.equalsIgnoreCase("Your offer already exists")) {
+                    Toast.makeText(CustomOffer.this, "" + offerResponse.getMessages(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (message == null) {
+                    Toast.makeText(CustomOffer.this, "" + offerResponse.getMessages(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                    intent.putExtra("fragment_status", "notification");
+                    startActivity(intent);
+                    finish();
+                    progressDialog.dismiss();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error", error.toString());
-                Toast.makeText(getApplicationContext(), ""+error.networkResponse.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "" + error.networkResponse.toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         }) {
