@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.barterapp.R;
 import com.example.barterapp.adapters.AddTradesAdapter;
-import com.example.barterapp.adapters.ReturnTradesAdapter;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
@@ -144,7 +143,7 @@ public class DialogFragmentInvoice extends DialogFragment implements View.OnClic
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.customdialog);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        tradesView = myDialog.findViewById(R.id.et_add_trades);
+        tradesView = myDialog.findViewById(R.id.et_add_amount);
         btnYes = myDialog.findViewById(R.id.btn_add);
         btnNo = myDialog.findViewById(R.id.btn_no);
         btnYes.setEnabled(true);

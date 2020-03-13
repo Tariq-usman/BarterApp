@@ -2,7 +2,6 @@ package com.example.barterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,17 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.barterapp.R;
+import com.example.barterapp.fragments.dialog_fragments.DialogFragmentWallet;
 
-public class Valet extends AppCompatActivity {
-    private ImageView backBtn, ivPayedAmount, ivPayedCoins, ivReceivedAmount, ivReceivedCoins;
+public class Wallet extends AppCompatActivity {
+    private ImageView backBtn, addAmountToWallet,ivPayedAmount, ivPayedCoins, ivReceivedAmount, ivReceivedCoins;
     private TextView tvPayedAmount, tvReceivedAmount;
     private int delay = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_valet);
+        setContentView(R.layout.activity_wallet);
         backBtn = findViewById(R.id.iv_back_valet);
+        addAmountToWallet = findViewById(R.id.iv_add_valet);
         ivPayedAmount = findViewById(R.id.iv_payed_amount);
         ivPayedCoins = findViewById(R.id.iv_payed_coins);
         ivReceivedAmount = findViewById(R.id.iv_receiver_amount);
@@ -32,6 +33,13 @@ public class Valet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        addAmountToWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragmentWallet dialogFragmentWallet = new DialogFragmentWallet();
+                dialogFragmentWallet.show(getSupportFragmentManager(),"wallet");
             }
         });
         ivPayedAmount.setOnClickListener(new View.OnClickListener() {

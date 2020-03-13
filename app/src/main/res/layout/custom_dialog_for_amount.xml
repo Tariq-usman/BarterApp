@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_button_border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/purple"
+            android:gravity="center"
+            android:text="Add New Trade"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ "
+                android:textColor="@color/greyForText"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <EditText
+                android:id="@+id/et_add_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:hint="500"
+                android:inputType="number"
+                android:textColorHint="@color/greyForText"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_no_amount"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:background="@android:color/transparent"
+                android:text="No"
+                android:textAllCaps="false"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <Button
+                android:id="@+id/btn_add_amount"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@android:color/transparent"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

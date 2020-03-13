@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.barterapp.R;
 import com.example.barterapp.others.Preferences;
 import com.google.firebase.FirebaseApp;
 import com.onesignal.OSPermissionSubscriptionState;
@@ -18,7 +19,7 @@ public class AppClass extends Application {
         super.onCreate();
         preferences = new Preferences(this);
         FirebaseApp.initializeApp(this);
-// OneSignal Initialization
+        // OneSignal Initialization
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
@@ -41,7 +42,7 @@ public class AppClass extends Application {
 
         PaymentConfiguration.init(
                 getApplicationContext(),
-                "pk_test_TYooMQauvdEDq54NiTphI7jx"
+                getString(R.string.stripe_api_key)
         );
     }
 }

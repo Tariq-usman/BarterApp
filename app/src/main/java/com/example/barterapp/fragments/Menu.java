@@ -28,7 +28,7 @@ import com.example.barterapp.activities.History;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.SignInActivity;
 import com.example.barterapp.activities.TradesHistory;
-import com.example.barterapp.activities.Valet;
+import com.example.barterapp.activities.Wallet;
 import com.example.barterapp.activities.ChangePassword;
 import com.example.barterapp.activities.ChoosePaymentMethodTwo;
 import com.example.barterapp.activities.TermsAndConditions;
@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class Menu extends Fragment implements View.OnClickListener {
     private FrameLayout layoutTitle;
-    LinearLayout layoutValet, layoutPayMethod, layoutTradeHistory, layoutNotification, layoutHistory, layoutTandConditions,
+    LinearLayout layoutWallet, layoutPayMethod, layoutTradeHistory, layoutNotification, layoutHistory, layoutTandConditions,
             layoutChangePass, layoutLogout;
     private Preferences preferences;
     private ProgressDialog progressDialog;
@@ -57,8 +57,8 @@ public class Menu extends Fragment implements View.OnClickListener {
         layoutTitle = getActivity().findViewById(R.id.title_layout);
         preferences = new Preferences(getContext());
 
-        layoutValet = view.findViewById(R.id.valet_layout);
-        layoutValet.setOnClickListener(this);
+        layoutWallet = view.findViewById(R.id.wallet_layout);
+        layoutWallet.setOnClickListener(this);
         layoutPayMethod = view.findViewById(R.id.pay_method_layout);
         layoutPayMethod.setOnClickListener(this);
         layoutTradeHistory = view.findViewById(R.id.trade_history_layout);
@@ -81,8 +81,8 @@ public class Menu extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.valet_layout:
-                startActivity(new Intent(getContext(), Valet.class));
+            case R.id.wallet_layout:
+                startActivity(new Intent(getContext(), Wallet.class));
                 break;
             case R.id.pay_method_layout:
                 startActivity(new Intent(getContext(), ChoosePaymentMethodTwo.class));

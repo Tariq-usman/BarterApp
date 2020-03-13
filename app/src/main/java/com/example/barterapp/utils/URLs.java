@@ -41,4 +41,6 @@ public class URLs {
     public static String current_user_notification_settings = base_url + "getCurrentUserNotification";
     public static String get_all_users_notifications = base_url + "getAllUserNotification";
     public static String get_trades_history_url = base_url + "getTradeHistory";
+    ////Payment url
+    public static final String wallet_payment_url = base_url + "valetPayment";
 }

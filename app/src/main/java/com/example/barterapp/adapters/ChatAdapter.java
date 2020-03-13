@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.chat_responses.GetAllChatMessagesResponse;
+import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;

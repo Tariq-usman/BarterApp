@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -55,7 +54,6 @@ import com.example.barterapp.others.MySingleton;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.others.VolleyMultipartRequest;
 import com.example.barterapp.responses.profile.CurrentUserResponse;
-import com.example.barterapp.responses.profile.UpdateProfileResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -64,7 +62,6 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
@@ -470,7 +467,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.customdialog);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        tradesView = myDialog.findViewById(R.id.et_add_trades);
+        tradesView = myDialog.findViewById(R.id.et_add_amount);
         btnYes = myDialog.findViewById(R.id.btn_add);
         btnNo = myDialog.findViewById(R.id.btn_no);
         btnYes.setEnabled(true);

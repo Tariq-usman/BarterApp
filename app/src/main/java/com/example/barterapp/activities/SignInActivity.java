@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     private View layout;
     private Toast toast;
     private Preferences preferences;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

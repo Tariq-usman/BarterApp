@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.Valet">
+    tools:context=".activities.Wallet">
 
     <FrameLayout
         android:id="@+id/title_layout"
@@ -34,6 +34,14 @@
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />
+        <ImageView
+            android:id="@+id/iv_add_valet"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_add_portfolio" />
 
     </FrameLayout>
 

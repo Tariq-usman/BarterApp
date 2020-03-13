@@ -211,7 +211,7 @@ public class CustomOffer extends AppCompatActivity implements View.OnClickListen
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         myDialog.setContentView(R.layout.customdialog);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        tradesView = myDialog.findViewById(R.id.et_add_trades);
+        tradesView = myDialog.findViewById(R.id.et_add_amount);
         btnYes = myDialog.findViewById(R.id.btn_add);
         btnNo = myDialog.findViewById(R.id.btn_no);
         btnYes.setEnabled(true);
