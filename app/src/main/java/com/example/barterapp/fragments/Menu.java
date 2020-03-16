@@ -116,12 +116,17 @@ public class Menu extends Fragment implements View.OnClickListener {
         StringRequest request = new StringRequest(Request.Method.POST, URLs.logout_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                LogoutResponse logoutResponse = gson.fromJson(response, LogoutResponse.class);
-                preferences.setToken("");
-                Toast.makeText(getContext(), "" + logoutResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(),SignInActivity.class));
-                ((Activity)getContext()).finish();
-                progressDialog.dismiss();
+                try {
+                    LogoutResponse logoutResponse = gson.fromJson(response, LogoutResponse.class);
+                    preferences.setToken("");
+                    Toast.makeText(getContext(), "" + logoutResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getContext(),SignInActivity.class));
+                    ((Activity)getContext()).finish();
+                    progressDialog.dismiss();
+                }catch (Exception e){
+                    Log.e("Logout e",e.toString());
+                    progressDialog.dismiss();
+                }
             }
         }, new Response.ErrorListener() {
             @Override

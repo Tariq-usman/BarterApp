@@ -66,13 +66,19 @@ public class ChatInbox extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.get_all_inbox_messages_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                GetAllInboxMessagesResponse inboxMessagesResponse = gson.fromJson(response, GetAllInboxMessagesResponse.class);
-                allInboxMessagesList.clear();
-                for (int i = 0; i < inboxMessagesResponse.getGetMessages().size(); i++) {
-                    allInboxMessagesList.add(inboxMessagesResponse.getGetMessages().get(i));
+                try {
+                    GetAllInboxMessagesResponse inboxMessagesResponse = gson.fromJson(response, GetAllInboxMessagesResponse.class);
+                    allInboxMessagesList.clear();
+                    for (int i = 0; i < inboxMessagesResponse.getGetMessages().size(); i++) {
+                        allInboxMessagesList.add(inboxMessagesResponse.getGetMessages().get(i));
+                    }
+                    inboxAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                }catch (Exception e){
+                    Log.e("Chat Exception", e.toString());
+                    progressDialog.dismiss();
                 }
-                inboxAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
+
             }
         }, new Response.ErrorListener() {
             @Override

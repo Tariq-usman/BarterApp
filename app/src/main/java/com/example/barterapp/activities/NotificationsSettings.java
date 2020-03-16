@@ -111,32 +111,37 @@ public class NotificationsSettings extends AppCompatActivity implements View.OnC
             @Override
             public void onResponse(String response) {
                 Toast.makeText(NotificationsSettings.this, "response", Toast.LENGTH_SHORT).show();
-                CurrentUserNotificationSettingsResponse settingsResponse = gson.fromJson(response, CurrentUserNotificationSettingsResponse.class);
-                sound_val = settingsResponse.getNotificationSetting().getSound();
-                notifications_val = settingsResponse.getNotificationSetting().getNotification();
-                new_orders_val = settingsResponse.getNotificationSetting().getNewOrder();
-                chat_sound_val = settingsResponse.getNotificationSetting().getChat();
-                if (sound_val == 1) {
-                    tbSound.setChecked(true);
-                } else {
-                    tbSound.setChecked(false);
+                try {
+                    CurrentUserNotificationSettingsResponse settingsResponse = gson.fromJson(response, CurrentUserNotificationSettingsResponse.class);
+                    sound_val = settingsResponse.getNotificationSetting().getSound();
+                    notifications_val = settingsResponse.getNotificationSetting().getNotification();
+                    new_orders_val = settingsResponse.getNotificationSetting().getNewOrder();
+                    chat_sound_val = settingsResponse.getNotificationSetting().getChat();
+                    if (sound_val == 1) {
+                        tbSound.setChecked(true);
+                    } else {
+                        tbSound.setChecked(false);
+                    }
+                    if (notifications_val == 1) {
+                        tbNotifications.setChecked(true);
+                    } else {
+                        tbNotifications.setChecked(false);
+                    }
+                    if (new_orders_val == 1) {
+                        tbNewOrders.setChecked(true);
+                    } else {
+                        tbNewOrders.setChecked(false);
+                    }
+                    if (chat_sound_val == 1) {
+                        tbChatSound.setChecked(true);
+                    } else {
+                        tbChatSound.setChecked(false);
+                    }
+                    progressDialog.dismiss();
+                }catch (Exception e){
+                    Log.e("Notify sett", e.toString());
+                    progressDialog.dismiss();
                 }
-                if (notifications_val == 1) {
-                    tbNotifications.setChecked(true);
-                } else {
-                    tbNotifications.setChecked(false);
-                }
-                if (new_orders_val == 1) {
-                    tbNewOrders.setChecked(true);
-                } else {
-                    tbNewOrders.setChecked(false);
-                }
-                if (chat_sound_val == 1) {
-                    tbChatSound.setChecked(true);
-                } else {
-                    tbChatSound.setChecked(false);
-                }
-                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

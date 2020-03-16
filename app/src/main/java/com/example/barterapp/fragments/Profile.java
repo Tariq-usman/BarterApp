@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +105,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private String token;
     private byte[] bytesArray;
     private Bitmap bitmap;
+    Uri selectedImage;
     private ProgressDialog progressDialog;
 
 
@@ -115,8 +117,6 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         currentUser();
 
         trades_list = new ArrayList<>();
-        trades_list.add("Example");
-//        portfolio_pics.add(Uri.parse(String.valueOf(R.drawable.notification_image)));
 
         preferences = new Preferences(getContext());
         preferences.setEditStatus(0);
@@ -147,7 +147,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         recyclerViewTrades.setLayoutManager(layoutManager);
-
+        profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
+        recyclerViewTrades.setAdapter(profileTradesAdapter);
 
         recyclerView = view.findViewById(R.id.recycler_view_profile_portfolio);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -178,11 +179,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 profilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.save_btn:
-                try {
                     updateUserData();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 layoutEdit.setVisibility(View.VISIBLE);
                 saveBtn.setVisibility(View.GONE);
                 et_experience.setFocusable(false);
@@ -222,34 +219,39 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         StringRequest request = new StringRequest(Request.Method.GET, URLs.current_user_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                try {
+                    Log.e("Response", response);
+                    CurrentUserResponse userResponse = gson.fromJson(response, CurrentUserResponse.class);
 
-                CurrentUserResponse userResponse = gson.fromJson(response, CurrentUserResponse.class);
+                    String userName = userResponse.getUser().getName();
+                    String experience = userResponse.getUser().getExperience();
+                    String trades = userResponse.getUser().getTrades();
+                    String profileImage = URLs.image_url + userResponse.getUser().getPicture();
 
-                String userName = userResponse.getUser().getName();
-                String experience = userResponse.getUser().getExperience();
-                String trades = userResponse.getUser().getTrades();
-                String profileImage = URLs.image_url + userResponse.getUser().getPicture();
+                    tvUserName.setText(userName);
+                   // Glide.with(getContext()).load(profileImage).into(iv_profileImage);
+                    et_experience.setText(experience);
+                    if (trades != null) {
+                        trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", " ").split(",")));
+                        profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
+                        recyclerViewTrades.setAdapter(profileTradesAdapter);
+                    } else {
+                        profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
+                        recyclerViewTrades.setAdapter(profileTradesAdapter);
+                        Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
+                    }
+                    portfolio_pics.clear();
+                    for (int i = 0; i < userResponse.getUser().getPortfolios().size(); i++) {
+                        portfolio_pics.add(userResponse.getUser().getPortfolios().get(i).getPicture());
+                    }
+                    profilePortfolioAdapter.notifyDataSetChanged();
 
-                tvUserName.setText(userName);
-                Glide.with(getContext()).load(profileImage).into(iv_profileImage);
-                et_experience.setText(experience);
-                if (trades!=null) {
-                    trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
-                    profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
-                    recyclerViewTrades.setAdapter(profileTradesAdapter);
-                } else {
-                    profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
-                    recyclerViewTrades.setAdapter(profileTradesAdapter);
-                    Toast.makeText(getContext(), "Null Trade", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+
+                } catch (Exception e) {
+                    Log.e("Exception", e.toString());
+                    progressDialog.dismiss();
                 }
-                portfolio_pics.clear();
-                for (int i = 0; i < userResponse.getUser().getPortfolios().size(); i++) {
-                    portfolio_pics.add(userResponse.getUser().getPortfolios().get(i).getPicture());
-                }
-                profilePortfolioAdapter.notifyDataSetChanged();
-
-                progressDialog.dismiss();
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -271,7 +273,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         requestQueue.add(request);
     }
 
-    public void updateUserData() throws JSONException {
+    public void updateUserData() {
         progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
@@ -343,7 +345,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             String path = null;
             try {
                 path = getFilePath(getContext(), selectedImage);
@@ -365,7 +367,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                     /*Bitmap myBitmap = BitmapFactory.decodeFile(path);
                     iv_profileImage.setImageBitmap(myBitmap);*/
 //                    Picasso.get().load(picturePath).into(iv_profileImage);
-                    Glide.with(getContext()).load(selectedImage.toString()).into(iv_profileImage);
+                    Glide.with(getContext()).load(selectedImage).into(iv_profileImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -378,7 +380,6 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 currentPosition = -1;
             } else {
                 if (portfolio_pics.size() == 0) {
-                    portfolio_pics.clear();
                     portfolio_pics.add(selectedImage.toString());
                     profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
                     profilePortfolioAdapter.notifyDataSetChanged();
@@ -448,15 +449,19 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         }
         return null;
     }
+
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
+
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
+
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
+
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class GetAllUsersNotificationsResponse {
-
     @SerializedName("notificationStreaming")
     @Expose
     private List<NotificationStreaming> notificationStreaming = null;
@@ -21,6 +20,12 @@ public class GetAllUsersNotificationsResponse {
 
     public class NotificationStreaming {
 
+        @SerializedName("receiver_id")
+        @Expose
+        private Integer receiverId;
+        @SerializedName("actor_id")
+        @Expose
+        private Integer actorId;
         @SerializedName("name")
         @Expose
         private String name;
@@ -33,6 +38,22 @@ public class GetAllUsersNotificationsResponse {
         @SerializedName("created_at")
         @Expose
         private String createdAt;
+
+        public Integer getReceiverId() {
+            return receiverId;
+        }
+
+        public void setReceiverId(Integer receiverId) {
+            this.receiverId = receiverId;
+        }
+
+        public Integer getActorId() {
+            return actorId;
+        }
+
+        public void setActorId(Integer actorId) {
+            this.actorId = actorId;
+        }
 
         public String getName() {
             return name;

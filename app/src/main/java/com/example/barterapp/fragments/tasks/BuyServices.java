@@ -63,14 +63,18 @@ private ProgressDialog progressDialog;
         StringRequest request = new StringRequest(Request.Method.GET, URLs.buy_sell_services_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                BuySellServicesResponse buyServicesResponse = gson.fromJson(response, BuySellServicesResponse.class);
-                buyJobsList.clear();
-                for (int i = 0;i<buyServicesResponse.getBuyJobs().size();i++){
-                    buyJobsList.add(buyServicesResponse.getBuyJobs().get(i));
+                try {
+                    BuySellServicesResponse buyServicesResponse = gson.fromJson(response, BuySellServicesResponse.class);
+                    buyJobsList.clear();
+                    for (int i = 0;i<buyServicesResponse.getBuyJobs().size();i++){
+                        buyJobsList.add(buyServicesResponse.getBuyJobs().get(i));
+                    }
+                    buyServicesAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                }catch (Exception e){
+                    Log.e("Task Exception", e.toString());
+                    progressDialog.dismiss();
                 }
-                buyServicesAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-
             }
         }, new Response.ErrorListener() {
             @Override

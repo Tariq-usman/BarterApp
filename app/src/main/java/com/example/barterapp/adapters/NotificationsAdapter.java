@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.activities.ChatActivity;
+import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.menu.GetAllUsersNotificationsResponse;
 import com.example.barterapp.utils.URLs;
 
@@ -23,10 +24,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
     Context context;
     private List<GetAllUsersNotificationsResponse.NotificationStreaming> notifications_list;
+    private Preferences preferences;
 
     public NotificationsAdapter(Context context, List<GetAllUsersNotificationsResponse.NotificationStreaming> notifications_list) {
         this.context = context;
         this.notifications_list = notifications_list;
+        preferences = new Preferences(context);
     }
 
     @NonNull
@@ -47,6 +50,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                preferences.setActorId(notifications_list.get(position).getActorId());
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

@@ -5,6 +5,7 @@ public class URLs {
     public static final String image_url = "http://oranje-tech.com/demo/barter/admin/images/users/";
     public static final String portfolio_images_url = "http://oranje-tech.com/demo/barter/admin/images/portfolio/";
 
+    public static final String update_device_token_url = base_url + "deviceToken";
     ////user urls
     public static final String signup_url = base_url + "signup";
     public static final String login_url = base_url + "login";

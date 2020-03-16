@@ -66,12 +66,9 @@ public class UserOffersFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.user_job_history_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                Log.e("RESPONSE ", response);
                 try {
-
+                    Log.e("RESPONSE ", response);
                     AllUserJobsHistoryResponse historyResponse = gson.fromJson(response, AllUserJobsHistoryResponse.class);
-
                     for (AllUserJobsHistoryResponse.BuyJob responseOffers : historyResponse.getBuyJobs()) {
                         buyJobs.add(responseOffers);
                     }
@@ -81,6 +78,7 @@ public class UserOffersFragment extends Fragment {
 //                Toast.makeText(History.this, "Response", Toast.LENGTH_SHORT).show();
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     Log.e("Exception", exception.toString());
+                    progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
+import com.example.barterapp.application.AppClass;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.user.LogInResponse;
 import com.example.barterapp.utils.URLs;
@@ -98,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
                 preferences.setUserId(user_id);
                 tv.setText("Successfully SignIn");
                 toast.show();
+                updateDeviceToken();
                 progressDialog.dismiss();
                 startActivity(new Intent(SignInActivity.this, MainPage.class));
                 finish();
@@ -115,6 +118,37 @@ public class SignInActivity extends AppCompatActivity {
                 Map<String ,String> map = new HashMap<>();
                 map.put("email",email);
                 map.put("password",pass);
+                return map;
+            }
+        };
+        requestQueue.add(request);
+    }
+    private void updateDeviceToken() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        Gson gson = new GsonBuilder().create();
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.update_device_token_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignInActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Log.e("App class", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerMap = new HashMap<>();
+                headerMap.put("Authorization", "Bearer " + preferences.getToken());
+                return headerMap;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("device_token", preferences.getDeviceToken());
                 return map;
             }
         };

@@ -72,7 +72,9 @@ public class ProfileTradesAdapter extends RecyclerView.Adapter<ProfileTradesAdap
         });
 
         if (position == pos) {
-            holder.textView.setText(edited_trade);
+            trades.remove(pos);
+            trades.add(pos,edited_trade);
+            holder.textView.setText(trades.get(position));
         } else {
             holder.textView.setText(trades.get(position));
         }
@@ -118,6 +120,7 @@ public class ProfileTradesAdapter extends RecyclerView.Adapter<ProfileTradesAdap
                 if (!trade.isEmpty() && trade != null && trade != "") {
                     edited_trade = trade;
                     notifyDataSetChanged();
+                    notifyItemInserted(pos);
                     myDialog.cancel();
                 }
             }

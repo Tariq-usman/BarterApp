@@ -38,6 +38,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         preferences = new Preferences(context);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     @NonNull
     @Override
@@ -52,11 +61,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
        // int user_id = preferences.getUserId();
         int id = messageList.get(position).getSenderId();
         if (sender_id == id){
-            holder.layoutReceiver.setVisibility(View.VISIBLE);
-            holder.tvReceiver.setText(messageList.get(position).getText());
-        }else {
             holder.layoutSender.setVisibility(View.VISIBLE);
             holder.tvSender.setText(messageList.get(position).getText());
+        }else {
+            holder.layoutReceiver.setVisibility(View.VISIBLE);
+            holder.tvReceiver.setText(messageList.get(position).getText());
         }
 
     }

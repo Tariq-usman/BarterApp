@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
-import com.example.barterapp.responses.TermAndConditionsResponse;
+import com.example.barterapp.responses.menu.TermAndConditionsResponse;
 import com.example.barterapp.utils.URLs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

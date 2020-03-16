@@ -1,4 +1,4 @@
-package com.example.barterapp.responses;
+package com.example.barterapp.responses.menu;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

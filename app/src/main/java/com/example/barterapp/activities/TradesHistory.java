@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -69,13 +70,18 @@ public class TradesHistory extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.get_trades_history_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                TradesHistoryResponse tradesHistoryResponse = gson.fromJson(response, TradesHistoryResponse.class);
-                historyList.clear();
-                for (int i = 0; i < tradesHistoryResponse.getOfferHistory().size(); i++) {
-                    historyList.add(tradesHistoryResponse.getOfferHistory().get(i));
+                try {
+                    TradesHistoryResponse tradesHistoryResponse = gson.fromJson(response, TradesHistoryResponse.class);
+                    historyList.clear();
+                    for (int i = 0; i < tradesHistoryResponse.getOfferHistory().size(); i++) {
+                        historyList.add(tradesHistoryResponse.getOfferHistory().get(i));
+                    }
+                    tradesHistoryAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                }catch (Exception e){
+                    Log.e("Trades history", e.toString());
+                    progressDialog.dismiss();
                 }
-                tradesHistoryAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override

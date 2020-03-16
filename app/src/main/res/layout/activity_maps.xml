@@ -15,11 +15,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
             android:layout_gravity="center"
             android:background="@color/purple"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingVertical="5dp">
 
             <ImageView
                 android:id="@+id/back_btn"
@@ -41,11 +41,11 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:paddingHorizontal="8dp"
                     android:background="@drawable/bg_search_view"
                     android:hint="Search here..."
                     android:inputType="text"
                     android:maxLines="1"
+                    android:paddingHorizontal="8dp"
                     android:textColor="@color/greyForText"
                     android:textColorHint="@color/greyForText"
                     android:textSize="@dimen/fourteen_sp" />
@@ -77,14 +77,16 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_location"
         android:visibility="invisible" />
+
     <ImageView
         android:id="@+id/ivCurrent_location"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_margin="4dp"
-        android:layout_alignParentRight="true"
         android:layout_above="@+id/location"
-        android:src="@drawable/ic_my_location"/>
+        android:layout_alignParentRight="true"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_my_location"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/location"
@@ -98,11 +100,11 @@
             android:id="@+id/searched_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="akdfjklasjdflkasjdkfjaslkdjfaskljdflksadjflksjdfljsadlfjsaljdfdjfasjdflkasjdflj sdkalfjklsadjflas;ddfkljalskdjfklasjdf"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="4dp"
             android:textColor="@color/greyForText"
             android:textSize="@dimen/twelve_sp" />
 

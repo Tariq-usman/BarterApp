@@ -66,17 +66,21 @@ public class SellServices extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.buy_sell_services_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                BuySellServicesResponse sellServicesResponse = gson.fromJson(response, BuySellServicesResponse.class);
-                sellJobsList.clear();
-                for (int i = 0; i < sellServicesResponse.getSellJob().size(); i++) {
-                    sellJobsList.add(sellServicesResponse.getSellJob().get(i));
+                try {
+                    BuySellServicesResponse sellServicesResponse = gson.fromJson(response, BuySellServicesResponse.class);
+                    sellJobsList.clear();
+                    for (int i = 0; i < sellServicesResponse.getSellJob().size(); i++) {
+                        sellJobsList.add(sellServicesResponse.getSellJob().get(i));
+                    }
+                    sellServicesAdapter.notifyDataSetChanged();
+                    if (sellJobsList.isEmpty()) {
+                        Toast.makeText(getContext(), "No data found!", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e("Task Exception", e.toString());
+                    progressDialog.dismiss();
                 }
-                sellServicesAdapter.notifyDataSetChanged();
-                if (sellJobsList.isEmpty()){
-                    Toast.makeText(getContext(), "No data found!", Toast.LENGTH_SHORT).show();
-                }
-                progressDialog.dismiss();
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -96,6 +100,7 @@ public class SellServices extends Fragment {
         };
         requestQueue.add(request);
     }
+
     public void customProgressDialog(Context context) {
         progressDialog = new ProgressDialog(context);
         // Setting Message

@@ -76,6 +76,17 @@ public class Preferences {
         return sharedPreferences.getInt("job_user_id", 0);
     }
 
+
+    public void setActorId(int job_user_id) {
+        editor.putInt("actor_id", job_user_id);
+        editor.apply();
+        editor.commit();
+    }
+
+    public int getActorId() {
+        return sharedPreferences.getInt("actor_id", 0);
+    }
+
     public void setFragmentStatus(String fragmentStatus) {
         editor.putString("notification_fragment", fragmentStatus);
         editor.apply();

@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -224,6 +225,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String knownName = addresses.get(0).getFeatureName();
                         searched_location.setText(address);
                         locationPinUp.setVisibility(View.INVISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                currentLocationBtn.setVisibility(View.INVISIBLE);
+                            }
+                        },2000);
                     } else {
                         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                         String city = addresses.get(0).getLocality();
@@ -233,6 +240,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String knownName = addresses.get(0).getFeatureName();
                         searched_location.setText(address);
                         locationPinUp.setVisibility(View.INVISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                currentLocationBtn.setVisibility(View.INVISIBLE);
+                            }
+                        },2000);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -250,6 +263,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCameraMove() {
                 locationPinUp.setVisibility(View.VISIBLE);
+                currentLocationBtn.setVisibility(View.VISIBLE);
             }
         });
     }

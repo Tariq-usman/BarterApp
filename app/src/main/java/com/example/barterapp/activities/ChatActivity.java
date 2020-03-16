@@ -78,7 +78,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         chatAdapter = new ChatAdapter( sender_id,getApplicationContext(), messageList);
         recyclerView.setAdapter(chatAdapter);
-        recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);  }
+        recyclerView.smoothScrollToPosition(chatAdapter.getItemCount()+1);  }
 
     private void getAllMessages() {
         progressDialog.show();
@@ -144,14 +144,14 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 msg.setDateTime("");
                 msg.setDeliver(0);
                 msg.setMessageId(0);
-                msg.setReceiverId(receiver_id);
-                msg.setSenderId(sender_id);
+                msg.setReceiverId(sender_id);
+                msg.setSenderId(receiver_id);
                 msg.setSeen(0);
                 msg.setText(strMsg);
 
                 messageList.add(msg);
-                chatAdapter.notifyItemInserted(messageList.size());
-                recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);
+                chatAdapter.notifyItemInserted(chatAdapter.getItemCount()+1);
+                recyclerView.smoothScrollToPosition(chatAdapter.getItemCount());
             AddNewMessageResponse addNewMessageResponse = gson.fromJson(response,AddNewMessageResponse.class);
                 //messageList.clear();
                 /*chatAdapter.notifyItemInserted(chatAdapter.getItemCount() + 1);
@@ -179,7 +179,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String , String> map = new HashMap<>();
                 String message = etTypeMessage.getText().toString();
-                map.put("receiver_id",String.valueOf(receiver_id));
+                map.put("receiver_id",String.valueOf(sender_id));
                 map.put("text",message);
                 return map;
             }

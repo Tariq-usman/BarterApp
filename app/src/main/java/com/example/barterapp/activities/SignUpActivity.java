@@ -120,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(getBaseContext());
         List<Address> addresses;
         try {
-            addresses = geocoder.getFromLocationName("Example Street,xyz", 20);
+            addresses = geocoder.getFromLocationName(tvLocation.getText().toString(), 20);
             for(int i = 0; i < addresses.size(); i++) { // MULTIPLE MATCHES
                 Address addr = addresses.get(i);
                 latitude = addr.getLatitude();

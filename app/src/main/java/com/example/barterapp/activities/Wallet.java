@@ -20,7 +20,7 @@ public class Wallet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        backBtn = findViewById(R.id.iv_back_valet);
+        backBtn = findViewById(R.id.iv_back_wallet);
         addAmountToWallet = findViewById(R.id.iv_add_valet);
         ivPayedAmount = findViewById(R.id.iv_payed_amount);
         ivPayedCoins = findViewById(R.id.iv_payed_coins);

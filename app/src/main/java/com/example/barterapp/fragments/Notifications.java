@@ -3,6 +3,7 @@ package com.example.barterapp.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,13 +67,18 @@ public class Notifications extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.get_all_users_notifications, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                GetAllUsersNotificationsResponse notificationsResponse = gson.fromJson(response, GetAllUsersNotificationsResponse.class);
-                notifications_list.clear();
-                for (int i = 0; i < notificationsResponse.getNotificationStreaming().size(); i++) {
-                    notifications_list.add(notificationsResponse.getNotificationStreaming().get(i));
+                try {
+                    GetAllUsersNotificationsResponse notificationsResponse = gson.fromJson(response, GetAllUsersNotificationsResponse.class);
+                    notifications_list.clear();
+                    for (int i = 0; i < notificationsResponse.getNotificationStreaming().size(); i++) {
+                        notifications_list.add(notificationsResponse.getNotificationStreaming().get(i));
+                    }
+                    notificationsAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                }catch (Exception e) {
+                    Log.e("Notify Exception", e.toString());
+                    progressDialog.dismiss();
                 }
-                notificationsAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
