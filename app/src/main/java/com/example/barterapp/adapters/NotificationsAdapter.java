@@ -45,13 +45,17 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         Glide.with(context).load(URLs.image_url+notifications_list.get(position).getPicture()).into(holder.ivNotifyUser);
         holder.tvNotifyUserName.setText(notifications_list.get(position).getName());
         holder.tvNotityBody.setText(notifications_list.get(position).getDescription());
-        holder.tvNotityTime.setText(notifications_list.get(position).getCreatedAt());
+
+        String time = notifications_list.get(position).getCreatedAt();
+        String [] date_time = time.split(" ");
+        String notfy_time = date_time[1];
+        holder.tvNotityTime.setText(notfy_time);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferences.setActorId(notifications_list.get(position).getActorId());
                 Intent intent = new Intent(context, ChatActivity.class);
+                preferences.setSenderId(notifications_list.get(position).getActorId());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

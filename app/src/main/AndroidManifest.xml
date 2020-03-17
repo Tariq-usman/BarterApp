@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TradesHistory"></activity>
+        <activity android:name=".activities.ForgotPassword"></activity>
+        <activity android:name=".activities.TradesHistory" />
         <activity android:name=".activities.OfferAcceptReject" />
         <activity android:name=".activities.CustomOffer" />
         <!--

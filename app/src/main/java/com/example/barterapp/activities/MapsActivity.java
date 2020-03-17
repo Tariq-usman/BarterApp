@@ -15,11 +15,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double currentLng;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    String centerPosition;
+    String centerPosition, task_location_status;
     List<Address> addresses;
     private Preferences preferences;
 
@@ -71,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fetchLastLocation();
 
         preferences = new Preferences(this);
+        task_location_status = preferences.getLocationStatus();
         currentLocationBtn = findViewById(R.id.ivCurrent_location);
         doneBtn = findViewById(R.id.done_btn);
         searchBtn = findViewById(R.id.searchBtn);
@@ -115,20 +114,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 String passingLocation = searched_location.getText().toString().trim();
-                preferences.setLocation(passingLocation);
+                if (task_location_status.equalsIgnoreCase("job location")) {
+                    preferences.setTaskLocation(passingLocation);
+                } else {
+                    preferences.setUserLocation(passingLocation);
+                }
                 finish();
             }
         });
         currentLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     //.icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_locations_green))));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                     //mMap.animateCamera(CameraUpdateFactory.newLatLng(current));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
-                }catch (Exception e){
-                    Log.e("exception " , e.toString());
+                } catch (Exception e) {
+                    Log.e("exception ", e.toString());
                 }
 
             }
@@ -198,8 +201,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(MapsActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                     }
-                }catch (Exception e){
-                    Log.e("exception",e.toString());
+                } catch (Exception e) {
+                    Log.e("exception", e.toString());
                 }
             }
 
@@ -230,7 +233,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void run() {
                                 currentLocationBtn.setVisibility(View.INVISIBLE);
                             }
-                        },2000);
+                        }, 2000);
                     } else {
                         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                         String city = addresses.get(0).getLocality();
@@ -245,7 +248,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void run() {
                                 currentLocationBtn.setVisibility(View.INVISIBLE);
                             }
-                        },2000);
+                        }, 2000);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

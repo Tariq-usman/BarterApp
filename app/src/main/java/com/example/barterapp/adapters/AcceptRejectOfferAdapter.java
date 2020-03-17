@@ -44,7 +44,7 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
     private String[] returnTrades = {"Design", "Mobile App Design"};
     private FlexboxLayoutManager layoutManager;
     private FlexboxLayoutManager fLayoutManager;
-    private String offer_id;
+    private int offer_id;
     private Preferences preferences;
     private ProgressDialog progressDialog;
     private List<GetAllUserOfferResponse.Offer> offerList;
@@ -95,6 +95,7 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
         holder.acceptOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                offer_id = offerList.get(position).getId();
                 acceptOffer();
             }
         });
@@ -103,7 +104,7 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
 
     private void acceptOffer() {
         progressDialog.show();
-        offer_id = preferences.getOfferId();
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest request = new StringRequest(Request.Method.POST, URLs.accept_order_url + offer_id, new Response.Listener<String>() {
             @Override

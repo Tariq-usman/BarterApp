@@ -32,42 +32,39 @@ public class BuySellServicesResponse {
 
     public class SellJob {
 
-        @SerializedName("job_user_id")
+        @SerializedName("offer_user_id")
         @Expose
-        private Integer jobUserId;
-        @SerializedName("job_id")
+        private Integer offerUserId;
+        @SerializedName("offer_id")
         @Expose
-        private Integer jobId;
+        private Integer offerId;
         @SerializedName("user_id")
         @Expose
         private Integer userId;
         @SerializedName("seller_security")
         @Expose
         private Integer sellerSecurity;
-        @SerializedName("buyer_security")
-        @Expose
-        private Integer buyerSecurity;
         @SerializedName("user")
         @Expose
         private User user;
-        @SerializedName("job")
+        @SerializedName("offer")
         @Expose
-        private Job job;
+        private Offer offer;
 
-        public Integer getJobUserId() {
-            return jobUserId;
+        public Integer getOfferUserId() {
+            return offerUserId;
         }
 
-        public void setJobUserId(Integer jobUserId) {
-            this.jobUserId = jobUserId;
+        public void setOfferUserId(Integer offerUserId) {
+            this.offerUserId = offerUserId;
         }
 
-        public Integer getJobId() {
-            return jobId;
+        public Integer getOfferId() {
+            return offerId;
         }
 
-        public void setJobId(Integer jobId) {
-            this.jobId = jobId;
+        public void setOfferId(Integer offerId) {
+            this.offerId = offerId;
         }
 
         public Integer getUserId() {
@@ -86,14 +83,6 @@ public class BuySellServicesResponse {
             this.sellerSecurity = sellerSecurity;
         }
 
-        public Integer getBuyerSecurity() {
-            return buyerSecurity;
-        }
-
-        public void setBuyerSecurity(Integer buyerSecurity) {
-            this.buyerSecurity = buyerSecurity;
-        }
-
         public User getUser() {
             return user;
         }
@@ -102,14 +91,13 @@ public class BuySellServicesResponse {
             this.user = user;
         }
 
-        public Job getJob() {
-            return job;
+        public Offer getOffer() {
+            return offer;
         }
 
-        public void setJob(Job job) {
-            this.job = job;
+        public void setOffer(Offer offer) {
+            this.offer = offer;
         }
-
         public class User {
 
             @SerializedName("id")
@@ -191,275 +179,6 @@ public class BuySellServicesResponse {
             }
 
         }
-
-        public class Job {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("title")
-            @Expose
-            private String title;
-            @SerializedName("description")
-            @Expose
-            private String description;
-            @SerializedName("due_date")
-            @Expose
-            private String dueDate;
-            @SerializedName("latitude")
-            @Expose
-            private String latitude;
-            @SerializedName("longitude")
-            @Expose
-            private String longitude;
-            @SerializedName("estimated_budget")
-            @Expose
-            private Integer estimatedBudget;
-            @SerializedName("service_type")
-            @Expose
-            private String serviceType;
-            @SerializedName("status_id")
-            @Expose
-            private Integer statusId;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public String getDueDate() {
-                return dueDate;
-            }
-
-            public void setDueDate(String dueDate) {
-                this.dueDate = dueDate;
-            }
-
-            public String getLatitude() {
-                return latitude;
-            }
-
-            public void setLatitude(String latitude) {
-                this.latitude = latitude;
-            }
-
-            public String getLongitude() {
-                return longitude;
-            }
-
-            public void setLongitude(String longitude) {
-                this.longitude = longitude;
-            }
-
-            public Integer getEstimatedBudget() {
-                return estimatedBudget;
-            }
-
-            public void setEstimatedBudget(Integer estimatedBudget) {
-                this.estimatedBudget = estimatedBudget;
-            }
-
-            public String getServiceType() {
-                return serviceType;
-            }
-
-            public void setServiceType(String serviceType) {
-                this.serviceType = serviceType;
-            }
-
-            public Integer getStatusId() {
-                return statusId;
-            }
-
-            public void setStatusId(Integer statusId) {
-                this.statusId = statusId;
-            }
-
-        }
-
-    }
-
-    public class BuyJob {
-
-        @SerializedName("offer_user_id")
-        @Expose
-        private Integer offerUserId;
-        @SerializedName("offer_id")
-        @Expose
-        private Integer offerId;
-        @SerializedName("user_id")
-        @Expose
-        private Integer userId;
-        @SerializedName("seller_security")
-        @Expose
-        private Integer sellerSecurity;
-        @SerializedName("buyer_security")
-        @Expose
-        private Integer buyerSecurity;
-        @SerializedName("user")
-        @Expose
-        private User_ user;
-        @SerializedName("offer")
-        @Expose
-        private Offer offer;
-
-        public Integer getOfferUserId() {
-            return offerUserId;
-        }
-
-        public void setOfferUserId(Integer offerUserId) {
-            this.offerUserId = offerUserId;
-        }
-
-        public Integer getOfferId() {
-            return offerId;
-        }
-
-        public void setOfferId(Integer offerId) {
-            this.offerId = offerId;
-        }
-
-        public Integer getUserId() {
-            return userId;
-        }
-
-        public void setUserId(Integer userId) {
-            this.userId = userId;
-        }
-
-        public Integer getSellerSecurity() {
-            return sellerSecurity;
-        }
-
-        public void setSellerSecurity(Integer sellerSecurity) {
-            this.sellerSecurity = sellerSecurity;
-        }
-
-        public Integer getBuyerSecurity() {
-            return buyerSecurity;
-        }
-
-        public void setBuyerSecurity(Integer buyerSecurity) {
-            this.buyerSecurity = buyerSecurity;
-        }
-
-        public User_ getUser() {
-            return user;
-        }
-
-        public void setUser(User_ user) {
-            this.user = user;
-        }
-
-        public Offer getOffer() {
-            return offer;
-        }
-
-        public void setOffer(Offer offer) {
-            this.offer = offer;
-        }
-
-        public class User_ {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("latitude")
-            @Expose
-            private String latitude;
-            @SerializedName("longitude")
-            @Expose
-            private String longitude;
-            @SerializedName("picture")
-            @Expose
-            private String picture;
-            @SerializedName("trades")
-            @Expose
-            private String trades;
-            @SerializedName("experience")
-            @Expose
-            private String experience;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getLatitude() {
-                return latitude;
-            }
-
-            public void setLatitude(String latitude) {
-                this.latitude = latitude;
-            }
-
-            public String getLongitude() {
-                return longitude;
-            }
-
-            public void setLongitude(String longitude) {
-                this.longitude = longitude;
-            }
-
-            public String getPicture() {
-                return picture;
-            }
-
-            public void setPicture(String picture) {
-                this.picture = picture;
-            }
-
-            public String getTrades() {
-                return trades;
-            }
-
-            public void setTrades(String trades) {
-                this.trades = trades;
-            }
-
-            public String getExperience() {
-                return experience;
-            }
-
-            public void setExperience(String experience) {
-                this.experience = experience;
-            }
-
-        }
-
         public class Offer {
 
             @SerializedName("id")
@@ -471,9 +190,9 @@ public class BuySellServicesResponse {
             @SerializedName("job_id")
             @Expose
             private Integer jobId;
-            @SerializedName("offer_type")
+            @SerializedName("offer_type_id")
             @Expose
-            private Integer offerType;
+            private Integer offerTypeId;
             @SerializedName("offer")
             @Expose
             private String offer;
@@ -500,7 +219,7 @@ public class BuySellServicesResponse {
             private Object deletedAt;
             @SerializedName("job")
             @Expose
-            private Job_ job;
+            private Job job;
 
             public Integer getId() {
                 return id;
@@ -526,12 +245,12 @@ public class BuySellServicesResponse {
                 this.jobId = jobId;
             }
 
-            public Integer getOfferType() {
-                return offerType;
+            public Integer getOfferTypeId() {
+                return offerTypeId;
             }
 
-            public void setOfferType(Integer offerType) {
-                this.offerType = offerType;
+            public void setOfferTypeId(Integer offerTypeId) {
+                this.offerTypeId = offerTypeId;
             }
 
             public String getOffer() {
@@ -598,15 +317,14 @@ public class BuySellServicesResponse {
                 this.deletedAt = deletedAt;
             }
 
-            public Job_ getJob() {
+            public Job getJob() {
                 return job;
             }
 
-            public void setJob(Job_ job) {
+            public void setJob(Job job) {
                 this.job = job;
             }
-
-            public class Job_ {
+            public class Job {
 
                 @SerializedName("id")
                 @Expose
@@ -758,7 +476,275 @@ public class BuySellServicesResponse {
 
     }
 
+    public class BuyJob {
+
+        @SerializedName("job_user_id")
+        @Expose
+        private Integer jobUserId;
+        @SerializedName("job_id")
+        @Expose
+        private Integer jobId;
+        @SerializedName("user_id")
+        @Expose
+        private Integer userId;
+        @SerializedName("buyer_security")
+        @Expose
+        private Integer buyerSecurity;
+        @SerializedName("user")
+        @Expose
+        private User user;
+        @SerializedName("job")
+        @Expose
+        private Job job;
+
+        public Integer getJobUserId() {
+            return jobUserId;
+        }
+
+        public void setJobUserId(Integer jobUserId) {
+            this.jobUserId = jobUserId;
+        }
+
+        public Integer getJobId() {
+            return jobId;
+        }
+
+        public void setJobId(Integer jobId) {
+            this.jobId = jobId;
+        }
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
+        }
+
+        public Integer getBuyerSecurity() {
+            return buyerSecurity;
+        }
+
+        public void setBuyerSecurity(Integer buyerSecurity) {
+            this.buyerSecurity = buyerSecurity;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public Job getJob() {
+            return job;
+        }
+
+        public void setJob(Job job) {
+            this.job = job;
+        }
+
+        public class Job {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("title")
+            @Expose
+            private String title;
+            @SerializedName("description")
+            @Expose
+            private String description;
+            @SerializedName("due_date")
+            @Expose
+            private String dueDate;
+            @SerializedName("latitude")
+            @Expose
+            private String latitude;
+            @SerializedName("longitude")
+            @Expose
+            private String longitude;
+            @SerializedName("estimated_budget")
+            @Expose
+            private Integer estimatedBudget;
+            @SerializedName("service_type")
+            @Expose
+            private String serviceType;
+            @SerializedName("status_id")
+            @Expose
+            private Integer statusId;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            public String getDueDate() {
+                return dueDate;
+            }
+
+            public void setDueDate(String dueDate) {
+                this.dueDate = dueDate;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
+            }
+
+            public String getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
+            }
+
+            public Integer getEstimatedBudget() {
+                return estimatedBudget;
+            }
+
+            public void setEstimatedBudget(Integer estimatedBudget) {
+                this.estimatedBudget = estimatedBudget;
+            }
+
+            public String getServiceType() {
+                return serviceType;
+            }
+
+            public void setServiceType(String serviceType) {
+                this.serviceType = serviceType;
+            }
+
+            public Integer getStatusId() {
+                return statusId;
+            }
+
+            public void setStatusId(Integer statusId) {
+                this.statusId = statusId;
+            }
+
+        }
+
+        public class User {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("latitude")
+            @Expose
+            private String latitude;
+            @SerializedName("longitude")
+            @Expose
+            private String longitude;
+            @SerializedName("picture")
+            @Expose
+            private String picture;
+            @SerializedName("trades")
+            @Expose
+            private String trades;
+            @SerializedName("experience")
+            @Expose
+            private String experience;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
+            }
+
+            public String getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
+            }
+
+            public String getPicture() {
+                return picture;
+            }
+
+            public void setPicture(String picture) {
+                this.picture = picture;
+            }
+
+            public String getTrades() {
+                return trades;
+            }
+
+            public void setTrades(String trades) {
+                this.trades = trades;
+            }
+
+            public String getExperience() {
+                return experience;
+            }
+
+            public void setExperience(String experience) {
+                this.experience = experience;
+            }
+
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

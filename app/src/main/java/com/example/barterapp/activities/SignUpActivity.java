@@ -62,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
         customProgressDialog(SignUpActivity.this);
 
         etName = findViewById(R.id.et_name);
-        etEmail = findViewById(R.id.et_email);
+        etEmail = findViewById(R.id.et_email_forgot_pass);
         etPass = findViewById(R.id.et_password);
         etConfPass = findViewById(R.id.et_confirm_pass);
         generateCustomToast();
@@ -71,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         selectLocationFromMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                preferences.setLocationStatus("User location");
                 startActivity(new Intent(SignUpActivity.this, MapsActivity.class));
             }
         });
@@ -187,7 +188,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        tvLocation.setText(preferences.getLocation());
+        tvLocation.setText(preferences.getUserLocation());
     }
 
     private void generateCustomToast() {

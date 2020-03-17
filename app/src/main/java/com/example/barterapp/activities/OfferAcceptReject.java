@@ -38,12 +38,15 @@ public class OfferAcceptReject extends AppCompatActivity {
     private ProgressDialog progressDialog;
     AcceptRejectOfferAdapter acceptRejectOfferAdapter;
     private List<GetAllUserOfferResponse.Offer> offerList = new ArrayList<>();
+    private int sender_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_accept_reject);
         customProgressDialog(OfferAcceptReject.this);
+        preferences = new Preferences(this);
+        sender_id = preferences.getSenderId();
         ivBack = findViewById(R.id.iv_back_offer_accept_reject);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +59,7 @@ public class OfferAcceptReject extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_custom_offer_accept_reject);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        acceptRejectOfferAdapter = new AcceptRejectOfferAdapter(OfferAcceptReject.this,offerList);
+        acceptRejectOfferAdapter = new AcceptRejectOfferAdapter(OfferAcceptReject.this, offerList);
         recyclerView.setAdapter(acceptRejectOfferAdapter);
     }
 
@@ -64,11 +67,11 @@ public class OfferAcceptReject extends AppCompatActivity {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.GET, URLs.get_offers_url + preferences.getUserId(), new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.get_offers_url + sender_id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                GetAllUserOfferResponse userOfferResponse = gson.fromJson(response,GetAllUserOfferResponse.class);
-                for (int i = 0 ; i<userOfferResponse.getOffers().size();i++){
+                GetAllUserOfferResponse userOfferResponse = gson.fromJson(response, GetAllUserOfferResponse.class);
+                for (int i = 0; i < userOfferResponse.getOffers().size(); i++) {
                     offerList.add(userOfferResponse.getOffers().get(i));
                 }
                 acceptRejectOfferAdapter.notifyDataSetChanged();
@@ -81,7 +84,7 @@ public class OfferAcceptReject extends AppCompatActivity {
                 Toast.makeText(OfferAcceptReject.this, "error", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headerMap = new HashMap<>();
@@ -94,6 +97,7 @@ public class OfferAcceptReject extends AppCompatActivity {
         requestQueue.add(request);
 
     }
+
     public void customProgressDialog(Context context) {
         progressDialog = new ProgressDialog(context);
         // Setting Message

@@ -56,7 +56,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         customProgressDialog(ChatActivity.this);
         preferences = new Preferences(this);
         receiver_id = preferences.getUserId();
-        sender_id = getIntent().getIntExtra("sender_id", 0);
+        sender_id = preferences.getSenderId();
+
         getAllMessages();
 
         fragmentInvoice = new DialogFragmentInvoice();
@@ -122,11 +123,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.view_get_custom_offers:
-                startActivity(new Intent(ChatActivity.this, OfferAcceptReject.class));
+                Intent intent = new Intent(ChatActivity.this, OfferAcceptReject.class);
+                startActivity(intent);
                 break;
 //                fragmentInvoice.show(getSupportFragmentManager(),"Invoice Dialog");
             case R.id.view_send_msg:
                 addMessage(etTypeMessage.getText().toString());
+                etTypeMessage.setText("");
                 break;
         }
 
@@ -136,7 +139,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         RequestQueue requestQueue = Volley.newRequestQueue(ChatActivity.this);
 
         final Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.POST, URLs.add_messages  /*receiver_id*/, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.add_messages , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -153,9 +156,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 chatAdapter.notifyItemInserted(chatAdapter.getItemCount()+1);
                 recyclerView.smoothScrollToPosition(chatAdapter.getItemCount());
             AddNewMessageResponse addNewMessageResponse = gson.fromJson(response,AddNewMessageResponse.class);
-                //messageList.clear();
-                /*chatAdapter.notifyItemInserted(chatAdapter.getItemCount() + 1);
-                recyclerView.smoothScrollToPosition(chatAdapter.getItemCount() + 1);*/
                 Toast.makeText(ChatActivity.this, ""+addNewMessageResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

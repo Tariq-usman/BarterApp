@@ -157,6 +157,9 @@
                 android:layout_height="35dp"
                 android:background="@drawable/bg_search_view"
                 android:text="Enter task location"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:paddingHorizontal="8dp"
                 android:textColor="@color/purple"
                 android:textSize="@dimen/fourteen_sp" />

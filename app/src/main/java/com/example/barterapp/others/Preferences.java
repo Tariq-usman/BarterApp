@@ -41,7 +41,7 @@ public class Preferences {
         editor.commit();
     }
 
-    public String getOfferId() {
+    public String   getOfferId() {
         return sharedPreferences.getString("offerId", "");
     }
 
@@ -76,6 +76,16 @@ public class Preferences {
         return sharedPreferences.getInt("job_user_id", 0);
     }
 
+    public void setSenderId(int sender_id) {
+        editor.putInt("sender_id", sender_id);
+        editor.apply();
+        editor.commit();
+    }
+
+    public int getSenderId() {
+        return sharedPreferences.getInt("sender_id", 0);
+    }
+
 
     public void setActorId(int job_user_id) {
         editor.putInt("actor_id", job_user_id);
@@ -106,15 +116,22 @@ public class Preferences {
     public int getEditStatus() {
         return sharedPreferences.getInt("edit_profile", 0);
     }
-
-    public void setLocation(String location) {
-        editor.putString("location", location);
+    public void setLocationStatus(String location_status) {
+        editor.putString("location_status", location_status);
+        editor.commit();
+        editor.apply();
+    }
+    public String getLocationStatus() {
+        return sharedPreferences.getString("location_status", "");
+    }
+    public void setUserLocation(String location) {
+        editor.putString("user location", location);
         editor.commit();
         editor.apply();
     }
 
-    public String getLocation() {
-        return sharedPreferences.getString("location", "");
+    public String getUserLocation() {
+        return sharedPreferences.getString("user location", "");
     }
 
     public void setSearchVal(boolean val) {
@@ -127,4 +144,12 @@ public class Preferences {
         return sharedPreferences.getBoolean("search", false);
     }
 
+    public void setTaskLocation(String add_task) {
+        editor.putString("add_task", add_task);
+        editor.commit();
+        editor.apply();
+    }
+    public String getTaskLocation() {
+        return sharedPreferences.getString("add_task", "");
+    }
 }

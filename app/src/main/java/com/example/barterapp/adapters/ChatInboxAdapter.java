@@ -101,7 +101,7 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.View
                 Intent intent = new Intent(context, ChatActivity.class);
                 Integer id = allInboxMessagesList.get(position).getId();
                 preferences.setJobUserId(id);
-                intent.putExtra("sender_id", id);
+                preferences.setSenderId(id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

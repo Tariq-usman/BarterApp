@@ -1,5 +1,6 @@
 package com.example.barterapp.fragments.dialog_fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;

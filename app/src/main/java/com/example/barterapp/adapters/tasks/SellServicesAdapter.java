@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,17 +47,22 @@ public class SellServicesAdapter extends RecyclerView.Adapter<SellServicesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        Glide.with(context).load(URLs.image_url+sellJobList.get(position).getUser().getPicture()).into(holder.ivUser);
-        holder.tvTitle.setText(sellJobList.get(position).getJob().getTitle());
-        holder.tvprice.setText("$ " + sellJobList.get(position).getJob().getEstimatedBudget());
-        holder.tvSecurity.setText("$ "+sellJobList.get(position).getSellerSecurity());
-        holder.tvDueDate.setText(sellJobList.get(position).getJob().getDueDate());
+        try{
+            Glide.with(context).load(URLs.image_url+sellJobList.get(position).getUser().getPicture()).into(holder.ivUser);
+            holder.tvTitle.setText(sellJobList.get(position).getOffer().getJob().getTitle());
+            holder.tvprice.setText("$ " + sellJobList.get(position).getOffer().getJob().getEstimatedBudget());
+            holder.tvSecurity.setText("$ "+sellJobList.get(position).getOffer().getBarterSecurity());
+            holder.tvDueDate.setText(sellJobList.get(position).getOffer().getJob().getDueDate());
+        }catch (Exception e){
+            Log.e(" Sell error" ,e.toString());
+        }
+        try {
         Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
         List<Address> addresses;
-        Double lat = Double.parseDouble(sellJobList.get(position).getJob().getLatitude());
-        Double lng = Double.parseDouble(sellJobList.get(position).getJob().getLongitude());
-        try {
-            addresses = geocoder.getFromLocation(28.963400, 77.711990, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        Double lat = Double.parseDouble(sellJobList.get(position).getOffer().getJob().getLatitude());
+        Double lng = Double.parseDouble(sellJobList.get(position).getOffer().getJob().getLongitude());
+
+            addresses = geocoder.getFromLocation(lat, lng, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             String city = addresses.get(0).getLocality();
             String state = addresses.get(0).getAdminArea();
@@ -72,24 +78,23 @@ public class SellServicesAdapter extends RecyclerView.Adapter<SellServicesAdapte
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
-                preferences.setOrderId(sellJobList.get(position).getJobId());
                 Intent intent = new Intent(context, BuySellHistoryServicesDetails.class);
-                intent.putExtra("order_id",sellJobList.get(position).getJobId());
-                intent.putExtra("title_my_job",sellJobList.get(position).getJob().getTitle());
-                intent.putExtra("description_my_job",sellJobList.get(position).getJob().getDescription());
+                intent.putExtra("order_id",sellJobList.get(position).getOffer().getJobId());
+                intent.putExtra("title_my_job",sellJobList.get(position).getOffer().getJob().getTitle());
+                intent.putExtra("description_my_job",sellJobList.get(position).getOffer().getJob().getDescription());
                 intent.putExtra("posted_by_my_job",sellJobList.get(position).getUser().getName());
                 intent.putExtra("picture_my_job",sellJobList.get(position).getUser().getPicture());
                 intent.putExtra("trades_my_job",sellJobList.get(position).getUser().getTrades());
                 intent.putExtra("location_my_job",holder.tvLocation.getText().toString());
-                intent.putExtra("duration_my_job",sellJobList.get(position).getJob().getDueDate());
-                intent.putExtra("due_date_my_job",sellJobList.get(position).getJob().getDueDate());
-                intent.putExtra("budget_my_job",sellJobList.get(position).getJob().getEstimatedBudget());
+                intent.putExtra("duration_my_job",sellJobList.get(position).getOffer().getJob().getDueDate());
+                intent.putExtra("due_date_my_job",sellJobList.get(position).getOffer().getJob().getDueDate());
+                intent.putExtra("budget_my_job",sellJobList.get(position).getOffer().getJob().getEstimatedBudget());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
 
-        int status_id = sellJobList.get(position).getJob().getStatusId();
+        int status_id = sellJobList.get(position).getOffer().getJob().getStatusId();
         if (status_id==3){
             holder.tvStatusText.setText("In Progress");
             holder.viewJobStatus.setBackgroundResource(R.drawable.bg_online_status);

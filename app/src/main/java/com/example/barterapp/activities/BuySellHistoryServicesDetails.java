@@ -113,7 +113,7 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
         recyclerViewTrades.setLayoutManager(layoutManager);
         recyclerViewTrades.setAdapter(new ServiceDetailsTradesAdapter(getApplicationContext(), trades_list));
 
-        if (status.equalsIgnoreCase("sell services")) {
+        if (status.equalsIgnoreCase("buy services")) {
             completeBtn.setVisibility(View.VISIBLE);
         } else if (status.equalsIgnoreCase("history")) {
             completeBtn.setVisibility(View.GONE);
@@ -138,6 +138,7 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
             public void onResponse(String response) {
                 DialogFragmentRating dialogFragmentRating = new DialogFragmentRating();
                 dialogFragmentRating.show(getSupportFragmentManager(), "Rating");
+                finish();
                 progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
