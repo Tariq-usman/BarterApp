@@ -68,7 +68,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             e.printStackTrace();
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+      /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("sell services");
@@ -76,7 +76,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
-        });
+        });*/
 
         int status_id = buyJobList.get(position).getJob().getStatusId();
         if (status_id == 3) {
@@ -90,7 +90,7 @@ public class BuyServicesAdapter extends RecyclerView.Adapter<BuyServicesAdapter.
             @Override
             public void onClick(View v) {
                 preferences.setFragmentStatus("buy services");
-                preferences.setOrderId(buyJobList.get(position).getJobId());
+                preferences.setOrderId(buyJobList.get(position).getId());
                 Intent intent = new Intent(context, BuySellHistoryServicesDetails.class);
                 intent.putExtra("title_my_job", buyJobList.get(position).getJob().getTitle());
                 intent.putExtra("description_my_job", buyJobList.get(position).getJob().getDescription());

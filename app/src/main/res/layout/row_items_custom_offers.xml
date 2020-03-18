@@ -167,6 +167,7 @@ Description text here.....Description text here....."
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/reject_offer_btn"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_marginHorizontal="10dp"

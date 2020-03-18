@@ -42,8 +42,6 @@ public class Notifications extends Fragment {
     private RecyclerView recyclerView;
     private NotificationsAdapter notificationsAdapter;
     private List<GetAllUsersNotificationsResponse.NotificationStreaming> notifications_list = new ArrayList<>();
-    int[] images = {R.drawable.notification_image, R.drawable.arslan, R.drawable.farmer_four, R.drawable.farmer_three, R.drawable.customer};
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

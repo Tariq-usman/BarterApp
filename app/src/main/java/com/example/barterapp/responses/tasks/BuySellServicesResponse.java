@@ -478,6 +478,9 @@ public class BuySellServicesResponse {
 
     public class BuyJob {
 
+        @SerializedName("id")
+        @Expose
+        private Integer id;
         @SerializedName("job_user_id")
         @Expose
         private Integer jobUserId;
@@ -496,6 +499,14 @@ public class BuySellServicesResponse {
         @SerializedName("job")
         @Expose
         private Job job;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
 
         public Integer getJobUserId() {
             return jobUserId;
@@ -648,7 +659,6 @@ public class BuySellServicesResponse {
             }
 
         }
-
         public class User {
 
             @SerializedName("id")
@@ -731,10 +741,7 @@ public class BuySellServicesResponse {
 
         }
     }
-
-
 }
-
 
 
 

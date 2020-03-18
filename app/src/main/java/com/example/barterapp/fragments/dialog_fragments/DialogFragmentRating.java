@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
+import com.example.barterapp.activities.BuySellHistoryServicesDetails;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.tasks.RatingResponse;
 import com.example.barterapp.utils.URLs;
@@ -81,6 +82,8 @@ public class DialogFragmentRating extends DialogFragment {
             @Override
             public void onResponse(String response) {
                 RatingResponse ratingResponse = gson.fromJson(response, RatingResponse.class);
+                ((BuySellHistoryServicesDetails)getContext()).finish();
+
                 Toast.makeText(getContext(), "" + ratingResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 dismiss();

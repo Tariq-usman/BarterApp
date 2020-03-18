@@ -15,25 +15,25 @@ import com.bumptech.glide.Glide;
 import com.example.barterapp.R;
 import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.responses.profile.CurrentUserResponse;
 import com.example.barterapp.utils.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfolioAdapter.ViewHolder> {
+public class UpdateProfilePortfolioAdapter extends RecyclerView.Adapter<UpdateProfilePortfolioAdapter.ViewHolder> {
     Context context;
     int status;
     private int RESULT_LOAD_IMAGE = 1;
-    List<String> portfolio_pics;
+    List<Uri> portfolio_pics;
     private Preferences preferences;
     RecyclerClickInterface clickInterface;
     int last_position = 0;
 
-    public ProfilePortfolioAdapter(Context context, List<String> portfolio_pics) {
+    public UpdateProfilePortfolioAdapter(Context context, List<Uri> portfolio_pics, RecyclerClickInterface recyclerClickInterface) {
         this.context = context;
         this.portfolio_pics = portfolio_pics;
         preferences = new Preferences(context);
+        this.clickInterface = recyclerClickInterface;
     }
 
     @NonNull
@@ -60,12 +60,10 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
         } else {
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
-            String imsges = portfolio_pics.get(position);
-            Glide.with(context).load(imsges).into(holder.ivPortfolioImage);
         }
-        String imsges = URLs.portfolio_images_url + portfolio_pics.get(position);
-        Picasso.get().load(imsges).error(R.drawable.portfolio).into(holder.ivPortfolioImage);
-//        Glide.with(context).load(imsges).into(holder.ivPortfolioImage);
+        Picasso.get().load(portfolio_pics.get(position)).error(R.drawable.portfolio).into(holder.ivPortfolioImage);
+
+//        Glide.with(context).load(portfolio_pics.get(position)).into(holder.ivPortfolioImage);
         holder.ivDeletePortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

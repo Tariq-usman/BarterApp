@@ -44,4 +44,6 @@ public class URLs {
     public static String get_trades_history_url = base_url + "getTradeHistory";
     ////Payment url
     public static final String wallet_payment_url = base_url + "valetPayment";
+    public static String get_total_balance_url = base_url+"userBalance";
+    public static String reject_offer_url = base_url+"rejectOffer/";
 }

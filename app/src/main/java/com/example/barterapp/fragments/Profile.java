@@ -46,6 +46,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.barterapp.adapters.UpdateProfilePortfolioAdapter;
 import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.activities.Portfolio;
 import com.example.barterapp.R;
@@ -55,6 +56,7 @@ import com.example.barterapp.others.MySingleton;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.others.VolleyMultipartRequest;
 import com.example.barterapp.responses.profile.CurrentUserResponse;
+import com.example.barterapp.utils.ImageFilePath;
 import com.example.barterapp.utils.URLs;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -63,10 +65,14 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,11 +100,13 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private Preferences preferences;
     private ProfileTradesAdapter profileTradesAdapter;
     private ProfilePortfolioAdapter profilePortfolioAdapter;
+    private UpdateProfilePortfolioAdapter updateProfilePortfolioAdapter;
     private ImageButton ibAddNewTrade, ibAddNewPortfolio;
     private Button btnYes, btnNo;
 
     private List<String> trades_list;
     public static List<String> portfolio_pics = new ArrayList<>();
+    public static List<Uri> updated_list;
     private CircleImageView iv_profileImage;
     private boolean select_image_status = true;
     private int currentPosition = -1;
@@ -107,7 +115,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private Bitmap bitmap;
     Uri selectedImage;
     private ProgressDialog progressDialog;
-
+    String path = null;
+    private boolean portfolio_status = false;
 
     @Nullable
     @Override
@@ -117,7 +126,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         currentUser();
 
         trades_list = new ArrayList<>();
-
+        updated_list = new ArrayList<>();
         preferences = new Preferences(getContext());
         preferences.setEditStatus(0);
 
@@ -150,12 +159,16 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
         recyclerViewTrades.setAdapter(profileTradesAdapter);
 
+        if (portfolio_status == false) {
+            recyclerView = view.findViewById(R.id.recycler_view_profile_portfolio);
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            recyclerView.setHasFixedSize(true);
+            profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics);
+            recyclerView.setAdapter(profilePortfolioAdapter);
+        }
         recyclerView = view.findViewById(R.id.recycler_view_profile_portfolio);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setHasFixedSize(true);
-        profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics, Profile.this);
-        recyclerView.setAdapter(profilePortfolioAdapter);
-
 
         return view;
     }
@@ -164,6 +177,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_edit:
+                portfolio_status=true;
                 layoutEdit.setVisibility(View.GONE);
                 saveBtn.setVisibility(View.VISIBLE);
                 et_experience.setFocusable(true);
@@ -175,11 +189,17 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 iv_profileImage.setEnabled(true);
                 iv_profileImage.setClickable(true);
                 preferences.setEditStatus(1);
+                for (int i=0;i<portfolio_pics.size();i++){
+                    updated_list.add(Uri.parse(portfolio_pics.get(i)));
+                }
+                updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
+                recyclerView.setAdapter(updateProfilePortfolioAdapter);
                 profileTradesAdapter.notifyDataSetChanged();
-                profilePortfolioAdapter.notifyDataSetChanged();
+                updateProfilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.save_btn:
-                    updateUserData();
+                portfolio_status=false;
+                updateUserData();
                 layoutEdit.setVisibility(View.VISIBLE);
                 saveBtn.setVisibility(View.GONE);
                 et_experience.setFocusable(false);
@@ -191,8 +211,10 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 iv_profileImage.setEnabled(false);
                 iv_profileImage.setClickable(false);
                 preferences.setEditStatus(0);
+                profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics);
+                recyclerView.setAdapter(profilePortfolioAdapter);
                 profileTradesAdapter.notifyDataSetChanged();
-                profilePortfolioAdapter.notifyDataSetChanged();
+                updateProfilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.profile_image:
                 select_image_status = false;
@@ -229,7 +251,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                     String profileImage = URLs.image_url + userResponse.getUser().getPicture();
 
                     tvUserName.setText(userName);
-                   // Glide.with(getContext()).load(profileImage).into(iv_profileImage);
+                    Picasso.get().load(profileImage).error(R.drawable.profile).into(iv_profileImage);
+//                    Glide.with(getContext()).load(profileImage).into(iv_profileImage);
                     et_experience.setText(experience);
                     if (trades != null) {
                         trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", " ").split(",")));
@@ -346,124 +369,40 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             selectedImage = data.getData();
-            String path = null;
-            try {
-                path = getFilePath(getContext(), selectedImage);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            /*String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            String image = selectedImage.toString();
-            cursor.close();*/
-
+            path = ImageFilePath.getPath(getContext(), selectedImage);
             if (select_image_status == false) {
+
                 try {
-                    /*Bitmap myBitmap = BitmapFactory.decodeFile(path);
-                    iv_profileImage.setImageBitmap(myBitmap);*/
-//                    Picasso.get().load(picturePath).into(iv_profileImage);
-                    Glide.with(getContext()).load(selectedImage).into(iv_profileImage);
-                } catch (Exception e) {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                    Glide.with(getContext()).load(bitmap).into(iv_profileImage);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 select_image_status = true;
             } else if (currentPosition >= 0) {
-                portfolio_pics.remove(currentPosition);
-                portfolio_pics.add(currentPosition, selectedImage.toString());
-                profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
-                profilePortfolioAdapter.notifyDataSetChanged();
+                updated_list.remove(currentPosition);
+                updated_list.add(currentPosition, selectedImage);
+                updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
+                recyclerView.setAdapter(updateProfilePortfolioAdapter);
+                updateProfilePortfolioAdapter.notifyItemInserted(updated_list.size());
+                updateProfilePortfolioAdapter.notifyDataSetChanged();
                 currentPosition = -1;
             } else {
-                if (portfolio_pics.size() == 0) {
-                    portfolio_pics.add(selectedImage.toString());
-                    profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
-                    profilePortfolioAdapter.notifyDataSetChanged();
+                if (updated_list.size() == 0) {
+                    updated_list.add(selectedImage);
+                    updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
+                    recyclerView.setAdapter(updateProfilePortfolioAdapter);
+                    updateProfilePortfolioAdapter.notifyItemInserted(updated_list.size());
+                    updateProfilePortfolioAdapter.notifyDataSetChanged();
                 } else {
-                    portfolio_pics.add(selectedImage.toString());
-                    profilePortfolioAdapter.notifyItemInserted(portfolio_pics.size());
-                    profilePortfolioAdapter.notifyDataSetChanged();
+                    updated_list.add(selectedImage);
+                    updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
+                    recyclerView.setAdapter(updateProfilePortfolioAdapter);
+                    updateProfilePortfolioAdapter.notifyItemInserted(updated_list.size());
+                    updateProfilePortfolioAdapter.notifyDataSetChanged();
                 }
             }
         }
-    }
-
-    @SuppressLint("NewApi")
-    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
-        String selection = null;
-        String[] selectionArgs = null;
-        // Uri is different in versions after KITKAT (Android 4.4), we need to
-        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                return Environment.getExternalStorageDirectory() + "/" + split[1];
-            } else if (isDownloadsDocument(uri)) {
-                final String id = DocumentsContract.getDocumentId(uri);
-                uri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-            } else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-                if ("image".equals(type)) {
-                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-                selection = "_id=?";
-                selectionArgs = new String[]{
-                        split[1]
-                };
-            }
-        }
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-
-            if (isGooglePhotosUri(uri)) {
-                return uri.getLastPathSegment();
-            }
-
-            String[] projection = {
-                    MediaStore.Images.Media.DATA
-            };
-            Cursor cursor = null;
-            try {
-                cursor = context.getContentResolver()
-                        .query(uri, projection, selection, selectionArgs, null);
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-        return null;
-    }
-
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
-    public static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
 

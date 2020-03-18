@@ -44,12 +44,12 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context).load(URLs.image_url+notifications_list.get(position).getPicture()).into(holder.ivNotifyUser);
         holder.tvNotifyUserName.setText(notifications_list.get(position).getName());
-        holder.tvNotityBody.setText(notifications_list.get(position).getDescription());
+        holder.tvNotifyBody.setText(notifications_list.get(position).getDescription());
 
         String time = notifications_list.get(position).getCreatedAt();
         String [] date_time = time.split(" ");
         String notfy_time = date_time[1];
-        holder.tvNotityTime.setText(notfy_time);
+        holder.tvNotifyTime.setText(notfy_time);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,14 +70,14 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView ivNotifyUser;
-        private TextView tvNotifyUserName, tvNotityBody, tvNotityTime;
+        private TextView tvNotifyUserName, tvNotifyBody, tvNotifyTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivNotifyUser = itemView.findViewById(R.id.iv_notify_user);
             tvNotifyUserName = itemView.findViewById(R.id.tv_notify_user_name);
-            tvNotityBody = itemView.findViewById(R.id.tv_notify_body);
-            tvNotityTime = itemView.findViewById(R.id.tv_notify_time);
+            tvNotifyBody = itemView.findViewById(R.id.tv_notify_body);
+            tvNotifyTime = itemView.findViewById(R.id.tv_notify_time);
         }
     }
 }

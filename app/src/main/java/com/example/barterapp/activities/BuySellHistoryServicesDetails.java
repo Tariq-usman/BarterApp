@@ -55,7 +55,7 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
     private int budget, orderId;
     private List<String> trades_list;
     private ProgressDialog progressDialog;
-
+    private int order_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +123,7 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //preferences.setOrderId(orderId);
+                 order_id = preferences.getOrderId();
                 completeOrder();
 
             }
@@ -132,13 +133,13 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
     private void completeOrder() {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        int order_id = preferences.getOrderId();
+
         StringRequest request = new StringRequest(Request.Method.POST, URLs.complete_order_url + order_id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 DialogFragmentRating dialogFragmentRating = new DialogFragmentRating();
                 dialogFragmentRating.show(getSupportFragmentManager(), "Rating");
-                finish();
+//                finish();
                 progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {

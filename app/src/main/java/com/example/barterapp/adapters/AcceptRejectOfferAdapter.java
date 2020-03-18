@@ -99,7 +99,47 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
                 acceptOffer();
             }
         });
+        holder.rejectOfferBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offer_id = offerList.get(position).getId();
+                rejectOffer();
+            }
+        });
+    }
 
+    private void rejectOffer() {
+        progressDialog.show();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.reject_offer_url + offer_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // Toast.makeText(context, "response", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, MainPage.class);
+//                intent.putExtra("fragment_status", "home");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                ((Activity) context).finish();
+                progressDialog.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.toString());
+                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerMap = new HashMap<>();
+                String token = preferences.getToken();
+                headerMap.put("Authorization", "Bearer " + token);
+                return headerMap;
+            }
+        };
+        requestQueue.add(request);
     }
 
     private void acceptOffer() {
@@ -149,13 +189,14 @@ public class AcceptRejectOfferAdapter extends RecyclerView.Adapter<AcceptRejectO
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Button acceptOfferBtn;
+        private Button acceptOfferBtn,rejectOfferBtn;
         private TextView tvPrice, tvDueDate, tvSecurityAmount, tvDescription;
         private RecyclerView recyclerViewReturnTrades, recyclerViewTrades;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             acceptOfferBtn = itemView.findViewById(R.id.accept_offer_btn);
+            rejectOfferBtn = itemView.findViewById(R.id.reject_offer_btn);
             recyclerViewTrades = itemView.findViewById(R.id.recycler_view_chat_invoice_trades);
             recyclerViewReturnTrades = itemView.findViewById(R.id.recycler_view_chat_invoice_return_trades);
             tvPrice = itemView.findViewById(R.id.tvPrice_custom_offer);
