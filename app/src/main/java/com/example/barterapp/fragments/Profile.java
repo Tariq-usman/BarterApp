@@ -1,23 +1,19 @@
 package com.example.barterapp.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,15 +64,17 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -93,7 +91,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private Dialog myDialog;
     private TextView tvUserName, tradesView;
     private LinearLayout layoutEdit;
-    private TextView textViewPortfolio, saveBtn;
+    private TextView tvCompletedTasks, textViewPortfolio, saveBtn;
     private RecyclerView recyclerView, recyclerViewTrades;
     private FlexboxLayoutManager layoutManager;
     private EditText et_experience;
@@ -111,12 +109,15 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private boolean select_image_status = true;
     private int currentPosition = -1;
     private String token;
-    private byte[] bytesArray;
+    private byte[] bytesArray, bytesArray1;
     private Bitmap bitmap;
     Uri selectedImage;
     private ProgressDialog progressDialog;
     String path = null;
     private boolean portfolio_status = false;
+    List<byte[]> portfolios = new ArrayList<>();
+    byte[] b;
+    Bitmap bitmap1;
 
     @Nullable
     @Override
@@ -131,6 +132,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
         preferences.setEditStatus(0);
 
         tvUserName = view.findViewById(R.id.tv_user_name);
+        tvCompletedTasks = view.findViewById(R.id.tv_completed_tasks);
 
         iv_profileImage = view.findViewById(R.id.profile_image);
         iv_profileImage.setOnClickListener(this);
@@ -177,7 +179,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_edit:
-                portfolio_status=true;
+                portfolio_status = true;
                 layoutEdit.setVisibility(View.GONE);
                 saveBtn.setVisibility(View.VISIBLE);
                 et_experience.setFocusable(true);
@@ -189,16 +191,16 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 iv_profileImage.setEnabled(true);
                 iv_profileImage.setClickable(true);
                 preferences.setEditStatus(1);
-                for (int i=0;i<portfolio_pics.size();i++){
+               /* for (int i = 0; i < portfolio_pics.size(); i++) {
                     updated_list.add(Uri.parse(portfolio_pics.get(i)));
-                }
+                }*/
                 updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
                 recyclerView.setAdapter(updateProfilePortfolioAdapter);
                 profileTradesAdapter.notifyDataSetChanged();
                 updateProfilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.save_btn:
-                portfolio_status=false;
+                portfolio_status = false;
                 updateUserData();
                 layoutEdit.setVisibility(View.VISIBLE);
                 saveBtn.setVisibility(View.GONE);
@@ -247,15 +249,17 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
                     String userName = userResponse.getUser().getName();
                     String experience = userResponse.getUser().getExperience();
+                    String completed_tasks = userResponse.getUser().getCompleteOrder().toString();
                     String trades = userResponse.getUser().getTrades();
                     String profileImage = URLs.image_url + userResponse.getUser().getPicture();
 
                     tvUserName.setText(userName);
-                    Picasso.get().load(profileImage).error(R.drawable.profile).into(iv_profileImage);
-//                    Glide.with(getContext()).load(profileImage).into(iv_profileImage);
+//                    Picasso.get().load(profileImage).error(R.drawable.profile).into(iv_profileImage);
+                    Glide.with(iv_profileImage.getContext()).load(profileImage).into(iv_profileImage);
                     et_experience.setText(experience);
+                    tvCompletedTasks.setText(completed_tasks);
                     if (trades != null) {
-                        trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", " ").split(",")));
+                        trades_list = new ArrayList<>(Arrays.asList(trades.replaceAll("\\s", "").split(",")));
                         profileTradesAdapter = new ProfileTradesAdapter(getContext(), trades_list);
                         recyclerViewTrades.setAdapter(profileTradesAdapter);
                     } else {
@@ -298,7 +302,6 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
     public void updateUserData() {
         progressDialog.show();
-
         Map<String, String> headers = new HashMap<>();
         String token = preferences.getToken();
         headers.put("Authorization", "Bearer " + token);
@@ -325,11 +328,22 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 Bitmap bm = ((BitmapDrawable) iv_profileImage.getDrawable()).getBitmap();
                 bytesArray = imageToString(bm);
                 params.put("image", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
-               /* for (int i=0;i<portfolio_pics.size();i++){
-                    bytesArray = imageToString(i);
-                    params.put("portfolioImage",new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
-                }*/
-                params.put("portfolioImage", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray));
+
+                for (int i = 0; i < updated_list.size(); i++) {
+                    Uri path = updated_list.get(i);
+                    try {
+                        bitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.parse(String.valueOf(path)));
+                        bytesArray1 = imageToString(bitmap1);
+                        Log.e("list_size", String.valueOf(bytesArray1.length));
+                        params.put("portfolioImage[]", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray1));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    params.size();
+                }
+
+//                params.put("portfolioImage[]", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray1));
+
                 return params;
             }
 

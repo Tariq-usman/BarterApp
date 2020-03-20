@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class GetAllUserOfferResponse {
-
     @SerializedName("offers")
     @Expose
     private List<Offer> offers = null;
@@ -30,9 +29,9 @@ public class GetAllUserOfferResponse {
         @SerializedName("job_id")
         @Expose
         private Integer jobId;
-        @SerializedName("offer_type")
+        @SerializedName("offer_type_id")
         @Expose
-        private Integer offerType;
+        private Integer offerTypeId;
         @SerializedName("offer")
         @Expose
         private String offer;
@@ -57,12 +56,12 @@ public class GetAllUserOfferResponse {
         @SerializedName("deleted_at")
         @Expose
         private Object deletedAt;
-        @SerializedName("user")
-        @Expose
-        private User user;
         @SerializedName("job")
         @Expose
         private Job job;
+        @SerializedName("user")
+        @Expose
+        private User user;
 
         public Integer getId() {
             return id;
@@ -88,12 +87,12 @@ public class GetAllUserOfferResponse {
             this.jobId = jobId;
         }
 
-        public Integer getOfferType() {
-            return offerType;
+        public Integer getOfferTypeId() {
+            return offerTypeId;
         }
 
-        public void setOfferType(Integer offerType) {
-            this.offerType = offerType;
+        public void setOfferTypeId(Integer offerTypeId) {
+            this.offerTypeId = offerTypeId;
         }
 
         public String getOffer() {
@@ -160,14 +159,6 @@ public class GetAllUserOfferResponse {
             this.deletedAt = deletedAt;
         }
 
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
         public Job getJob() {
             return job;
         }
@@ -176,152 +167,12 @@ public class GetAllUserOfferResponse {
             this.job = job;
         }
 
-        public class User {
+        public User getUser() {
+            return user;
+        }
 
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("latitude")
-            @Expose
-            private String latitude;
-            @SerializedName("longitude")
-            @Expose
-            private String longitude;
-            @SerializedName("picture")
-            @Expose
-            private String picture;
-            @SerializedName("trades")
-            @Expose
-            private String trades;
-            @SerializedName("experience")
-            @Expose
-            private String experience;
-            @SerializedName("email")
-            @Expose
-            private String email;
-            @SerializedName("email_verified_at")
-            @Expose
-            private Object emailVerifiedAt;
-            @SerializedName("device_token")
-            @Expose
-            private String deviceToken;
-            @SerializedName("deleted_at")
-            @Expose
-            private Object deletedAt;
-            @SerializedName("created_at")
-            @Expose
-            private String createdAt;
-            @SerializedName("updated_at")
-            @Expose
-            private String updatedAt;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getLatitude() {
-                return latitude;
-            }
-
-            public void setLatitude(String latitude) {
-                this.latitude = latitude;
-            }
-
-            public String getLongitude() {
-                return longitude;
-            }
-
-            public void setLongitude(String longitude) {
-                this.longitude = longitude;
-            }
-
-            public String getPicture() {
-                return picture;
-            }
-
-            public void setPicture(String picture) {
-                this.picture = picture;
-            }
-
-            public String getTrades() {
-                return trades;
-            }
-
-            public void setTrades(String trades) {
-                this.trades = trades;
-            }
-
-            public String getExperience() {
-                return experience;
-            }
-
-            public void setExperience(String experience) {
-                this.experience = experience;
-            }
-
-            public String getEmail() {
-                return email;
-            }
-
-            public void setEmail(String email) {
-                this.email = email;
-            }
-
-            public Object getEmailVerifiedAt() {
-                return emailVerifiedAt;
-            }
-
-            public void setEmailVerifiedAt(Object emailVerifiedAt) {
-                this.emailVerifiedAt = emailVerifiedAt;
-            }
-
-            public String getDeviceToken() {
-                return deviceToken;
-            }
-
-            public void setDeviceToken(String deviceToken) {
-                this.deviceToken = deviceToken;
-            }
-
-            public Object getDeletedAt() {
-                return deletedAt;
-            }
-
-            public void setDeletedAt(Object deletedAt) {
-                this.deletedAt = deletedAt;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getUpdatedAt() {
-                return updatedAt;
-            }
-
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-            }
-
+        public void setUser(User user) {
+            this.user = user;
         }
 
         public class Job {
@@ -472,9 +323,154 @@ public class GetAllUserOfferResponse {
 
         }
 
+        public class User {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("latitude")
+            @Expose
+            private String latitude;
+            @SerializedName("longitude")
+            @Expose
+            private String longitude;
+            @SerializedName("picture")
+            @Expose
+            private String picture;
+            @SerializedName("trades")
+            @Expose
+            private String trades;
+            @SerializedName("experience")
+            @Expose
+            private String experience;
+            @SerializedName("email")
+            @Expose
+            private String email;
+            @SerializedName("email_verified_at")
+            @Expose
+            private Object emailVerifiedAt;
+            @SerializedName("device_token")
+            @Expose
+            private String deviceToken;
+            @SerializedName("deleted_at")
+            @Expose
+            private Object deletedAt;
+            @SerializedName("created_at")
+            @Expose
+            private String createdAt;
+            @SerializedName("updated_at")
+            @Expose
+            private String updatedAt;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
+            }
+
+            public String getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
+            }
+
+            public String getPicture() {
+                return picture;
+            }
+
+            public void setPicture(String picture) {
+                this.picture = picture;
+            }
+
+            public String getTrades() {
+                return trades;
+            }
+
+            public void setTrades(String trades) {
+                this.trades = trades;
+            }
+
+            public String getExperience() {
+                return experience;
+            }
+
+            public void setExperience(String experience) {
+                this.experience = experience;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public Object getEmailVerifiedAt() {
+                return emailVerifiedAt;
+            }
+
+            public void setEmailVerifiedAt(Object emailVerifiedAt) {
+                this.emailVerifiedAt = emailVerifiedAt;
+            }
+
+            public String getDeviceToken() {
+                return deviceToken;
+            }
+
+            public void setDeviceToken(String deviceToken) {
+                this.deviceToken = deviceToken;
+            }
+
+            public Object getDeletedAt() {
+                return deletedAt;
+            }
+
+            public void setDeletedAt(Object deletedAt) {
+                this.deletedAt = deletedAt;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+        }
     }
 
 }
-
-
 

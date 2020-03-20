@@ -62,6 +62,9 @@ public class CurrentUserResponse {
         @SerializedName("updated_at")
         @Expose
         private String updatedAt;
+        @SerializedName("complete_order")
+        @Expose
+        private Integer completeOrder;
         @SerializedName("portfolios")
         @Expose
         private List<Portfolio> portfolios = null;
@@ -170,6 +173,14 @@ public class CurrentUserResponse {
             this.updatedAt = updatedAt;
         }
 
+        public Integer getCompleteOrder() {
+            return completeOrder;
+        }
+
+        public void setCompleteOrder(Integer completeOrder) {
+            this.completeOrder = completeOrder;
+        }
+
         public List<Portfolio> getPortfolios() {
             return portfolios;
         }
@@ -270,6 +281,8 @@ public class CurrentUserResponse {
             }
 
         }
+
     }
+
 }
 

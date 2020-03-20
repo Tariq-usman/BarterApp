@@ -27,9 +27,11 @@
             android:padding="4dp">
 
             <LinearLayout
+                android:id="@+id/layou_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
@@ -113,15 +115,17 @@
                     android:id="@+id/recycler_view_chat_invoice_trades"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:listitem="@layout/row_items_trades" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_return_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -135,7 +139,7 @@
                     android:id="@+id/recycler_view_chat_invoice_return_trades"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:listitem="@layout/row_items_trades" />
             </LinearLayout>
 

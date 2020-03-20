@@ -61,7 +61,7 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
             String imsges = portfolio_pics.get(position);
-            Glide.with(context).load(imsges).into(holder.ivPortfolioImage);
+            Glide.with(holder.ivPortfolioImage.getContext()).load(imsges).into(holder.ivPortfolioImage);
         }
         String imsges = URLs.portfolio_images_url + portfolio_pics.get(position);
         Picasso.get().load(imsges).error(R.drawable.portfolio).into(holder.ivPortfolioImage);

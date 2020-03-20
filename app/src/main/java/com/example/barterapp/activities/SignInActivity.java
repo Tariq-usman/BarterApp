@@ -23,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barterapp.R;
-import com.example.barterapp.application.AppClass;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.user.LogInResponse;
 import com.example.barterapp.utils.URLs;
@@ -76,13 +75,24 @@ public class SignInActivity extends AppCompatActivity {
                 pass = etPassword.getText().toString().trim();
                 if (!email.matches(Utils.emailPattern)) {
                     etEmail.setError("Please enter valid email..");
-                } else if (pass.length()<6) {
+                } else if (pass.length() < 6) {
                     etPassword.setError("Please enter valid password..");
                 } else {
                     logInUser();
                 }
             }
         });
+        getIncomingIntent();
+    }
+
+    private void getIncomingIntent() {
+        if (getIntent() != null) {
+            etEmail.setText(getIntent().getStringExtra("email"));
+            etPassword.setText(getIntent().getStringExtra("password"));
+        } else {
+            etEmail.setText("");
+            etPassword.setText("");
+        }
     }
 
     private void logInUser() {
@@ -92,10 +102,10 @@ public class SignInActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, URLs.login_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               // Toast.makeText(SignInActivity.this, "Login", Toast.LENGTH_SHORT).show();
-                LogInResponse logInResponse =gson.fromJson(response,LogInResponse.class);
+                // Toast.makeText(SignInActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                LogInResponse logInResponse = gson.fromJson(response, LogInResponse.class);
                 String token = logInResponse.getToken();
-                int user_id=logInResponse.getUser().getId();
+                int user_id = logInResponse.getUser().getId();
                 preferences.setToken(token);
                 preferences.setUserId(user_id);
                 tv.setText("Successfully SignIn");
@@ -112,17 +122,18 @@ public class SignInActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(SignInActivity.this, "User not found!", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String ,String> map = new HashMap<>();
-                map.put("email",email);
-                map.put("password",pass);
+                Map<String, String> map = new HashMap<>();
+                map.put("email", email);
+                map.put("password", pass);
                 return map;
             }
         };
         requestQueue.add(request);
     }
+
     private void updateDeviceToken() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Gson gson = new GsonBuilder().create();
@@ -191,7 +202,8 @@ public class SignInActivity extends AppCompatActivity {
         toast.setView(layout);
 //        toast.show();
     }
-    public void customProgressDialog(Context context){
+
+    public void customProgressDialog(Context context) {
         progressDialog = new ProgressDialog(context);
         // Setting Message
         progressDialog.setMessage("Loading...");

@@ -52,9 +52,12 @@ public class Notifications extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view_notifications);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
         notificationsAdapter = new NotificationsAdapter(getContext(),notifications_list);
         recyclerView.setAdapter( notificationsAdapter);
+//        recyclerView.smoothScrollToPosition(notifications_list.size()+1);
         return view;
     }
 

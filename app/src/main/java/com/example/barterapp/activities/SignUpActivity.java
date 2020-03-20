@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,8 +42,9 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     private TextView tv, textViewSignIn, tvLocation;
     private EditText etName, etEmail, etPass, etConfPass;
+    private CheckBox checkBox;
     private Button signUpButton;
-    private String name, email, pass, cPass,location;
+    private String name, email, pass, cPass, location;
     private Preferences preferences;
     private LayoutInflater inflater;
     private View layout;
@@ -50,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageView selectLocationFromMap;
     Context context;
     Address location_lat_long;
-    double latitude,longitude;
+    double latitude, longitude;
 
     private ProgressDialog progressDialog;
 
@@ -65,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email_forgot_pass);
         etPass = findViewById(R.id.et_password);
         etConfPass = findViewById(R.id.et_confirm_pass);
+        checkBox = findViewById(R.id.cb_sign_up);
         generateCustomToast();
         tvLocation = findViewById(R.id.tv_location_signup);
         selectLocationFromMap = findViewById(R.id.select_location_from_map);
@@ -93,16 +96,15 @@ public class SignUpActivity extends AppCompatActivity {
                     etPass.setError("Password is weak..");
                 } else if (!cPass.matches(pass)) {
                     etConfPass.setError("Password Not matching..");
+                } else if (!checkBox.isChecked()) {
+                    Toast.makeText(SignUpActivity.this, "Please agree terms and conditions..", Toast.LENGTH_SHORT).show();
                 } else {
-
                     signUpUser();
-
                 }
             }
         });
 
         preferences = new Preferences(this);
-
 
         textViewSignIn = findViewById(R.id.tv_signin);
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
@@ -116,22 +118,20 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private void getFromLocation(String address)
-    {
+    private void getFromLocation(String address) {
         Geocoder geocoder = new Geocoder(getBaseContext());
         List<Address> addresses;
         try {
             addresses = geocoder.getFromLocationName(tvLocation.getText().toString(), 20);
-            for(int i = 0; i < addresses.size(); i++) { // MULTIPLE MATCHES
+            for (int i = 0; i < addresses.size(); i++) { // MULTIPLE MATCHES
                 Address addr = addresses.get(i);
                 latitude = addr.getLatitude();
                 longitude = addr.getLongitude(); // DO SOMETHING WITH VALUES
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
-}
-
+    }
 
 
     private void signUpUser() {
@@ -139,18 +139,21 @@ public class SignUpActivity extends AppCompatActivity {
         getFromLocation(location);
         RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
 
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.signup_url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.signup_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               // Toast.makeText(SignUpActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-                Gson gson =new GsonBuilder().create();
-                SignUpResponse signUpResponse = gson.fromJson(response,SignUpResponse.class);
+                // Toast.makeText(SignUpActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                Gson gson = new GsonBuilder().create();
+                SignUpResponse signUpResponse = gson.fromJson(response, SignUpResponse.class);
                 String message = signUpResponse.getMessage().toString();
                 Log.e("Response ", message);
                 tv.setText("Register Successfully");
                 toast.show();
                 progressDialog.dismiss();
-                startActivity(new Intent(getApplicationContext(),MainPage.class));
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("password", pass);
+                startActivity(intent);
                 finish();
             }
         }, new Response.ErrorListener() {
@@ -159,26 +162,25 @@ public class SignUpActivity extends AppCompatActivity {
                 String msgError = new String(error.networkResponse.data);
                 progressDialog.dismiss();
                 Log.e("error MSG", msgError);
-                Toast.makeText(SignUpActivity.this, "Error "+error.networkResponse.data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Error " + error.toString(), Toast.LENGTH_SHORT).show();
             }
-        })
-        {
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String > header = new HashMap<>();
+                Map<String, String> header = new HashMap<>();
                 return header;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String > map = new HashMap<>();
+                Map<String, String> map = new HashMap<>();
                 String device_token = preferences.getDeviceToken();
-                map.put("name",name);
-                map.put("email",email);
-                map.put("password",pass);
-                map.put("latitude",String.valueOf(latitude));
-                map.put("longitude",String.valueOf(longitude));
-                map.put("device_token",device_token);
+                map.put("name", name);
+                map.put("email", email);
+                map.put("password", pass);
+                map.put("latitude", String.valueOf(latitude));
+                map.put("longitude", String.valueOf(longitude));
+                map.put("device_token", device_token);
                 return map;
             }
         };
@@ -201,7 +203,8 @@ public class SignUpActivity extends AppCompatActivity {
         toast.setView(layout);
 //        toast.show();
     }
-    public void customProgressDialog(Context context){
+
+    public void customProgressDialog(Context context) {
         progressDialog = new ProgressDialog(context);
         // Setting Message
         progressDialog.setMessage("Loading...");

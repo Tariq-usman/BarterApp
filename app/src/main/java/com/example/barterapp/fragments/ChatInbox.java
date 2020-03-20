@@ -52,7 +52,8 @@ public class ChatInbox extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager =new LinearLayoutManager(getContext()) ;
+        recyclerView.setLayoutManager(layoutManager);
         inboxAdapter = new ChatInboxAdapter(getContext(), allInboxMessagesList);
         recyclerView.setAdapter(inboxAdapter);
         recyclerView.smoothScrollToPosition(inboxAdapter.getItemCount()+1);

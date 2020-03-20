@@ -57,7 +57,7 @@
                 android:singleLine="true"
                 android:textColor="@color/whiteColor"
                 android:textColorHint="@color/whiteColor"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                 android:singleLine="true"
                 android:textColor="@color/whiteColor"
                 android:textColorHint="@color/whiteColor"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:singleLine="true"
                 android:textColor="@color/whiteColor"
                 android:textColorHint="@color/whiteColor"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                 android:singleLine="true"
                 android:textColor="@color/whiteColor"
                 android:textColorHint="@color/whiteColor"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -199,6 +199,8 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/cb_sign_up"
+                android:checked="false"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:button="@drawable/white_checkbox_custom" />

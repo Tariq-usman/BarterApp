@@ -76,7 +76,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         etTypeMessage = findViewById(R.id.view_write_msg);
         recyclerView = findViewById(R.id.recycler_view_chat);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        LinearLayoutManager layoutManager =new LinearLayoutManager(getApplicationContext()) ;
+        recyclerView.setLayoutManager(layoutManager);
         chatAdapter = new ChatAdapter( sender_id,getApplicationContext(), messageList);
         recyclerView.setAdapter(chatAdapter);
         recyclerView.smoothScrollToPosition(chatAdapter.getItemCount()+1);  }
