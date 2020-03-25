@@ -39,89 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginHorizontal="16dp"
-                android:paddingBottom="65dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="20dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_home_products"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginVertical="3dp"
-                        android:src="@drawable/design" />
-
-                    <!--<TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Upload "
-                        android:textColor="@color/purple"
-                        android:textSize="@dimen/sixteen_sp" />-->
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight=".6"
-                        android:text="Title:"
-                        android:textColor="@color/greyForText"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_title_edit_portfolio"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.5"
-                        android:text="Design"
-                        android:textSize="@dimen/fourteen_sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight=".6"
-                        android:text="Price:"
-                        android:textColor="@color/greyForText"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_price_edit_portfolio"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.5"
-                        android:text="$500"
-                        android:textSize="@dimen/fourteen_sp" />
-                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_portfolio"
@@ -130,22 +47,6 @@
                     tools:listitem="@layout/row_items_profile_portfolio" />
 
 
-            </LinearLayout>
-        </ScrollView>
-
-<!--
-        <Button
-            android:id="@+id/trade_btn"
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_button"
-            android:paddingHorizontal="20dp"
-            android:text="Upload"
-            android:textAllCaps="false"
-            android:textColor="@color/greyForText" />
--->
 
     </FrameLayout>
 

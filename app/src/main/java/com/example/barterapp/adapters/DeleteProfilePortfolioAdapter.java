@@ -9,11 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -24,20 +32,22 @@ import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
 import com.example.barterapp.responses.profile.CurrentUserResponse;
 import com.example.barterapp.utils.URLs;
-import com.squareup.picasso.Picasso;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfolioAdapter.ViewHolder> {
+public class DeleteProfilePortfolioAdapter extends RecyclerView.Adapter<DeleteProfilePortfolioAdapter.ViewHolder> {
     Context context;
     int status;
-    private int RESULT_LOAD_IMAGE = 1;
-    List<String> portfolio_pics;
+    List<CurrentUserResponse.User.Portfolio> portfolio_pics;
     private Preferences preferences;
     RecyclerClickInterface clickInterface;
     int last_position = 0;
-
-    public ProfilePortfolioAdapter(Context context, List<String> portfolio_pics) {
+    Integer id;
+    public DeleteProfilePortfolioAdapter(Context context, List<CurrentUserResponse.User.Portfolio> portfolio_pics) {
         this.context = context;
         this.portfolio_pics = portfolio_pics;
         preferences = new Preferences(context);
@@ -53,25 +63,12 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-/*
-        if (images.size() == 0) {
-            holder.ivPortfolioImage.setImageResource(R.drawable.notification_image);
-            return;
-        }*/
-
-        status = preferences.getEditStatus();
-        Log.i("status", String.valueOf(status));
-        if (status == 0) {
-            holder.ivPortfolioImage.setEnabled(false);
-            holder.ivDeletePortfolio.setVisibility(View.GONE);
-        } else {
+        {
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
-            String imsges = portfolio_pics.get(position);
-            Glide.with(holder.ivPortfolioImage.getContext()).load(imsges).into(holder.ivPortfolioImage);
         }
-        String imsges = URLs.portfolio_images_url + portfolio_pics.get(position);
-//        Picasso.get().load(imsges).error(R.drawable.portfolio).into(holder.ivPortfolioImage);
+//        Picasso.get().load(portfolio_pics.get(position)).into(holder.ivPortfolioImage);
+        String imsges = URLs.portfolio_images_url +portfolio_pics.get(position).getPicture();
         Glide.with(holder.ivPortfolioImage.getContext()).load(imsges).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -84,18 +81,12 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
                 return false;
             }
         }).into(holder.ivPortfolioImage);
+
         holder.ivDeletePortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                portfolio_pics.remove(portfolio_pics.get(position));
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
-            }
-        });
-        holder.ivPortfolioImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickInterface.interfaceOnClick(v, position);
+                 id = portfolio_pics.get(position).getId();
+                deletePortfolio(id,position);
             }
         });
     }
@@ -117,4 +108,36 @@ public class ProfilePortfolioAdapter extends RecyclerView.Adapter<ProfilePortfol
             progressBar = itemView.findViewById(R.id.progress_portfolio);
         }
     }
+    private void deletePortfolio(int portfolio_id, final int position) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        final Gson gson = new GsonBuilder().create();
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_portfolio_url + portfolio_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                portfolio_pics.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, portfolio_pics.size());
+                Log.e("RESPONSE ", response);
+                Toast.makeText(context, "Portfolio delete successfully", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerMap = new HashMap<>();
+                String token = preferences.getToken();
+                headerMap.put("Authorization", "Bearer " + token);
+                headerMap.put("Accept", "application/json");
+                headerMap.put("Content-Type", "application/json");
+                return headerMap;
+            }
+
+        };
+        requestQueue.add(request);
+    }
+
 }

@@ -203,5 +203,10 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
 }

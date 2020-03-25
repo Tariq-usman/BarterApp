@@ -32,4 +32,10 @@ public class History extends AppCompatActivity {
         viewPager.setAdapter(new HistoryViewPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

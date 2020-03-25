@@ -92,9 +92,9 @@ public class SignUpActivity extends AppCompatActivity {
                     etName.setError("Please enter name..");
                 } else if (!email.matches(Utils.emailPattern)) {
                     etEmail.setError("Please enter valid email..");
-                } else if (pass.length() < 6) {
-                    etPass.setError("Password is weak..");
-                } else if (!cPass.matches(pass)) {
+                } else if (pass.length() < 8 && !Utils.isValidPassword(pass)) {
+                    etPass.setError("Not Valid Password");
+                } else if (!cPass.equalsIgnoreCase(etPass.getText().toString().trim())) {
                     etConfPass.setError("Password Not matching..");
                 } else if (!checkBox.isChecked()) {
                     Toast.makeText(SignUpActivity.this, "Please agree terms and conditions..", Toast.LENGTH_SHORT).show();
@@ -213,4 +213,11 @@ public class SignUpActivity extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

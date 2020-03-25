@@ -1,32 +1,39 @@
 package com.example.barterapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.barterapp.R;
 import com.example.barterapp.interfaces.RecyclerClickInterface;
 import com.example.barterapp.others.Preferences;
-import com.example.barterapp.utils.URLs;
-import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 public class UpdateProfilePortfolioAdapter extends RecyclerView.Adapter<UpdateProfilePortfolioAdapter.ViewHolder> {
     Context context;
     int status;
-    private int RESULT_LOAD_IMAGE = 1;
-    List<Uri> portfolio_pics;
+    private List<Uri> portfolio_pics;
     private Preferences preferences;
-    RecyclerClickInterface clickInterface;
+    private RecyclerClickInterface clickInterface;
     int last_position = 0;
 
     public UpdateProfilePortfolioAdapter(Context context, List<Uri> portfolio_pics, RecyclerClickInterface recyclerClickInterface) {
@@ -46,11 +53,6 @@ public class UpdateProfilePortfolioAdapter extends RecyclerView.Adapter<UpdatePr
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-/*
-        if (images.size() == 0) {
-            holder.ivPortfolioImage.setImageResource(R.drawable.notification_image);
-            return;
-        }*/
 
         status = preferences.getEditStatus();
         Log.i("status", String.valueOf(status));
@@ -61,9 +63,25 @@ public class UpdateProfilePortfolioAdapter extends RecyclerView.Adapter<UpdatePr
             holder.ivPortfolioImage.setEnabled(true);
             holder.ivDeletePortfolio.setVisibility(View.VISIBLE);
         }
-        Picasso.get().load(portfolio_pics.get(position)).error(R.drawable.portfolio).into(holder.ivPortfolioImage);
+//        Picasso.get().load(portfolio_pics.get(position)).into(holder.ivPortfolioImage);
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), portfolio_pics.get(position));
+            Glide.with(context).load(bitmap).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    return false;
+                }
 
-//        Glide.with(context).load(portfolio_pics.get(position)).into(holder.ivPortfolioImage);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.INVISIBLE);
+                    return false;
+                }
+            }).into(holder.ivPortfolioImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         holder.ivDeletePortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +106,13 @@ public class UpdateProfilePortfolioAdapter extends RecyclerView.Adapter<UpdatePr
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivPortfolioImage, ivDeletePortfolio;
+        private ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPortfolioImage = itemView.findViewById(R.id.ivPortfolio);
             ivDeletePortfolio = itemView.findViewById(R.id.iv_delete_portfolio);
+            progressBar = itemView.findViewById(R.id.progress_portfolio);
         }
     }
 }

@@ -75,7 +75,7 @@ public class SignInActivity extends AppCompatActivity {
                 pass = etPassword.getText().toString().trim();
                 if (!email.matches(Utils.emailPattern)) {
                     etEmail.setError("Please enter valid email..");
-                } else if (pass.length() < 6) {
+                } else if (pass.length() < 8 && !Utils.isValidPassword(pass)) {
                     etPassword.setError("Please enter valid password..");
                 } else {
                     logInUser();
@@ -166,31 +166,6 @@ public class SignInActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public boolean isValidPassword(final String password) {
-
-        Pattern pattern;
-        Matcher matcher;
-
-      /*  # a digit must occur at least once
-          # a lower case letter must occur at least once
-          # an upper case letter must occur at least once
-          # a special character must occur at least once you can replace with your special characters
-          # no whitespace allowed in the entire string
-          # anything, at least six places though
-          # end-of-string*/
-        final String PASSWORD_PATTERN = "^" +
-                "(?=.*[0-9])" +
-                "(?=.*[a-z])" + //a lower case letter must occur at least once
-                "(?=.*[A-Z])" + //an upper case letter must occur at least once
-                "(?=.*[@#$%^&+=])" +
-                "(?=\\S+$).{4,}$";
-
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
-
-    }
 
     private void generateCustomToast() {
         inflater = getLayoutInflater();
@@ -212,4 +187,11 @@ public class SignInActivity extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

@@ -104,13 +104,13 @@ public class Wallet extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 UserBalanceResponse balanceResponse = gson.fromJson(response, UserBalanceResponse.class);
-                tvTotalBalance.setText("$ "+balanceResponse.getBalance().getWallet().getBalance().toString());
+                tvTotalBalance.setText("$ " + balanceResponse.getBalance().getWallet().getBalance().toString());
                 progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("wallet error",error.toString());
+                Log.e("wallet error", error.toString());
                 progressDialog.dismiss();
             }
         }) {
@@ -134,4 +134,9 @@ public class Wallet extends AppCompatActivity {
         progressDialog.getMax();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

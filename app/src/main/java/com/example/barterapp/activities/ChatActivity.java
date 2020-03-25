@@ -198,4 +198,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         // Fetching max value
         progressDialog.getMax();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

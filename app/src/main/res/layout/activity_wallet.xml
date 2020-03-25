@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="50dp"
             android:gravity="center"
-            android:text="Valet"
+            android:text="Wallet"
             android:textAllCaps="true"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/sixteen_sp" />
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:text="$300"
+            android:text="$ 0"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/twenty_sp" />
 

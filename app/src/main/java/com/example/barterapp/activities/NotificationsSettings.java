@@ -72,31 +72,31 @@ public class NotificationsSettings extends AppCompatActivity implements View.OnC
                 saveNotificationSettings();
                 break;
             case R.id.tbSound:
-                if (sound_val==0) {
-                    sound_val= 1;
-                }else {
-                    sound_val=0;
+                if (sound_val == 0) {
+                    sound_val = 1;
+                } else {
+                    sound_val = 0;
                 }
                 break;
             case R.id.tbNotifications:
-                if (notifications_val==0) {
-                    notifications_val= 1;
-                }else {
-                    notifications_val=0;
+                if (notifications_val == 0) {
+                    notifications_val = 1;
+                } else {
+                    notifications_val = 0;
                 }
                 break;
             case R.id.tbNewOrder:
-                if (new_orders_val==0) {
-                    new_orders_val= 1;
-                }else {
-                    new_orders_val=0;
+                if (new_orders_val == 0) {
+                    new_orders_val = 1;
+                } else {
+                    new_orders_val = 0;
                 }
                 break;
             case R.id.tbChatSound:
-                if (chat_sound_val==0) {
-                    chat_sound_val= 1;
-                }else {
-                    chat_sound_val=0;
+                if (chat_sound_val == 0) {
+                    chat_sound_val = 1;
+                } else {
+                    chat_sound_val = 0;
                 }
                 break;
         }
@@ -138,7 +138,7 @@ public class NotificationsSettings extends AppCompatActivity implements View.OnC
                         tbChatSound.setChecked(false);
                     }
                     progressDialog.dismiss();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Log.e("Notify sett", e.toString());
                     progressDialog.dismiss();
                 }
@@ -211,6 +211,12 @@ public class NotificationsSettings extends AppCompatActivity implements View.OnC
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // Fetching max value
         progressDialog.getMax();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }

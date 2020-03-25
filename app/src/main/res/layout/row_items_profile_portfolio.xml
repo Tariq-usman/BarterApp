@@ -31,6 +31,12 @@
                 android:src="@drawable/ic_cancel"
                 android:padding="6dp"
                 android:visibility="gone" />
+            <ProgressBar
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:id="@+id/progress_portfolio"
+                android:visibility="visible"/>
 
         </FrameLayout>
 

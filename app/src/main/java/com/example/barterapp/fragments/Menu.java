@@ -30,7 +30,6 @@ import com.example.barterapp.activities.SignInActivity;
 import com.example.barterapp.activities.TradesHistory;
 import com.example.barterapp.activities.Wallet;
 import com.example.barterapp.activities.ChangePassword;
-import com.example.barterapp.activities.ChoosePaymentMethodTwo;
 import com.example.barterapp.activities.TermsAndConditions;
 import com.example.barterapp.activities.NotificationsSettings;
 import com.example.barterapp.others.Preferences;
@@ -59,8 +58,8 @@ public class Menu extends Fragment implements View.OnClickListener {
 
         layoutWallet = view.findViewById(R.id.wallet_layout);
         layoutWallet.setOnClickListener(this);
-        layoutPayMethod = view.findViewById(R.id.pay_method_layout);
-        layoutPayMethod.setOnClickListener(this);
+       // layoutPayMethod = view.findViewById(R.id.pay_method_layout);
+       // layoutPayMethod.setOnClickListener(this);
         layoutTradeHistory = view.findViewById(R.id.trade_history_layout);
         layoutTradeHistory.setOnClickListener(this);
 
@@ -84,9 +83,9 @@ public class Menu extends Fragment implements View.OnClickListener {
             case R.id.wallet_layout:
                 startActivity(new Intent(getContext(), Wallet.class));
                 break;
-            case R.id.pay_method_layout:
+           /* case R.id.pay_method_layout:
                 startActivity(new Intent(getContext(), ChoosePaymentMethodTwo.class));
-                break;
+                break;*/
             case R.id.notification_layout:
                 startActivity(new Intent(getContext(), NotificationsSettings.class));
                 break;

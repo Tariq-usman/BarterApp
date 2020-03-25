@@ -111,8 +111,8 @@ public class TaskDueDate extends AppCompatActivity {
 //                AddNewJobResponse jobResponse = gson.fromJson(response, AddNewJobResponse.class);
                 Toast.makeText(TaskDueDate.this, "Job add successfully."/* + jobResponse.getJobs()*/, Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                Intent intent = new Intent(TaskDueDate.this,MainPage.class);
-                intent.putExtra("fragment_status","add_task");
+                Intent intent = new Intent(TaskDueDate.this, MainPage.class);
+                intent.putExtra("fragment_status", "add_task");
                 startActivity(intent);
                 finish();
 
@@ -162,4 +162,11 @@ public class TaskDueDate extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

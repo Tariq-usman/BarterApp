@@ -89,7 +89,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
     private static String result;
     private int RESULT_LOAD_IMAGE = 1;
     private Dialog myDialog;
-    private TextView tvUserName, tradesView;
+    private TextView tvUserName, tradesView,tvSeeAll;
     private LinearLayout layoutEdit;
     private TextView tvCompletedTasks, textViewPortfolio, saveBtn;
     private RecyclerView recyclerView, recyclerViewTrades;
@@ -133,7 +133,8 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
 
         tvUserName = view.findViewById(R.id.tv_user_name);
         tvCompletedTasks = view.findViewById(R.id.tv_completed_tasks);
-
+        tvSeeAll = view.findViewById(R.id.tv_see_all);
+        tvSeeAll.setOnClickListener(this);
         iv_profileImage = view.findViewById(R.id.profile_image);
         iv_profileImage.setOnClickListener(this);
         iv_profileImage.setClickable(false);
@@ -182,6 +183,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 portfolio_status = true;
                 layoutEdit.setVisibility(View.GONE);
                 saveBtn.setVisibility(View.VISIBLE);
+                tvSeeAll.setVisibility(View.INVISIBLE);
                 et_experience.setFocusable(true);
                 et_experience.setClickable(true);
                 et_experience.setCursorVisible(true);
@@ -191,7 +193,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 iv_profileImage.setEnabled(true);
                 iv_profileImage.setClickable(true);
                 preferences.setEditStatus(1);
-               /* for (int i = 0; i < portfolio_pics.size(); i++) {
+                /*for (int i = 0; i < portfolio_pics.size(); i++) {
                     updated_list.add(Uri.parse(portfolio_pics.get(i)));
                 }*/
                 updateProfilePortfolioAdapter = new UpdateProfilePortfolioAdapter(getContext(), updated_list, Profile.this);
@@ -204,6 +206,7 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 updateUserData();
                 layoutEdit.setVisibility(View.VISIBLE);
                 saveBtn.setVisibility(View.GONE);
+                tvSeeAll.setVisibility(View.VISIBLE);
                 et_experience.setFocusable(false);
                 et_experience.setClickable(false);
                 et_experience.setCursorVisible(false);
@@ -215,14 +218,14 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                 preferences.setEditStatus(0);
                 profilePortfolioAdapter = new ProfilePortfolioAdapter(getContext(), portfolio_pics);
                 recyclerView.setAdapter(profilePortfolioAdapter);
-                profileTradesAdapter.notifyDataSetChanged();
+                profilePortfolioAdapter.notifyDataSetChanged();
                 updateProfilePortfolioAdapter.notifyDataSetChanged();
                 break;
             case R.id.profile_image:
                 select_image_status = false;
                 pickImageFormGallery();
                 break;
-            case R.id.tv_portfolio_profile:
+            case R.id.tv_see_all:
                 startActivity(new Intent(getContext(), Portfolio.class));
                 break;
             case R.id.btn_add_trade_profile:
@@ -335,15 +338,11 @@ public class Profile extends Fragment implements View.OnClickListener, RecyclerC
                         bitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.parse(String.valueOf(path)));
                         bytesArray1 = imageToString(bitmap1);
                         Log.e("list_size", String.valueOf(bytesArray1.length));
-                        params.put("portfolioImage[]", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray1));
+                        params.put("portfolioImage["+i+"]", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray1));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    params.size();
                 }
-
-//                params.put("portfolioImage[]", new DataPart(UUID.randomUUID().toString() + ".png", bytesArray1));
-
                 return params;
             }
 

@@ -114,4 +114,10 @@ public class MakeOffer extends AppCompatActivity {
         due_date = getIntent().getStringExtra("due_date");
         budget = getIntent().getIntExtra("budget", 0);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

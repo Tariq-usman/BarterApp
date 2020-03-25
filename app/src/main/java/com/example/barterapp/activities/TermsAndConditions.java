@@ -53,7 +53,7 @@ public class TermsAndConditions extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, URLs.terms_conditions_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                TermAndConditionsResponse conditionsResponse = gson.fromJson(response,TermAndConditionsResponse.class);
+                TermAndConditionsResponse conditionsResponse = gson.fromJson(response, TermAndConditionsResponse.class);
                 String str = conditionsResponse.getGetTerm().get(0).getContent();
                 webView.loadData(str, "text/html", "UTF-8");
                 Toast.makeText(TermsAndConditions.this, "Response", Toast.LENGTH_SHORT).show();
@@ -62,13 +62,14 @@ public class TermsAndConditions extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error",error.toString());
+                Log.e("Error", error.toString());
                 progressDialog.dismiss();
             }
         });
         requestQueue.add(request);
     }
-    public void customProgressDialog(Context context){
+
+    public void customProgressDialog(Context context) {
         progressDialog = new ProgressDialog(context);
         // Setting Message
         progressDialog.setMessage("Loading...");
@@ -77,4 +78,11 @@ public class TermsAndConditions extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

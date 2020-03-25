@@ -117,4 +117,10 @@ public class ChangePassword extends AppCompatActivity {
         // Fetching max value
         progressDialog.getMax();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

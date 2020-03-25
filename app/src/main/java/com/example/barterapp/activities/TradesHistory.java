@@ -48,7 +48,7 @@ public class TradesHistory extends AppCompatActivity {
         preferences = new Preferences(this);
         customProgressDialog(this);
         getTradesHistory();
-        ivBack=findViewById(R.id.ivBack_trade);
+        ivBack = findViewById(R.id.ivBack_trade);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +58,7 @@ public class TradesHistory extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_trades_history);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        tradesHistoryAdapter = new TradesHistoryAdapter(getApplicationContext(),historyList);
+        tradesHistoryAdapter = new TradesHistoryAdapter(getApplicationContext(), historyList);
         recyclerView.setAdapter(tradesHistoryAdapter);
 
     }
@@ -78,7 +78,7 @@ public class TradesHistory extends AppCompatActivity {
                     }
                     tradesHistoryAdapter.notifyDataSetChanged();
                     progressDialog.dismiss();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Log.e("Trades history", e.toString());
                     progressDialog.dismiss();
                 }
@@ -109,6 +109,12 @@ public class TradesHistory extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // Fetching max value
         progressDialog.getMax();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }
