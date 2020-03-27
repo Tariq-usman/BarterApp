@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Barter App</string>
+    <string name="app_name">Bartisian App</string>
     <string name="title_activity_maps">Map</string>
     <string name="stripe_api_key">pk_test_IHFeS72J8BZlJIDYNZdDCbBT00ax45UZW1</string>
 </resources>

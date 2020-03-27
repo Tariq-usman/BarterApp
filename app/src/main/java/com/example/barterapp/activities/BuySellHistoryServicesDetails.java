@@ -92,13 +92,13 @@ public class BuySellHistoryServicesDetails extends AppCompatActivity {
             Date c = Calendar.getInstance().getTime();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String current_date = df.format(c);
-            String due_date = duration;
+             due_date = duration;
 
             daybetween(current_date/*"25/02/2020"*/, due_date /*"28/02/2020"*/, "yyyy-MM-dd");
             if (daysDiff <= 0) {
                 tvDuration.setText("0 Days");
             } else {
-                tvDuration.setText(duration);
+                tvDuration.setText(daysDiff+" Days");
             }
         } else {
             Toast.makeText(this, "No data available!", Toast.LENGTH_SHORT).show();

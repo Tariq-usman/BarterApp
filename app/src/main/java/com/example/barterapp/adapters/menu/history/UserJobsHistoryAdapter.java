@@ -49,7 +49,7 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
     private Preferences preferences;
     long daysDiff;
     Integer job_id;
-
+    private int current_position;
     public UserJobsHistoryAdapter(Context context, List<AllUserJobsHistoryResponse.SellJob> sellJobs,
                                   List<AllUserJobsHistoryResponse.BuyJob> buyJobs) {
         this.context = context;
@@ -121,21 +121,22 @@ public class UserJobsHistoryAdapter extends RecyclerView.Adapter<UserJobsHistory
             public void onClick(View v) {
 //                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
                 job_id = sellJobs.get(position).getOffer().getJob().getId();
-                deleteJob(position);
+                current_position = holder.getAdapterPosition();
+                deleteJob(job_id);
             }
         });
 
     }
 
-    private void deleteJob(final int position) {
+    private void deleteJob(final int job_id) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         final Gson gson = new GsonBuilder().create();
-        StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_user_job_url + job_id, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, URLs.delete_user_offer_url + job_id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                sellJobs.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, sellJobs.size());
+                sellJobs.remove(current_position);
+                notifyItemRemoved(current_position);
+                notifyItemRangeChanged(current_position, sellJobs.size());
                 Log.e("RESPONSE ", response);
                 Toast.makeText(context, "Item delete Successfully", Toast.LENGTH_SHORT).show();
             }
