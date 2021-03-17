@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.barterapp.R;
 import com.example.barterapp.others.Preferences;
@@ -27,7 +28,7 @@ public class AddTask extends AppCompatActivity {
     private EditText etTitle, etDescription;
     private TextView tvTaskLocation;
     private RadioButton rbPhysical, rbOnline;
-    String latitude,longitude;
+    String latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class AddTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preferences.setLocationStatus("job location");
-                startActivity(new Intent(AddTask.this,MapsActivity.class));
+                startActivity(new Intent(AddTask.this, MapsActivity.class));
             }
         });
 
@@ -60,19 +61,27 @@ public class AddTask extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFromLocation();
-                Intent intent = new Intent(AddTask.this,TaskDueDate.class);
-                intent.putExtra("title",etTitle.getText().toString().trim());
-                intent.putExtra("description",etDescription.getText().toString().trim());
-                if (rbPhysical.isChecked()){
-                    intent.putExtra("service_type",rbPhysical.getText().toString());
-                }else {
-                    intent.putExtra("service_type",rbOnline.getText().toString());
+                if (etTitle.getText().toString() == null || etTitle.getText().toString().isEmpty()) {
+                    etTitle.setError("Enter title please");
+                } else if (etDescription.getText().toString() == null || etDescription.getText().toString().isEmpty()) {
+                    etDescription.setError("Enter title please");
+                } else if (tvTaskLocation.getText().toString() == null || tvTaskLocation.getText().toString().isEmpty()) {
+                    tvTaskLocation.setError("Enter title please");
+                } else {
+                    getFromLocation();
+                    Intent intent = new Intent(AddTask.this, TaskDueDate.class);
+                    intent.putExtra("title", etTitle.getText().toString().trim());
+                    intent.putExtra("description", etDescription.getText().toString().trim());
+                    if (rbPhysical.isChecked()) {
+                        intent.putExtra("service_type", rbPhysical.getText().toString());
+                    } else {
+                        intent.putExtra("service_type", rbOnline.getText().toString());
+                    }
+                    intent.putExtra("lat", latitude);
+                    intent.putExtra("long", longitude);
+                    startActivity(intent);
+                    finish();
                 }
-                intent.putExtra("lat",latitude);
-                intent.putExtra("long" , longitude);
-                startActivity(intent);
-                finish();
             }
         });
     }
@@ -83,18 +92,17 @@ public class AddTask extends AppCompatActivity {
         tvTaskLocation.setText(preferences.getTaskLocation());
     }
 
-    private void getFromLocation()
-    {
+    private void getFromLocation() {
         Geocoder geocoder = new Geocoder(getBaseContext());
         List<Address> addresses;
         try {
             addresses = geocoder.getFromLocationName(preferences.getTaskLocation(), 20);
-            for(int i = 0; i < addresses.size(); i++) { // MULTIPLE MATCHES
+            for (int i = 0; i < addresses.size(); i++) { // MULTIPLE MATCHES
                 Address addr = addresses.get(i);
                 latitude = String.valueOf(addr.getLatitude());
                 longitude = String.valueOf(addr.getLongitude()); // DO SOMETHING WITH VALUES
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

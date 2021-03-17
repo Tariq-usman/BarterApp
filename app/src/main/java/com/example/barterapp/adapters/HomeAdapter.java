@@ -71,6 +71,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Double lat = Double.parseDouble(jobsResponse.getLatitude());
         Double lng = Double.parseDouble(jobsResponse.getLongitude());
 
+/*
         try {
             addresses = geocoder.getFromLocation(lat, lng, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
@@ -83,6 +84,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+*/
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

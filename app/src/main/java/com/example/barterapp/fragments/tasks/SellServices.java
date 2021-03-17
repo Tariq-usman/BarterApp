@@ -73,9 +73,9 @@ public class SellServices extends Fragment {
                         sellJobsList.add(sellServicesResponse.getSellJob().get(i));
                     }
                     sellServicesAdapter.notifyDataSetChanged();
-                    if (sellJobsList.isEmpty()) {
+                   /* if (sellJobsList.isEmpty()) {
                         Toast.makeText(getContext(), "No data found!", Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                     progressDialog.dismiss();
                 } catch (Exception e) {
                     Log.e("Task Exception", e.toString());
